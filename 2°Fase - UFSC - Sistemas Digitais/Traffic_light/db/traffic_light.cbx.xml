@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<LOG_ROOT>
+	<PROJECT NAME="traffic_light">
+		<CBX_INST_ENTRY INSTANCE_NAME="|adap_traffic|nios2_soc:u0|nios2_soc_cpu:cpu|lpm_add_sub:Add8" CBX_FILE_NAME="add_sub_8ri.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|adap_traffic|nios2_soc:u0|nios2_soc_cpu:cpu|nios2_soc_cpu_ic_data_module:nios2_soc_cpu_ic_data|altsyncram:the_altsyncram" CBX_FILE_NAME="altsyncram_c9d1.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|adap_traffic|nios2_soc:u0|nios2_soc_cpu:cpu|nios2_soc_cpu_ic_tag_module:nios2_soc_cpu_ic_tag|altsyncram:the_altsyncram" CBX_FILE_NAME="altsyncram_ctg1.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|adap_traffic|nios2_soc:u0|nios2_soc_cpu:cpu|nios2_soc_cpu_nios2_oci:the_nios2_soc_cpu_nios2_oci|nios2_soc_cpu_nios2_ocimem:the_nios2_soc_cpu_nios2_ocimem|nios2_soc_cpu_ociram_sp_ram_module:nios2_soc_cpu_ociram_sp_ram|altsyncram:the_altsyncram" CBX_FILE_NAME="altsyncram_2j71.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|adap_traffic|nios2_soc:u0|nios2_soc_cpu:cpu|nios2_soc_cpu_register_bank_a_module:nios2_soc_cpu_register_bank_a|altsyncram:the_altsyncram" CBX_FILE_NAME="altsyncram_hmg1.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|adap_traffic|nios2_soc:u0|nios2_soc_cpu:cpu|nios2_soc_cpu_register_bank_b_module:nios2_soc_cpu_register_bank_b|altsyncram:the_altsyncram" CBX_FILE_NAME="altsyncram_img1.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|adap_traffic|nios2_soc:u0|nios2_soc_jtag_uart:jtag_uart|nios2_soc_jtag_uart_scfifo_w:the_nios2_soc_jtag_uart_scfifo_w|scfifo:wfifo" CBX_FILE_NAME="scfifo_1n21.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|adap_traffic|nios2_soc:u0|nios2_soc_jtag_uart:jtag_uart|nios2_soc_jtag_uart_scfifo_r:the_nios2_soc_jtag_uart_scfifo_r|scfifo:rfifo" CBX_FILE_NAME="scfifo_1n21.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|adap_traffic|nios2_soc:u0|nios2_soc_onchip_mem:onchip_mem|altsyncram:the_altsyncram" CBX_FILE_NAME="altsyncram_7ic1.tdf"/>
+	</PROJECT>
+</LOG_ROOT>

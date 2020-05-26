@@ -1,0 +1,16 @@
+Fitter Status : Successful - Tue Nov 20 11:17:13 2018
+Quartus II 64-Bit Version : 13.0.0 Build 156 04/24/2013 SJ Web Edition
+Revision Name : traffic_light
+Top-level Entity Name : adap_traffic
+Family : Cyclone II
+Device : EP2C35F672C6
+Timing Models : Final
+Total logic elements : 2,690 / 33,216 ( 8 % )
+    Total combinational functions : 2,516 / 33,216 ( 8 % )
+    Dedicated logic registers : 1,567 / 33,216 ( 5 % )
+Total registers : 1567
+Total pins : 10 / 475 ( 2 % )
+Total virtual pins : 0
+Total memory bits : 192,384 / 483,840 ( 40 % )
+Embedded Multiplier 9-bit elements : 0 / 70 ( 0 % )
+Total PLLs : 0 / 4 ( 0 % )

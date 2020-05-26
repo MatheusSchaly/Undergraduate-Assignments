@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1510778331 source:d:\gitrepo\data-structures-exercises\mergesort\main.cpp
+	<iostream>
+	<array>
+

@@ -1,0 +1,1750 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html dir="ltr" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html">
+    <title>erwin Report Designer -  Document </title>
+
+    <style>
+        table.datagrid
+        {
+            font: normal 76%/150% "Lucida Grande" , "Lucida Sans Unicode" , Verdana, Arial, Helvetica, sans-serif;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 0 0 1em;
+            color: #000;
+        }
+        table.datagrid a
+        {
+            color: #523A0B;
+            text-decoration: none;
+            border-bottom: 1px dotted;
+        }
+        table.datagrid a:visited
+        {
+            color: #444;
+            font-weight: normal;
+        }
+        table.datagrid a:visited:after
+        {
+            content: "\00A0\221A";
+        }
+        table.datagrid a:hover
+        {
+            border-bottom-style: solid;
+        }
+        table.datagrid thead th, thead td, tfoot th, tfoot td
+        {
+            border: 1px solid #523A0B;
+            border-width: 1px 0;
+            background: #EBE5D9;
+        }
+        table.datagrid th
+        {
+            font-weight: bold;
+            line-height: normal;
+            padding: 0.25em 0.5em;
+            text-align: left;
+        }
+        table.datagrid tbody th, td
+        {
+            padding: 0.25em 0.5em;
+            text-align: left;
+            vertical-align: top;
+        }
+        table.datagrid tbody th
+        {
+            font-weight: normal;
+            white-space: nowrap;
+        }
+        table.datagrid tbody th a:link, tbody th a:visited
+        {
+            font-weight: bold;
+        }
+        table.datagrid tbody td, tbody th
+        {
+            border: 1px solid #fff;
+            border-width: 1px 0;
+        }
+        table.datagrid tbody tr.odd th, tbody tr.odd td
+        {
+            border-color: #EBE5D9;
+            background: #F7F4EE;
+        }
+        table.datagrid tbody tr:hover td, tbody tr:hover th
+        {
+            background: #ffffee;
+            border-color: #523A0B;
+        }
+                
+        .BlankHeader th
+        {
+            padding: 5px 10px;
+            border: 1px solid #d9d9d9;
+            background: #000000;
+            border-bottom: navy solid thin;
+            border-top: navy solid thin;
+            border-left: none;
+            border-right: none;
+            font-size: smaller;
+        }
+        caption
+        {
+            font-family: Georgia,Times,serif;
+            font-weight: normal;
+            font-size: 1.4em;
+            text-align: left;
+            margin: 0;
+            padding: 0.5em 0.25em;
+        }
+        
+        #menu ul
+        {
+            margin: 0px;
+            padding: 0px;
+            list-style-type: none;
+        }
+
+        .CurrentA
+        {
+            display: block;
+            width: 8em;
+            color: white;
+            background-color: #000099;
+            text-decoration: none;
+            text-align: center;
+        }
+        .NormalA
+        {
+            display: block;
+            width: 8em;
+            color: white;
+            background-color: #C0C0C0;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        #menu a:hover
+        {
+            background-color: #008000;
+        }
+        #menu li
+        {
+            float: left;
+            margin-right: 0.5em;
+        }
+    </style>
+</head>
+<body>
+    <div id="boundary">
+        <div id="content">
+            <table id="theReport" cellpading="1" border="2" align="center" style="">
+                <tr>
+                    <td align="center" valign="middle">
+                        <b><font size="5" color="#000000" face='Times New Roman'>Relationship Reports-Relationship Verb Phrases</font></b>
+                    </td>
+                </tr>
+            </table>
+            <div id="menu" style="float: right">
+                <ul>
+                    <li>Select Format:</li>
+                    <li><a href="tabular.htm" class="NormalA">Tabular</a></li>
+                    <li><a href="hierarchical.htm" class="CurrentA">Hierarchical</a></li>
+                </ul>
+            </div>
+            <table id="theheader" cellpading="1" border="0" width="100%">
+                <tr>
+                    <td align="LEFT" valign="TOP">
+                        <b><font size="3" face='Times New Roman'></font></b>
+                    </td>
+                </tr>
+            </table>
+            <div id="itsthetable">
+                <table summary="ReportData" class='datagrid' width="100%">
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                            <th style="">
+                                <b>Relationship Name</b>
+                            </th>
+                            
+                            <th style="">
+                                <b>Relationship Child_To_Parent_Verb_Phrase</b>
+                            </th>
+                            
+                            <th style="">
+                                <b>Relationship Definition</b>
+                            </th>
+                            
+                            <th style="">
+                                <b>Relationship Parent_To_Child_Verb_Phrase</b>
+                            </th>
+                            
+                            <th style="">
+                                <b>Relationship Type</b>
+                            </th>
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Conjura
+                            
+                        </td>
+                        
+                        <td style="">
+                            É conjurada por
+                            
+                        </td>
+                        
+                        <td style="">
+                            Uma guilda jogo pode ter de 0 a N habilidades. Uma habilidade pode estar em 0 a N guildas.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Conjura
+                            
+                        </td>
+                        
+                        <td style="">
+                            Many-to-many
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Conjura
+                            
+                        </td>
+                        
+                        <td style="">
+                            É conjurada por
+                            
+                        </td>
+                        
+                        <td style="">
+                            Uma habilidade pode estar em 0 a N itens. Um item pode ser possuir de 0 a N habilidades.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Conjura
+                            
+                        </td>
+                        
+                        <td style="">
+                            Many-to-many
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Conjura
+                            
+                        </td>
+                        
+                        <td style="">
+                            É conjurada por
+                            
+                        </td>
+                        
+                        <td style="">
+                            Uma profissão secundária pode ter de 1 a N habilidades. Uma habilidade pode estar em 0 a N profissões secundárias.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Conjura
+                            
+                        </td>
+                        
+                        <td style="">
+                            Many-to-many
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Conjura
+                            
+                        </td>
+                        
+                        <td style="">
+                            É conjurada por
+                            
+                        </td>
+                        
+                        <td style="">
+                            Um personagem pode ter de 0 a N habildiades. Uma habilidade pode ser possuída por 0 a N personagens.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Conjura
+                            
+                        </td>
+                        
+                        <td style="">
+                            Many-to-many
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Conjura
+                            
+                        </td>
+                        
+                        <td style="">
+                            É conjurada por
+                            
+                        </td>
+                        
+                        <td style="">
+                            Um personagem pode ter de 0 a N criaturas sumonadas. Uma criatura pode ser possuída por 0 a N personagens.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Conjura
+                            
+                        </td>
+                        
+                        <td style="">
+                            Many-to-many
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Fornece
+                            
+                        </td>
+                        
+                        <td style="">
+                            É fornecido por
+                            
+                        </td>
+                        
+                        <td style="">
+                            Uma missão pode fornecer de 0 a N itens. Uma item pode ser fornecido por 0 a N missões.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Fornece
+                            
+                        </td>
+                        
+                        <td style="">
+                            Many-to-many
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Fornece
+                            
+                        </td>
+                        
+                        <td style="">
+                            É fornecido por
+                            
+                        </td>
+                        
+                        <td style="">
+                            Uma criatura pode ter de 0 a N missões para fornecer. Uma missão pode estar fornecida por 0 a N criatura ou NPCs.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Fornece
+                            
+                        </td>
+                        
+                        <td style="">
+                            Many-to-many
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Fornece
+                            
+                        </td>
+                        
+                        <td style="">
+                            É fornecido por
+                            
+                        </td>
+                        
+                        <td style="">
+                            Um item pode ter de 0 a N missões. Uma missão pode estar em 0 a N itens.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Fornece
+                            
+                        </td>
+                        
+                        <td style="">
+                            Many-to-many
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Fornece ou conjura
+                            
+                        </td>
+                        
+                        <td style="">
+                            É fornecida ou conjurada por
+                            
+                        </td>
+                        
+                        <td style="">
+                            Uma criatura ou NPC pode possuir de 0 a N habilidades. Uma habilidade pode ser possuída por 0 a N criaturas ou NPCs.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Fornece ou conjura
+                            
+                        </td>
+                        
+                        <td style="">
+                            Many-to-many
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Localiza-se em um
+                            
+                        </td>
+                        
+                        <td style="">
+                            Possui
+                            
+                        </td>
+                        
+                        <td style="">
+                            Uma criatura ou NPC pode estar em 0 a N mapas. Uma mapa pode possuir de 0 a N criaturas ou NPCs.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Localiza-se em um
+                            
+                        </td>
+                        
+                        <td style="">
+                            Many-to-many
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Possui
+                            
+                        </td>
+                        
+                        <td style="">
+                            É utilizado por
+                            
+                        </td>
+                        
+                        <td style="">
+                            Um personagem pode ter de 0 a N itens. Um item pode ser possuído por 0 a N personagens.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Possui
+                            
+                        </td>
+                        
+                        <td style="">
+                            Many-to-many
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Possui
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            Uma guilda pode ter de 3 a N personagens. Um personagem pode ter apenas uma guilda.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Possui
+                            
+                        </td>
+                        
+                        <td style="">
+                            Non-Identifying
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Possui
+                            
+                        </td>
+                        
+                        <td style="">
+                            Localiza-se em um
+                            
+                        </td>
+                        
+                        <td style="">
+                            Um mapa pode ter de 0 a N objetos. Um pode ser estar em 1 a N mapas.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Possui
+                            
+                        </td>
+                        
+                        <td style="">
+                            Many-to-many
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Possui
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            Um servidor pode ter de 0 a N contas. Uma conta deve ter apenas um servidor.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Possui
+                            
+                        </td>
+                        
+                        <td style="">
+                            Identifying
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Possui
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            Uma conta pode ter de 0 a N personagens. Um personagem deve ter uma conta.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Possui
+                            
+                        </td>
+                        
+                        <td style="">
+                            Non-Identifying
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Possui
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            Um jogo pode ter de 1 a N servidores. Uma servidor deve ter apenas um jogo.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Possui
+                            
+                        </td>
+                        
+                        <td style="">
+                            Non-Identifying
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Possui
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            Um jogo pode ter de 0 a N expansões. Uma expansão deve ter apenas um jogo.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Possui
+                            
+                        </td>
+                        
+                        <td style="">
+                            Non-Identifying
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Possui
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            Um jogo pode ter de 1 a N expansões. Um mapa deve ter apenas um jogo.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Possui
+                            
+                        </td>
+                        
+                        <td style="">
+                            Non-Identifying
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            R/100
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            Identifying
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            R/101
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            Identifying
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            R/103
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            Identifying
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            R/104
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            Identifying
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            R/109
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            Identifying
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            R/110
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            Identifying
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            R/112
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            Identifying
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            R/113
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            Identifying
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            R/115
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            Identifying
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            R/116
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            Identifying
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            R/122
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            Identifying
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            R/123
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            Identifying
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            R/91
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            Identifying
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            R/92
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            Identifying
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            R/94
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            Identifying
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            R/95
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            Identifying
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            R/97
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            Identifying
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            R/98
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            Identifying
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Solta
+                            
+                        </td>
+                        
+                        <td style="">
+                            É soltado por
+                            
+                        </td>
+                        
+                        <td style="">
+                            Uma criatura ou NPC pode possuir de 0 a N itens. Um item pode ser possuído por 0 a N criaturas ou NPCs. A loja seria incluída nesta realação.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Solta
+                            
+                        </td>
+                        
+                        <td style="">
+                            Many-to-many
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            É adquirida por
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            Um personagem pode ter de 0 a 20 missões. Uma missão pode ser possuída por 0 a N personagens.
+                            
+                        </td>
+                        
+                        <td style="">
+                            É adquirida por
+                            
+                        </td>
+                        
+                        <td style="">
+                            Non-Identifying
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            É adquirida por
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            Uma profissão secundária pode ter de 0 a N personagens. Um personagem pode ter de 0 a 4 profissões secundárias.
+                            
+                        </td>
+                        
+                        <td style="">
+                            É adquirida por
+                            
+                        </td>
+                        
+                        <td style="">
+                            Non-Identifying
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            É um
+                            
+                        </td>
+                        
+                        <td style="">
+                            É um
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            Pode ser um
+                            
+                        </td>
+                        
+                        <td style="">
+                            Subtype
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            É um
+                            
+                        </td>
+                        
+                        <td style="">
+                            É um
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            Pode ser um
+                            
+                        </td>
+                        
+                        <td style="">
+                            Subtype
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                <caption></caption>
+                </table>
+            </div>
+            <div id="footer" style="float: right"><p></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

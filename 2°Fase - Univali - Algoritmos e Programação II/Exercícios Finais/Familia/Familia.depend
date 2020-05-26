@@ -1,0 +1,19 @@
+# depslib dependency file v1.0
+1497920156 source:c:\users\hsmatheus\desktop\cc\2° fase\algoritmos e programação\exercicios finais\meus\familia\main.cpp
+	<iostream>
+	"Familia.h"
+	"Pessoa.h"
+
+1497920351 c:\users\hsmatheus\desktop\cc\2° fase\algoritmos e programação\exercicios finais\meus\familia\familia.h
+	"Pessoa.h"
+	<iostream>
+
+1497917227 c:\users\hsmatheus\desktop\cc\2° fase\algoritmos e programação\exercicios finais\meus\familia\pessoa.h
+	<iostream>
+
+1497920351 source:c:\users\hsmatheus\desktop\cc\2° fase\algoritmos e programação\exercicios finais\meus\familia\familia.cpp
+	"Familia.h"
+
+1497917208 source:c:\users\hsmatheus\desktop\cc\2° fase\algoritmos e programação\exercicios finais\meus\familia\pessoa.cpp
+	"Pessoa.h"
+

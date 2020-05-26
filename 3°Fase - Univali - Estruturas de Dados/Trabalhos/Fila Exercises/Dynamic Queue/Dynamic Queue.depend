@@ -1,0 +1,18 @@
+# depslib dependency file v1.0
+1506459382 source:/home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Fila Exercises/Dynamic Queue/main.cpp
+	<iostream>
+	"Queue.h"
+	"Node.h"
+
+1506458250 source:/home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Fila Exercises/Dynamic Queue/Node.cpp
+	"Node.h"
+
+1506458240 /home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Fila Exercises/Dynamic Queue/Node.h
+	<iostream>
+
+1506459205 source:/home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Fila Exercises/Dynamic Queue/Queue.cpp
+	"Queue.h"
+
+1506458598 /home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Fila Exercises/Dynamic Queue/Queue.h
+	"Node.h"
+

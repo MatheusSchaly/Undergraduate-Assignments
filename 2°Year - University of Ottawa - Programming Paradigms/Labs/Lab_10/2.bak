@@ -1,0 +1,6 @@
+#lang scheme
+
+(define L '(1 2 3 4 5))
+(car L)
+(cdr L)
+

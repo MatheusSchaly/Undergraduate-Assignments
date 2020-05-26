@@ -1,0 +1,149 @@
+# depslib dependency file v1.0
+1505227258 source:/home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Trabalho 1/Atividade 2/main.cpp
+	"Jogador.h"
+	"Lista.h"
+	"Nodo.h"
+	"Carta.h"
+	<stdlib.h>
+	<ctime>
+
+1505215916 source:/home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Trabalho 1/Atividade 2/Lista.cpp
+	"Lista.h"
+
+1505215233 /home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Trabalho 1/Atividade 2/Lista.h
+	"Nodo.h"
+
+1505227269 /home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Trabalho 1/Atividade 2/Nodo.h
+	"Carta.h"
+	<iostream>
+
+1505227245 source:/home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Trabalho 1/Atividade 2/Nodo.cpp
+	"Nodo.h"
+
+1505215233 source:/home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Trabalho 1/Atividade 2/Carta.cpp
+	"Carta.h"
+
+1505215233 /home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Trabalho 1/Atividade 2/Carta.h
+	<iostream>
+
+1505215233 /home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Trabalho 1/Atividade 2/Jogador.h
+	"Carta.h"
+	"Lista.h"
+
+1505215233 source:/home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Trabalho 1/Atividade 2/Jogador.cpp
+	"Jogador.h"
+
+1505190389 source:c:\users\mauricio\desktop\data-structures-exercises\trabalho 1\atividade 2\carta.cpp
+	"Carta.h"
+
+1505084966 c:\users\mauricio\desktop\data-structures-exercises\trabalho 1\atividade 2\carta.h
+	<iostream>
+
+1505199426 source:c:\users\mauricio\desktop\data-structures-exercises\trabalho 1\atividade 2\jogador.cpp
+	"Jogador.h"
+
+1505199239 c:\users\mauricio\desktop\data-structures-exercises\trabalho 1\atividade 2\jogador.h
+	"Carta.h"
+	"Lista.h"
+
+1505088045 c:\users\mauricio\desktop\data-structures-exercises\trabalho 1\atividade 2\lista.h
+	"Nodo.h"
+
+1505081543 c:\users\mauricio\desktop\data-structures-exercises\trabalho 1\atividade 2\nodo.h
+	"Carta.h"
+	<iostream>
+
+1505190389 source:c:\users\mauricio\desktop\data-structures-exercises\trabalho 1\atividade 2\lista.cpp
+	"Lista.h"
+
+1505199848 source:c:\users\mauricio\desktop\data-structures-exercises\trabalho 1\atividade 2\main.cpp
+	"Jogador.h"
+	"Lista.h"
+	"Nodo.h"
+	"Carta.h"
+	<stdlib.h>
+	<ctime>
+
+1505081107 source:c:\users\mauricio\desktop\data-structures-exercises\trabalho 1\atividade 2\nodo.cpp
+	"Nodo.h"
+
+1505215233 source:/home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/MatheusSchaly_ MauricioFarias/Atividade 2/Carta.cpp
+	"Carta.h"
+
+1505215233 /home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/MatheusSchaly_ MauricioFarias/Atividade 2/Carta.h
+	<iostream>
+
+1505215233 source:/home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/MatheusSchaly_ MauricioFarias/Atividade 2/Jogador.cpp
+	"Jogador.h"
+
+1505215233 /home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/MatheusSchaly_ MauricioFarias/Atividade 2/Jogador.h
+	"Carta.h"
+	"Lista.h"
+
+1505869147 /home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/MatheusSchaly_ MauricioFarias/Atividade 2/Lista.h
+	"Nodo.h"
+
+1505869147 /home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/MatheusSchaly_ MauricioFarias/Atividade 2/Nodo.h
+	"Carta.h"
+	<iostream>
+
+1505869147 source:/home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/MatheusSchaly_ MauricioFarias/Atividade 2/Lista.cpp
+	"Lista.h"
+
+1505227258 source:/home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/MatheusSchaly_ MauricioFarias/Atividade 2/main.cpp
+	"Jogador.h"
+	"Lista.h"
+	"Nodo.h"
+	"Carta.h"
+	<stdlib.h>
+	<ctime>
+
+1505869147 source:/home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/MatheusSchaly_ MauricioFarias/Atividade 2/Nodo.cpp
+	"Nodo.h"
+
+1507673475 source:d:\gitrepo\data-structures-exercises\matheusschaly_ mauriciofarias\atividade 2\carta.cpp
+	"Carta.h"
+
+1507673475 d:\gitrepo\data-structures-exercises\matheusschaly_ mauriciofarias\atividade 2\carta.h
+	<iostream>
+
+1507673475 source:d:\gitrepo\data-structures-exercises\matheusschaly_ mauriciofarias\atividade 2\jogador.cpp
+	"Jogador.h"
+
+1507673475 d:\gitrepo\data-structures-exercises\matheusschaly_ mauriciofarias\atividade 2\jogador.h
+	"Carta.h"
+	"Lista.h"
+
+1507673475 d:\gitrepo\data-structures-exercises\matheusschaly_ mauriciofarias\atividade 2\lista.h
+	"Nodo.h"
+
+1507673475 d:\gitrepo\data-structures-exercises\matheusschaly_ mauriciofarias\atividade 2\nodo.h
+	"Carta.h"
+	<iostream>
+
+1507673475 source:d:\gitrepo\data-structures-exercises\matheusschaly_ mauriciofarias\atividade 2\lista.cpp
+	"Lista.h"
+
+1507673475 source:d:\gitrepo\data-structures-exercises\matheusschaly_ mauriciofarias\atividade 2\main.cpp
+	"Jogador.cpp"
+	"Lista.cpp"
+	"Nodo.cpp"
+	"Carta.cpp"
+	<stdlib.h>
+	<ctime>
+
+1507673475 d:\gitrepo\data-structures-exercises\matheusschaly_ mauriciofarias\atividade 2\jogador.cpp
+	"Jogador.h"
+
+1507673475 d:\gitrepo\data-structures-exercises\matheusschaly_ mauriciofarias\atividade 2\lista.cpp
+	"Lista.h"
+
+1507673475 d:\gitrepo\data-structures-exercises\matheusschaly_ mauriciofarias\atividade 2\nodo.cpp
+	"Nodo.h"
+
+1507673475 d:\gitrepo\data-structures-exercises\matheusschaly_ mauriciofarias\atividade 2\carta.cpp
+	"Carta.h"
+
+1507673475 source:d:\gitrepo\data-structures-exercises\matheusschaly_ mauriciofarias\atividade 2\nodo.cpp
+	"Nodo.h"
+

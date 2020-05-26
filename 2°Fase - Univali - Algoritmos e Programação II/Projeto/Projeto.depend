@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1495846210 source:c:\users\6289827\downloads\projeto\main.cpp
+	<iostream>
+	"Vetor.h"
+
+1495845917 c:\users\6289827\downloads\projeto\vetor.h
+	<iostream>
+	<algorithm>
+
+1495846072 source:c:\users\6289827\downloads\projeto\vetor.cpp
+	"Vetor.h"
+

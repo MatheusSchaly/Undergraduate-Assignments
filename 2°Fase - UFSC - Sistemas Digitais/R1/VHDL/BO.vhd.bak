@@ -1,0 +1,14 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity BO is
+	port(
+		-- control inputs
+		clock, reset: in std_logic;
+		s1, s45, s50, s55, s100, s105, s110, s135, s140: in std_logic;
+
+		-- control outputs
+		ecktimer, rstcktimer, rsttime, etime, eNS, cMuxP, eP, eEW: out std_logic;
+		cMuxNS, cMuxEW: out std_logic_vector(1 downto 0)
+	);
+end entity;

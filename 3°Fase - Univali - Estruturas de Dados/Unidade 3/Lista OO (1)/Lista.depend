@@ -1,0 +1,53 @@
+# depslib dependency file v1.0
+1290351815 source:d:\meus documentos\univali\algoritmo e estrutura de dados\oo\c++\lista\main.cpp
+	<iostream>
+	"Lista.cpp"
+
+1290351815 "
+
+1290351850 d:\meus documentos\univali\algoritmo e estrutura de dados\oo\c++\lista\lista.cpp
+	"Lista.h"
+	"Nodo.cpp"
+
+1290347198 
+
+1290347787 d:\meus documentos\univali\algoritmo e estrutura de dados\oo\c++\lista\lista.h
+	"Nodo.h"
+
+1290347787 d:\meus documentos\univali\algoritmo e estrutura de dados\oo\c++\lista\nodo.h
+
+1290347198 d:\meus documentos\univali\algoritmo e estrutura de dados\oo\c++\lista\nodo.cpp
+	"Nodo.h"
+
+1290351816 source:/Users/alessandromueller/Documents/UNIVALI/Estruturas de Dados/C++/Lista/Implementacao/Lista/main.cpp
+	<iostream>
+	"Lista.cpp"
+
+1290351852 /Users/alessandromueller/Documents/UNIVALI/Estruturas de Dados/C++/Lista/Implementacao/Lista/Lista.cpp
+	"Lista.h"
+	"Nodo.cpp"
+
+1290347788 /Users/alessandromueller/Documents/UNIVALI/Estruturas de Dados/C++/Lista/Implementacao/Lista/Lista.h
+	"Nodo.h"
+
+1290347788 /Users/alessandromueller/Documents/UNIVALI/Estruturas de Dados/C++/Lista/Implementacao/Lista/Nodo.h
+
+1290347200 /Users/alessandromueller/Documents/UNIVALI/Estruturas de Dados/C++/Lista/Implementacao/Lista/Nodo.cpp
+	"Nodo.h"
+
+1290351816 source:/Users/alessandromueller/Documents/UNIVALI/Estruturas de Dados/C++/Lista/Implementacao/Lista OO (1)/main.cpp
+	<iostream>
+	"Lista.cpp"
+
+1490223377 /Users/alessandromueller/Documents/UNIVALI/Estruturas de Dados/C++/Lista/Implementacao/Lista OO (1)/Lista.cpp
+	"Lista.h"
+	"Nodo.cpp"
+
+1290347788 /Users/alessandromueller/Documents/UNIVALI/Estruturas de Dados/C++/Lista/Implementacao/Lista OO (1)/Lista.h
+	"Nodo.h"
+
+1290347788 /Users/alessandromueller/Documents/UNIVALI/Estruturas de Dados/C++/Lista/Implementacao/Lista OO (1)/Nodo.h
+
+1290347200 /Users/alessandromueller/Documents/UNIVALI/Estruturas de Dados/C++/Lista/Implementacao/Lista OO (1)/Nodo.cpp
+	"Nodo.h"
+

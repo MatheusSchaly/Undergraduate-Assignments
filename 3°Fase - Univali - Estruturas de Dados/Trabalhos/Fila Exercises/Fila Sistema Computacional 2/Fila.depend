@@ -1,0 +1,45 @@
+# depslib dependency file v1.0
+1493216327 source:/Users/alessandromueller/Documents/UNIVALI/Estruturas de Dados/C++/Fila/Implementacao/Fila OO (1)/Fila/main.cpp
+	<iostream>
+	"Fila.cpp"
+
+1493246903 source:/Users/alessandromueller/Documents/UNIVALI/Estruturas de Dados/C++/Fila/Implementacao/Fila OO (1)/Fila/Fila.cpp
+	<iostream>
+	"Fila.h"
+
+1493246903 /Users/alessandromueller/Documents/UNIVALI/Estruturas de Dados/C++/Fila/Implementacao/Fila OO (1)/Fila/Fila.h
+
+1493246903 /Users/alessandromueller/Documents/UNIVALI/Estruturas de Dados/C++/Fila/Implementacao/Fila OO (1)/Fila/Fila.cpp
+	<iostream>
+	"Fila.h"
+
+1506290314 source:/home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Fila/Fila.cpp
+	<iostream>
+	"Fila.h"
+
+1506288169 /home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Fila/Fila.h
+
+1506289545 source:/home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Fila/main.cpp
+	<iostream>
+	<stdlib.h>
+	"Fila.cpp"
+
+1506290314 /home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Fila/Fila.cpp
+	<iostream>
+	"Fila.h"
+
+1506358630 source:/home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Fila/Fila Base/Fila.cpp
+	<iostream>
+	"Fila.h"
+
+1506288169 /home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Fila/Fila Base/Fila.h
+
+1506290352 source:/home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Fila/Fila Base/main.cpp
+	<iostream>
+	<stdlib.h>
+	"Fila.cpp"
+
+1506358630 /home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Fila/Fila Base/Fila.cpp
+	<iostream>
+	"Fila.h"
+

@@ -1,0 +1,31 @@
+# depslib dependency file v1.0
+1496779619 source:/Users/alessandromueller/Documents/UNIVALI/Estruturas de Dados/C++/Arvore/Implementacao/ABB OO (1)/main.cpp
+	<iostream>
+	"ABB.cpp"
+
+1496785066 /Users/alessandromueller/Documents/UNIVALI/Estruturas de Dados/C++/Arvore/Implementacao/ABB OO (1)/ABB.cpp
+	"Nodo.cpp"
+	"ABB.h"
+
+1496785029 /Users/alessandromueller/Documents/UNIVALI/Estruturas de Dados/C++/Arvore/Implementacao/ABB OO (1)/Nodo.cpp
+	"Nodo.h"
+
+1496785080 /Users/alessandromueller/Documents/UNIVALI/Estruturas de Dados/C++/Arvore/Implementacao/ABB OO (1)/Nodo.h
+
+1496785029 /Users/alessandromueller/Documents/UNIVALI/Estruturas de Dados/C++/Arvore/Implementacao/ABB OO (1)/ABB.h
+
+1496779620 source:d:\cc\3° fase\estruturas de dados\unidade 6\abb oo (1)\main.cpp
+	<iostream>
+	"ABB.cpp"
+
+1496785066 d:\cc\3° fase\estruturas de dados\unidade 6\abb oo (1)\abb.cpp
+	"Nodo.cpp"
+	"ABB.h"
+
+1496785030 d:\cc\3° fase\estruturas de dados\unidade 6\abb oo (1)\nodo.cpp
+	"Nodo.h"
+
+1496785080 d:\cc\3° fase\estruturas de dados\unidade 6\abb oo (1)\nodo.h
+
+1496785030 d:\cc\3° fase\estruturas de dados\unidade 6\abb oo (1)\abb.h
+

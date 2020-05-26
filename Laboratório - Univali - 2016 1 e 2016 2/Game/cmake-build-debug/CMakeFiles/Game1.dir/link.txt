@@ -1,0 +1,1 @@
+/usr/bin/c++    -std=c++11 -g   CMakeFiles/Game1.dir/main.cpp.o CMakeFiles/Game1.dir/map.cpp.o CMakeFiles/Game1.dir/general.cpp.o CMakeFiles/Game1.dir/movement.cpp.o CMakeFiles/Game1.dir/foes.cpp.o  -o Game1 

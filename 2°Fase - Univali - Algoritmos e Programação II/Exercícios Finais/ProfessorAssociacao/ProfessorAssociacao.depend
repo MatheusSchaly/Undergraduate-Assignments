@@ -1,0 +1,30 @@
+# depslib dependency file v1.0
+1497985336 source:c:\users\hsmatheus\desktop\cc\2° fase\algoritmos e programação\exercicios finais\meus\professorassociacao\aluno.cpp
+	"Aluno.h"
+
+1497985060 source:c:\users\hsmatheus\desktop\cc\2° fase\algoritmos e programação\exercicios finais\meus\professorassociacao\orientacao.cpp
+	"Orientacao.h"
+
+1497983519 source:c:\users\hsmatheus\desktop\cc\2° fase\algoritmos e programação\exercicios finais\meus\professorassociacao\professor.cpp
+	"Professor.h"
+
+1497984996 source:c:\users\hsmatheus\desktop\cc\2° fase\algoritmos e programação\exercicios finais\meus\professorassociacao\main.cpp
+	<iostream>
+	"Professor.h"
+	"Aluno.h"
+	"Orientacao.h"
+
+1497983519 c:\users\hsmatheus\desktop\cc\2° fase\algoritmos e programação\exercicios finais\meus\professorassociacao\professor.h
+	<iostream>
+	<vector>
+	<string>
+	"Aluno.h"
+
+1497985345 c:\users\hsmatheus\desktop\cc\2° fase\algoritmos e programação\exercicios finais\meus\professorassociacao\aluno.h
+	<iostream>
+	<string>
+
+1497983581 c:\users\hsmatheus\desktop\cc\2° fase\algoritmos e programação\exercicios finais\meus\professorassociacao\orientacao.h
+	"Aluno.h"
+	"Professor.h"
+

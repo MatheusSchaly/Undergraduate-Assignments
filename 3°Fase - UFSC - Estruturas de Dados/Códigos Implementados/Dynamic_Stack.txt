@@ -1,0 +1,157 @@
+//! Copyright 2018 Matheus Henrique Schaly
+
+#ifndef STRUCTURES_LINKED_STACK_H
+#define STRUCTURES_LINKED_STACK_H
+
+#include <cstdint>
+#include <stdexcept>
+
+
+namespace structures {
+
+//! Dynamic stack implementation
+template<typename T>
+class LinkedStack {
+ public:
+    //! Constructor
+    LinkedStack();
+
+    //! Destructor
+    ~LinkedStack();
+
+    //! Clears the stack
+    void clear();
+
+    //! Inserts an element at the rightmost of the stack
+    void push(const T& data);
+
+    //! Removes an element from the rightmost of the stack
+    T pop();
+
+    //! Returns the data at the rightmost node of the stack
+    T& top() const;
+
+    //! Returns true if stack is empty and false otherwise
+    bool empty() const;
+
+    //! Returns the current size of the queue
+    std::size_t size() const;
+
+ private:
+    class Node {
+     public:
+        //! Constructor with 1 parameter
+        explicit Node(const T& data):
+            data_{data}
+        {}
+
+        //! Constructor with 2 parameters
+        Node(const T& data, Node* next):
+            data_{data},
+            next_{next}
+        {}
+
+        //! Info's getter
+        T& data() {
+            return data_;
+        }
+
+        //! Info's constant getter
+        const T& data() const {
+            return data_;
+        }
+
+        //! Next's getter
+        Node* next() {
+            return next_;
+        }
+
+        //! Next's constant getter
+        const Node* next() const {
+            return next_;
+        }
+
+        //! Next's setter
+        void next(Node* next) {
+            next_ = next;
+        }
+
+     private:
+        //! Node's data
+        T data_;
+
+        //! Node's next node
+        Node* next_;
+    };
+
+    //! Stack's rightmost node
+    Node* top_{nullptr};
+
+    //! Stack's current size
+    std::size_t size_{0u};
+};
+
+}  // namespace structures
+
+template<typename T>
+structures::LinkedStack<T>::LinkedStack() {}
+
+template<typename T>
+structures::LinkedStack<T>::~LinkedStack() {
+    clear();
+}
+
+template<typename T>
+void structures::LinkedStack<T>::clear() {
+    while (!empty()) {
+        pop();
+    }
+}
+
+template<typename T>
+void structures::LinkedStack<T>::push(const T& data) {
+    Node* node = new Node(data, nullptr);
+    if (node == nullptr) {
+        throw std::out_of_range("A pilha esta cheia.");
+    }
+    if (empty()) {
+        top_ = node;
+    } else {
+        node -> next(top_);
+        top_ = node;
+    }
+    size_++;
+}
+
+template<typename T>
+T structures::LinkedStack<T>::pop() {
+    if (empty()) {
+        throw std::out_of_range("A pilha esta vazia.");
+    }
+    Node* node = top_;
+    T deleted_data = node -> data();
+    top_ = top_ -> next();
+    delete node;
+    size_--;
+    return deleted_data;
+}
+
+template<typename T>
+T& structures::LinkedStack<T>::top() const {
+    if (empty()) {
+        throw std::out_of_range("A pilha esta vazia.");
+    }
+    return top_ -> data();
+}
+
+template<typename T>
+bool structures::LinkedStack<T>::empty() const {
+    return size_ == 0;
+}
+
+template<typename T>
+std::size_t structures::LinkedStack<T>::size() const {
+    return size_;
+}
+
+#endif

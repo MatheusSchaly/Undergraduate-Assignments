@@ -1,0 +1,303 @@
+<HTML>
+<HEAD>
+    <title>erwin Report Designer - Diagram : ER_Diagram_31 Document </title>
+    <style>
+        table
+        {
+            font: normal 76%/150% "Lucida Grande" , "Lucida Sans Unicode" , Verdana, Arial, Helvetica, sans-serif;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 0 0 1em;
+            color: #000;
+        }
+        table a
+        {
+            color: #523A0B;
+            text-decoration: none;
+            border-bottom: 1px dotted;
+        }
+        table a:visited
+        {
+            color: #444;
+            font-weight: normal;
+        }
+        table a:visited:after
+        {
+            content: "\00A0\221A";
+        }
+        table a:hover
+        {
+            border-bottom-style: solid;
+        }
+        thead th, thead td, tfoot th, tfoot td
+        {
+            border: 1px solid #523A0B;
+            border-width: 1px 0;
+            background: #EBE5D9;
+        }
+        th
+        {
+            font-weight: bold;
+            line-height: normal;
+            padding: 0.25em 0.5em;
+            text-align: left;
+        }
+        tbody th, td
+        {
+            padding: 0.25em 0.5em;
+            text-align: left;
+            vertical-align: top;
+        }
+        tbody th
+        {
+            font-weight: normal;
+            white-space: nowrap;
+        }
+        tbody th a:link, tbody th a:visited
+        {
+            font-weight: bold;
+        }
+        tbody td, tbody th
+        {
+            border: 1px solid #fff;
+            border-width: 1px 0;
+        }
+        tbody tr.odd th, tbody tr.odd td
+        {
+            border-color: #EBE5D9;
+            background: #F7F4EE;
+        }
+        tbody tr:hover td, tbody tr:hover th
+        {
+            background: #ffffee;
+            border-color: #523A0B;
+        }
+        caption
+        {
+            font-family: Georgia,Times,serif;
+            font-weight: normal;
+            font-size: 1.4em;
+            text-align: left;
+            margin: 0;
+            padding: 0.5em 0.25em;
+        }
+        
+        #menu ul
+        {
+            margin: 0px;
+            padding: 0px;
+            list-style-type: none;
+        }
+
+        .CurrentA
+        {
+            display: block;
+            width: 8em;
+            color: white;
+            background-color: #000099;
+            text-decoration: none;
+            text-align: center;
+        }
+        .NormalA
+        {
+            display: block;
+            width: 8em;
+            color: white;
+            background-color: #C0C0C0;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        #menu a:hover
+        {
+            background-color: #008000;
+        }
+        #menu li
+        {
+            float: left;
+            margin-right: 0.5em;
+        }
+        img
+        {
+            margin:10px;
+            border:1px dashed #0000ff;
+            height:auto;
+            width:auto;
+            float:left;
+            text-align:center;
+        }
+    </style>
+</HEAD>
+<BODY ONUNLOAD="close_winrep();">
+<SCRIPT>
+    var width = 0;
+    var frame_detail = null;
+    var win = null;
+    
+    function close_winrep()
+    {
+        if (win && !win.closed)
+        {
+            win.close();
+        }
+    }
+    
+    function PupupEntityInfo(rep_pict)
+    {
+        if (win && !win.closed)
+        {
+            win.close();
+        }
+        win = window.open(rep_pict + "/tabular.htm", "Report Details","titlebar=no,scrollbars=yes,top=400,left=222,resizable=yes,height=350,width=400");
+    }
+    
+    function ShowDetailFrame() {
+        
+        if ( width >= 300) 
+        {
+            width = 300;
+            frame_detail.style.width = width;
+            return;
+        }
+        else
+            width = width + 30;
+
+        frame_detail = parent.document.getElementById("diagramFrames");
+        var swidth = "*," + width ;
+        frame_detail.cols = swidth;
+
+        setTimeout("ShowDetailFrame()",10);    
+    }
+
+
+    function HideDetailFrame() {
+        /*if ( width <= 1 ) 
+        {   
+            width = 0;
+            return;
+        }
+
+        frame_detail = parent.document.getElementById("diagramFrames");
+
+        width = width - 40;
+        
+        if(width <= 1)
+        {
+            width = 0;
+        }
+        
+        var swidth = "*,0";// + width ;
+        */
+        var swidth = "*,0";
+        frame_detail.cols = swidth;
+
+        //setTimeout("HideDetailFrame()",10);
+    }
+
+    function LinkEntityInfo(rep_pict) {
+        ShowDetailFrame();
+        frame_detail = parent.document.getElementById("diagram_details");
+        frame_detail.src = rep_pict + "/tabular.htm";
+    }
+    
+    function ShowEntityInfo(rep_pict) {
+        var Sys = {};
+        var ua = navigator.userAgent.toLowerCase();
+        var s;
+        (s = ua.match(/msie ([\d.]+)/)) ? Sys.ie = s[1] :
+        (s = ua.match(/firefox\/([\d.]+)/)) ? Sys.firefox = s[1] :
+        (s = ua.match(/chrome\/([\d.]+)/)) ? Sys.chrome = s[1] :
+        (s = ua.match(/opera.([\d.]+)/)) ? Sys.opera = s[1] :
+        (s = ua.match(/version\/([\d.]+).*safari/)) ? Sys.safari = s[1] : 0;
+        
+
+        if(Sys.ie && parseInt(Sys.ie.substr(0,2)) <10) {
+            LinkEntityInfo(rep_pict);
+        }
+        else if (Sys.chrome) {
+            PupupEntityInfo(rep_pict);
+        }
+        else{
+            PupupEntityInfo(rep_pict);
+        }
+        
+        //if(Sys.firefox) document.write('Firefox: '+Sys.firefox);
+        //if(Sys.chrome) document.write('Chrome: '+Sys.chrome);
+        //if(Sys.opera) document.write('Opera: '+Sys.opera);
+        //if(Sys.safari) document.write('Safari: '+Sys.safari);
+    }
+</SCRIPT>
+<div id="header">
+    <table id="theReport" cellpading="1" border="2" align="center" style="">
+        <tr>
+            <td align="center" valign="middle">
+                <b><font size="5" color="#000000" face='Times New Roman'>Diagram : ER_Diagram_31</font></b>
+            </td>
+        </tr>
+    </table>
+    <div id="menu" style="float: right">
+        <ul>
+            <li>Select Format:</li>
+            <li><a href="diagram.htm" class="CurrentA">Diagram</a></li>
+            <li><a href="tabular.htm" class="NormalA" onclick="HideDetailFrame();">Tabular</a></li>
+            <li><a href="hierarchical.htm" class="NormalA" onclick="HideDetailFrame();">Hierarchical</a></li>
+        </ul>
+    </div>
+    <table id="theheader" cellpading="1" border="0" width="100%">
+        <tr>
+            <td align="LEFT" valign="TOP">
+                <b><font size="3" face='Times New Roman'></font></b>
+            </td>
+        </tr>
+    </table>
+</div>
+<P>
+    <IMG src='Diagrams/31.jpg' usemap ='#mapdiagram'>
+        <MAP name='mapdiagram'>
+            
+            <AREA HREF="Javascript:ShowEntityInfo('33');" alt='Jogo' shape='rect' coords='262,20, 393,120'>
+            
+            <AREA HREF="Javascript:ShowEntityInfo('43');" alt='Servidor' shape='rect' coords='432,160, 567,260'>
+            
+            <AREA HREF="Javascript:ShowEntityInfo('68');" alt='Expansao' shape='rect' coords='255,168, 392,252'>
+            
+            <AREA HREF="Javascript:ShowEntityInfo('87');" alt='Conta' shape='rect' coords='421,300, 579,608'>
+            
+            <AREA HREF="Javascript:ShowEntityInfo('118');" alt='Mapa' shape='rect' coords='98,160, 216,260'>
+            
+            <AREA HREF="Javascript:ShowEntityInfo('131');" alt='Objeto' shape='rect' coords='72,404, 241,504'>
+            
+            <AREA HREF="Javascript:ShowEntityInfo('156');" alt='CriaturaNPC' shape='rect' coords='431,1220, 600,1368'>
+            
+            <AREA HREF="Javascript:ShowEntityInfo('232');" alt='Guilda' shape='rect' coords='20,1244, 174,1344'>
+            
+            <AREA HREF="Javascript:ShowEntityInfo('250');" alt='Habilidade' shape='rect' coords='641,1196, 797,1392'>
+            
+            <AREA HREF="Javascript:ShowEntityInfo('387');" alt='ProfissaoSecundaria' shape='rect' coords='214,1252, 392,1336'>
+            
+            <AREA HREF="Javascript:ShowEntityInfo('397');" alt='Item' shape='rect' coords='837,1044, 969,1544'>
+            
+            <AREA HREF="Javascript:ShowEntityInfo('408');" alt='Missao' shape='rect' coords='467,1584, 564,1700'>
+            
+            <AREA HREF="Javascript:ShowEntityInfo('780');" alt='Consumivel' shape='rect' coords='706,1732, 886,1816'>
+            
+            <AREA HREF="Javascript:ShowEntityInfo('210');" alt='Personagem' shape='rect' coords='394,671, 605,1043'>
+            
+            <AREA HREF="Javascript:ShowEntityInfo('727');" alt='Equipavel' shape='rect' coords='919,1738, 1037,1822'>
+            
+        </MAP>
+    </IMG>
+</P>
+<P>
+    <table cellpading="1" border="0" width="100%">
+        <tr>
+            <td align="right" valign="TOP">
+            </td>
+        </tr>
+    </table>
+    <div id="footer" style="float: right" >
+        <b><font size="3">Author : </font></b>
+    </div>
+</P>
+</BODY>
+</HTML>

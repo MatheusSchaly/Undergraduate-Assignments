@@ -1,0 +1,47 @@
+compareIfEqual_n_bits = O componente "compareIfEqual_n_bits" tem dois sinais de entrada e um de saída, ambos com n bits.
+Seu objetivo é comparar dois valores e retornar o valor "1" se eles forem exatamente iguais, caso não forem, retornará "0".
+É utilizado massivamente no projeto, tendo em vista que precisamos comparar se um valor é ou não igual a outro.
+Empregou-se este componente para comparar se a entrada fosse igual a:
+
+- 50000000 = este valor equivale a frequência utilizada na placa da altera e nos auxiliará
+futuramente para a implementação das próximas etapas. Com finalidade de abstração e simplificação dos testes,
+ utilizou-se o valor de 500. Tem como saída o sinal "s1" que será utilizado no bloco de controle.
+
+ -45, 50, 55, 100, 105, 110, 135, 140 = compararão o valor advindo da saída do registrador time e caso forem verdadeiros, dispararão os sinais
+  s45, s50, s55, s100, s105, s110, s135 e s140 respectivamente, que serão utilizados pelo bloco de controle.
+
+adder_n_bits = O componente "adder_n_bits" admite duas entradas e uma saída, ambas n bits, ou seja,
+dependendo do propósito que o projeto, pode-se alterar a quantidade de bits que o somador
+irá ter como entrada e saída. Tem como objetivo principal realizar a soma de dois inteiros com sinal.
+Este componente é utilizado em dois âmbitos distintos, para a soma da saida do registrador "cktimer" com "1",
+e também para a soma da saída do registrador "time" com 1.
+
+mux2x1_n_bits = O componente "mux2x1_n_bits" terá como sinal de entrada dois sinais de n bits e uma saída também de n bits. A finalidade do componente é,
+selecionar a entrada dependendo do valor do sinal de seleção, neste caso de 1 bit. Caso o seletor valer "0", selecionará a primeira entrada fornecida como saída,
+senão, selecionará a segunda.
+É utilizado em somente um lugar no Bloco Operativo, para a atribuição do valor do registrador "P":
+Caso o sinal cMuxP(seletor) valha:
+ - "0", selecionará "10" como saída,
+ - "1", selecionará "01" como saída.
+
+mux4x1_n_bits = O componente "mux4x1_n_bits" terá como sinal de entrada quatro sinais de n bits e uma saída também de n bits. A finalidade do componente é,
+selecionar a entrada dependendo do valor do sinal de seleção, neste caso de 2 bits.
+  Caso:
+  - o seletor valer "00", selecionará a primeira entrada fornecida e a determinará como saída,
+  - o seletor valer "01", selecionará a segunda entrada fornecida e a determinará como saída,
+  - o seletor valer "10", selecionará a terceira entrada fornecida e a determinará como saída,
+  senão a quarta entrada fornecida será a saída.
+ É utilizado em dois lugares diferentes no Bloco Operativo, para a atribuição do valor do registrador "NS" e do registrador "EW":
+ Caso o sinal cMuxNS(seletor) valha:
+  - "00", selecionará "100" como saída,
+  - "01", selecionará "010" como saída,
+  - "10", selecionará "001" como saída,
+  outro qualquer valor não será utilizado, portanto será feito uma espécie de aterramento da quarta entrada.
+
+register_n_bits = 
+
+traffic_light_top =
+
+BC=
+
+BO =

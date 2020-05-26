@@ -1,0 +1,11 @@
+#lang scheme
+(define (halfTrig theta)
+  
+	(/ (* 2 ((lambda (x) (tan (/ x 2))) theta)) 
+	 (+ 1 ((lambda (y) (* y y)) ((lambda (x) (tan (/ x 2))) 1.57)))))
+
+
+(define q (lambda (a b c) (let ((d (sqrt (- (* b b) (* 4 a c)))))
+         (list (/ (+ (- b) d) (* 2 a))
+               (/ (- (- b) d) (* 2 a))))))
+                            

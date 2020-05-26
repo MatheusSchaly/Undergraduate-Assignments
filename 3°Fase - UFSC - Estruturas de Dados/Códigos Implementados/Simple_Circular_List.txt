@@ -1,0 +1,324 @@
+! Copyright 2018 Matheus Henrique Schaly
+
+#ifndef STRUCTURES_CIRCULAR_LIST_H
+#define STRUCTURES_CIRCULAR_LIST_H
+
+#include cstdint
+#include stdexcept
+
+namespace structures {
+
+! Dynamic Simple Circular Linked List
+templatetypename T
+class CircularList {
+ public
+    ! Constructor
+    CircularList();
+    ! Destructor
+    ~CircularList();
+    ! Removes list's elements
+    void clear();
+    ! Inserts an element at the list's rightmost part
+    void push_back(const T& data);
+    ! Inserts an element at the list's leftmost part
+    void push_front(const T& data);
+    ! Inserts an element at the given index
+    void insert(const T& data, stdsize_t index);
+    ! Inserts an element sorted by data
+    void insert_sorted(const T& data);
+    ! Returns the element's data at index (checks limits)
+    T& at(stdsize_t index);
+    ! Returns the constant element's data at index (checks limits)
+    const T& at(stdsize_t index) const;
+    ! Removes an element from index
+    T pop(stdsize_t index);
+    ! Removes an element from the rightmost part
+    T pop_back();
+    ! Removes an element from the leftmost part
+    T pop_front();
+    ! Removes an element with the given data
+    void remove(const T& data);
+    ! Returns true if the list is empty and false otherwise
+    bool empty() const;
+    ! Checks if the list contains the node with the given data
+    bool contains(const T& data) const;
+    ! Returns the index of the given data
+    stdsize_t find(const T& data) const;
+    ! Returns the current size of the list
+    stdsize_t size() const;
+
+ private
+    class Node {   Elemento
+     public
+        ! Constructor with 1 parameter
+        explicit Node(const T& data)
+            data_{data}
+        {}
+
+        ! Constructor with 2 parameters
+        Node(const T& data, Node next)
+            data_{data},
+            next_{next}
+        {}
+
+        ! Data's getter
+        T& data() {
+            return data_;
+        }
+
+        ! Data's constant getter
+        const T& data() const {
+            return data_;
+        }
+
+        ! Next's getter
+        Node next() {
+            return next_;
+        }
+
+        ! Next's constant getter
+        const Node next() const {
+            return next_;
+        }
+
+        ! Next's setter
+        void next(Node node) {
+            next_ = node;
+        }
+
+     private
+        ! Node's data
+        T data_;
+
+        ! Nodes next node
+        Node next_{nullptr};
+    };
+
+    ! Returns the list's last node
+    Node end() {   último nodo da lista
+        auto it = head;
+        for (auto i = 1u; i  size(); ++i) {
+            it = it-next();
+        }
+        return it;
+    }
+
+    ! List's leftmost node
+    Node head{nullptr};
+
+    ! List's current size
+    stdsize_t size_{0u};
+};
+
+}   namespace structures
+
+! Constructor
+templatetypename T
+structuresCircularListTCircularList() {}
+
+! Destructor
+templatetypename T
+structuresCircularListT~CircularList() {
+    clear();
+}
+
+! Removes list's elements
+templatetypename T
+void structuresCircularListTclear() {
+    while (!empty()) {
+        pop_front();
+    }
+}
+
+! Inserts an element at the list's rightmost part
+templatetypename T
+void structuresCircularListTpush_back(const T& data) {
+    insert(data, size_);
+}
+
+! Inserts an element at the list's leftmost part
+templatetypename T
+void structuresCircularListTpush_front(const T& data) {
+    Node node = new Node(data, head);
+    if (node == nullptr) {
+        throw stdout_of_range(A lista esta cheia.);
+    }
+    head = node;
+    size_++;
+}
+
+! Inserts an element at the given index
+templatetypename T
+void structuresCircularListTinsert(const T& data, stdsize_t index) {
+    if (index  size_  index  0) {
+        throw stdout_of_range(Indice invalido);
+    }
+    if (index == 0) {
+        push_front(data);
+    } else {
+        Node node = new Node(data);
+        Node previous_node = head;
+        if (node == nullptr) {
+            throw stdout_of_range(A lista esta cheia.);
+        }
+        stdsize_t i = 1;
+        while (i  index) {
+            previous_node = previous_node - next();
+            i++;
+        }
+        node - next(previous_node - next());
+        previous_node - next(node);
+        size_++;
+        if (index == size_) {
+            node - next(head);   Fastest way to build circular list
+        }
+    }
+}
+
+! Inserts an element sorted by data
+templatetypename T
+void structuresCircularListTinsert_sorted(const T& data) {
+    if (head == nullptr) {
+        push_front(data);
+    } else {
+        Node previous_node = head;
+        stdsize_t i = 0;
+        while (previous_node != nullptr && data  previous_node - data()) {
+            previous_node = previous_node - next();
+            i++;
+        }
+        try {
+            insert(data, i);
+        } catch (stdout_of_range error) {
+            throw error;
+        }
+    }
+}
+
+! Returns an element's data at index
+templatetypename T
+T& structuresCircularListTat(stdsize_t index) {
+    if (index = size_  index  0) {
+        throw stdout_of_range(Indice invalido.);
+    }
+    Node node = head;
+    stdsize_t i = 1;
+    while (i = index) {
+        node = node - next();
+        i++;
+    }
+    return node - data();
+}
+
+! Removes an element from index
+templatetypename T
+T structuresCircularListTpop(stdsize_t index) {
+    if (empty()  index = size_  index  0) {
+        throw stdout_of_range(Indice invalido.);
+    }
+    if (index == 0) {
+        return pop_front();
+    } else {
+        Node node;
+        Node previous_node = head;
+        stdsize_t i = 1;
+        while (i  index) {
+            previous_node = previous_node - next();
+            i++;
+        }
+        node = previous_node - next();
+        previous_node - next(node - next());
+        T deleted_data = node - data();
+        delete node;
+        size_--;
+        if (index == size_) {
+            previous_node - next(head);   Fastest way to build circular list
+        }
+        return deleted_data;
+    }
+}
+
+! Removes an element from the rightmost part of the list
+templatetypename T
+T structuresCircularListTpop_back() {
+    try {
+        return pop(size_ - 1);
+    } catch (stdout_of_range error) {
+        throw error;
+    }
+}
+
+! Removes an element from the leftmost part of the list
+templatetypename T
+T structuresCircularListTpop_front() {
+    if (empty()) {
+        throw stdout_of_range(A lista esta vazia);
+    }
+    Node node = head;
+    T deleted_data = node - data();
+    head = node - next();
+    delete node;
+    size_--;
+    return deleted_data;
+}
+
+! Removes an element with the given data
+templatetypename T
+void structuresCircularListTremove(const T& data) {
+    pop(find(data));
+}
+
+! Returns true if list is empty and false otherwise
+templatetypename T
+bool structuresCircularListTempty() const {
+    return size_ == 0;
+}
+
+! Checks if the list contais the node with the given data
+templatetypename T
+bool structuresCircularListTcontains(const T& data) const {
+    if (empty()) {
+        throw stdout_of_range(A lista esta vazia.);
+    } else {
+        Node node = head;
+        stdsize_t i = 1;
+        while (i  size_) {
+            if (node - data() == data) {
+                return true;
+            }
+            node = node - next();
+            i++;
+        }
+        return false;
+    }
+}
+
+! Returns the index of the given data
+templatetypename T
+stdsize_t structuresCircularListTfind(const T& data) const {
+    if (empty()) {
+        throw stdout_of_range(A lista esta vazia.);
+    } else {
+        Node node = head;
+        stdsize_t i = 0;
+        while (i  size_ - 1) {
+            if (node - data() == data) {
+                return i;
+            }
+            node = node - next();
+            i++;
+        }
+        if (node - data() == data) {
+            return size_ - 1;
+        }
+    }
+    return size_;
+}
+
+! Returns the current size of the list
+templatetypename T
+stdsize_t structuresCircularListTsize() const {
+    return size_;
+}
+
+#endif

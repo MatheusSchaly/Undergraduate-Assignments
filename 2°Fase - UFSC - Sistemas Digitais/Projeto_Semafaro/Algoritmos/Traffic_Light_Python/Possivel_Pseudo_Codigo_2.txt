@@ -1,0 +1,76 @@
+Begin
+cur_state = S1;
+next_state = S2;
+reset <- 0;
+lights <- 10000101;
+count <- 45;
+While (true) do:
+{
+	While (true) do:
+	{нн
+		If (reset = 1):
+		{
+			cur_state <- S1;
+			next_state <- S2;
+			count <- 45;
+			break;
+		}
+		If (count = 0):
+		{
+			If (current_state = S3) or (current_state = S8):		{
+				count <- 45;
+			}
+			Else if (current_state = S6):
+			{
+				count <- 25;
+			}		
+			Else:
+			{
+				count <- 5;
+			}
+			Break;
+		count <- count - 1;
+	}
+
+	If (cur_state = S1):
+	{
+		lights <- 10000101;
+		next_state <- S2;
+	}
+	Else if (cur_state = S2):
+	{
+		lights <- 01000101;
+		next_state <- S3;
+	}
+	Else if (cur_state = S3):
+	{
+		lights <- 00100101;
+		next_state <- S4;
+	}
+	Else if (cur_state = S4):
+	{
+		lights <- 00110001;
+		next_state <- S5;
+	}
+	Else if (cur_state = S5):
+	{
+		lights <- 00101001;
+		next_state <- S6;
+	}
+	Else if (cur_state = S6):
+	{
+		lights <- 00100101;
+		next_state = S7;
+	}
+	Else if (cur_state = S7):
+	{
+		lights <- 00100110;
+		next_state <- S8;
+	}
+	Else if (cur_state = S8):
+	{
+		lights <- 00100101;
+		next_state <- S1;
+	{
+}
+End

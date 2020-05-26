@@ -1,0 +1,7 @@
+[Different methods for food logging] You are what you eat So measure what you eat (FoodRecognition-IEEE-I&MM)
+[Different methods for food logging] You are what you eat So measure what you eat (FoodRecognition-IEEE-I&MM)
+[Very promising system with reasonable accuracy] Mobile Multi-Food Recognition Using Deep Learning
+1. Measuring Calorie and Nutrition From Food Image
+2. Using distance estimation and deep learning to simplify calibration in food calorie measurement
+3. An intelligent cloud-based data processing broker for mobile e-health multimedia applications
+4. A virtualization mechanism for real-time multimedia-assisted mobile food recognition application in cloud computing

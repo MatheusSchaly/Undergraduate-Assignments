@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1495243328 source:c:\users\6309453\desktop\trabalho algo\trabalho 19.05\main.cpp
+	<iostream>
+	"Produtos.h"
+	"Estoque.h"
+
+1495238824 c:\users\6309453\desktop\trabalho algo\trabalho 19.05\produtos.h
+	<iostream>
+	<fstream>
+	<cstring>
+
+1495243001 c:\users\6309453\desktop\trabalho algo\trabalho 19.05\estoque.h
+	<iostream>
+	<fstream>
+	"Produtos.h"
+

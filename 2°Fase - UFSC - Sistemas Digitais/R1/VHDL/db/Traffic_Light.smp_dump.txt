@@ -1,0 +1,12 @@
+
+State Machine - |traffic_light_top|BC:bc_map|currentState
+Name currentState.S8 currentState.S7 currentState.S6 currentState.S5 currentState.S4 currentState.S3 currentState.S2 currentState.S0 currentState.init 
+currentState.init 0 0 0 0 0 0 0 0 0 
+currentState.S0 0 0 0 0 0 0 0 1 1 
+currentState.S2 0 0 0 0 0 0 1 0 1 
+currentState.S3 0 0 0 0 0 1 0 0 1 
+currentState.S4 0 0 0 0 1 0 0 0 1 
+currentState.S5 0 0 0 1 0 0 0 0 1 
+currentState.S6 0 0 1 0 0 0 0 0 1 
+currentState.S7 0 1 0 0 0 0 0 0 1 
+currentState.S8 1 0 0 0 0 0 0 0 1 

@@ -1,0 +1,47 @@
+# depslib dependency file v1.0
+1507673475 source:d:\gitrepo\data-structures-exercises\matheusschaly_mauriciofarias_trabalho2\atividade 2\main.cpp
+	<iostream>
+	<cstdlib>
+	"PriorityQueue.cpp"
+
+1529941958 source:d:\gitrepo\data-structures-exercises\matheusschaly_mauriciofarias_trabalho2\atividade 2\priorityqueue.cpp
+	"PriorityQueue.h"
+
+1507673475 d:\gitrepo\data-structures-exercises\matheusschaly_mauriciofarias_trabalho2\atividade 2\priorityqueue.h
+	"Node.cpp"
+
+1507673475 d:\gitrepo\data-structures-exercises\matheusschaly_mauriciofarias_trabalho2\atividade 2\node.h
+	<iostream>
+
+1507673475 source:d:\gitrepo\data-structures-exercises\matheusschaly_mauriciofarias_trabalho2\atividade 2\node.cpp
+	"Node.h"
+
+1507515221 source:c:\users\mauricio\desktop\data-structures-exercises\matheusschaly_mauriciofarias_trabalho2\atividade 2\main.cpp
+	<iostream>
+	<cstdlib>
+	"PriorityQueue.cpp"
+
+1507514814 c:\users\mauricio\desktop\data-structures-exercises\matheusschaly_mauriciofarias_trabalho2\atividade 2\priorityqueue.h
+	"Node.cpp"
+
+1507514493 c:\users\mauricio\desktop\data-structures-exercises\matheusschaly_mauriciofarias_trabalho2\atividade 2\node.h
+	<iostream>
+
+1507514626 source:c:\users\mauricio\desktop\data-structures-exercises\matheusschaly_mauriciofarias_trabalho2\atividade 2\node.cpp
+	"Node.h"
+
+1507514746 source:c:\users\mauricio\desktop\data-structures-exercises\matheusschaly_mauriciofarias_trabalho2\atividade 2\priorityqueue.cpp
+	"PriorityQueue.h"
+
+1507515317 c:\users\mauricio\desktop\data-structures-exercises\matheusschaly_mauriciofarias_trabalho2\atividade 2\priorityqueue.cpp
+	"PriorityQueue.h"
+
+1507514626 c:\users\mauricio\desktop\data-structures-exercises\matheusschaly_mauriciofarias_trabalho2\atividade 2\node.cpp
+	"Node.h"
+
+1529941958 d:\gitrepo\data-structures-exercises\matheusschaly_mauriciofarias_trabalho2\atividade 2\priorityqueue.cpp
+	"PriorityQueue.h"
+
+1507673475 d:\gitrepo\data-structures-exercises\matheusschaly_mauriciofarias_trabalho2\atividade 2\node.cpp
+	"Node.h"
+

@@ -1,0 +1,31 @@
+# depslib dependency file v1.0
+1493216327 source:/Users/alessandromueller/Documents/UNIVALI/Estruturas de Dados/C++/Fila/Implementacao/Fila OO (1)/Fila/main.cpp
+	<iostream>
+	"Fila.cpp"
+
+1493246903 source:/Users/alessandromueller/Documents/UNIVALI/Estruturas de Dados/C++/Fila/Implementacao/Fila OO (1)/Fila/Fila.cpp
+	<iostream>
+	"Fila.h"
+
+1493246903 /Users/alessandromueller/Documents/UNIVALI/Estruturas de Dados/C++/Fila/Implementacao/Fila OO (1)/Fila/Fila.h
+
+1493246903 /Users/alessandromueller/Documents/UNIVALI/Estruturas de Dados/C++/Fila/Implementacao/Fila OO (1)/Fila/Fila.cpp
+	<iostream>
+	"Fila.h"
+
+1493250504 source:d:\cc\3° fase\estruturas de dados\unidade 4\fila\fila.cpp
+	<iostream>
+	"Fila.h"
+
+1493250504 d:\cc\3° fase\estruturas de dados\unidade 4\fila\fila.h
+
+1508867886 source:d:\cc\3° fase\estruturas de dados\unidade 4\fila\main.cpp
+	<iostream>
+	<stdlib.h>
+	<ctime>
+	"Fila.cpp"
+
+1493250504 d:\cc\3° fase\estruturas de dados\unidade 4\fila\fila.cpp
+	<iostream>
+	"Fila.h"
+

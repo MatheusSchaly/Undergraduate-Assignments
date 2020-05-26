@@ -1,0 +1,4775 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html dir="ltr" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html">
+    <title>erwin Report Designer -  Document </title>
+
+    <style>
+        table.datagrid
+        {
+            font: normal 76%/150% "Lucida Grande" , "Lucida Sans Unicode" , Verdana, Arial, Helvetica, sans-serif;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 0 0 1em;
+            color: #000;
+        }
+        table.datagrid a
+        {
+            color: #523A0B;
+            text-decoration: none;
+            border-bottom: 1px dotted;
+        }
+        table.datagrid a:visited
+        {
+            color: #444;
+            font-weight: normal;
+        }
+        table.datagrid a:visited:after
+        {
+            content: "\00A0\221A";
+        }
+        table.datagrid a:hover
+        {
+            border-bottom-style: solid;
+        }
+        table.datagrid thead th, thead td, tfoot th, tfoot td
+        {
+            border: 1px solid #523A0B;
+            border-width: 1px 0;
+            background: #EBE5D9;
+        }
+        table.datagrid th
+        {
+            font-weight: bold;
+            line-height: normal;
+            padding: 0.25em 0.5em;
+            text-align: left;
+        }
+        table.datagrid tbody th, td
+        {
+            padding: 0.25em 0.5em;
+            text-align: left;
+            vertical-align: top;
+        }
+        table.datagrid tbody th
+        {
+            font-weight: normal;
+            white-space: nowrap;
+        }
+        table.datagrid tbody th a:link, tbody th a:visited
+        {
+            font-weight: bold;
+        }
+        table.datagrid tbody td, tbody th
+        {
+            border: 1px solid #fff;
+            border-width: 1px 0;
+        }
+        table.datagrid tbody tr.odd th, tbody tr.odd td
+        {
+            border-color: #EBE5D9;
+            background: #F7F4EE;
+        }
+        table.datagrid tbody tr:hover td, tbody tr:hover th
+        {
+            background: #ffffee;
+            border-color: #523A0B;
+        }
+                
+        .BlankHeader th
+        {
+            padding: 5px 10px;
+            border: 1px solid #d9d9d9;
+            background: #000000;
+            border-bottom: navy solid thin;
+            border-top: navy solid thin;
+            border-left: none;
+            border-right: none;
+            font-size: smaller;
+        }
+        caption
+        {
+            font-family: Georgia,Times,serif;
+            font-weight: normal;
+            font-size: 1.4em;
+            text-align: left;
+            margin: 0;
+            padding: 0.5em 0.25em;
+        }
+        
+        #menu ul
+        {
+            margin: 0px;
+            padding: 0px;
+            list-style-type: none;
+        }
+
+        .CurrentA
+        {
+            display: block;
+            width: 8em;
+            color: white;
+            background-color: #000099;
+            text-decoration: none;
+            text-align: center;
+        }
+        .NormalA
+        {
+            display: block;
+            width: 8em;
+            color: white;
+            background-color: #C0C0C0;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        #menu a:hover
+        {
+            background-color: #008000;
+        }
+        #menu li
+        {
+            float: left;
+            margin-right: 0.5em;
+        }
+    </style>
+</head>
+<body>
+    <div id="boundary">
+        <div id="content">
+            <table id="theReport" cellpading="1" border="2" align="center" style="">
+                <tr>
+                    <td align="center" valign="middle">
+                        <b><font size="5" color="#000000" face='Times New Roman'>Table Reports-Table Name-Comment-Column Name-Comment</font></b>
+                    </td>
+                </tr>
+            </table>
+            <div id="menu" style="float: right">
+                <ul>
+                    <li>Select Format:</li>
+                    <li><a href="tabular.htm" class="NormalA">Tabular</a></li>
+                    <li><a href="hierarchical.htm" class="CurrentA">Hierarchical</a></li>
+                </ul>
+            </div>
+            <table id="theheader" cellpading="1" border="0" width="100%">
+                <tr>
+                    <td align="LEFT" valign="TOP">
+                        <b><font size="3" face='Times New Roman'></font></b>
+                    </td>
+                </tr>
+            </table>
+            <div id="itsthetable">
+                <table summary="ReportData" class='datagrid' width="100%">
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                            <th style="">
+                                <b>Table Name</b>
+                            </th>
+                            
+                            <th style="">
+                                <b>Table Comment</b>
+                            </th>
+                            
+                            <th style="">
+                                <b>Column Name</b>
+                            </th>
+                            
+                            <th style="">
+                                <b>Column Comment</b>
+                            </th>
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Jogo
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados ao jogo. Nesse caso o jogo é o MMORPG chamado World of Warcraft (WoW)
+                            
+                        </td>
+                        
+                        <td style="">
+                            NomeJogo
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nome do jogo.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Jogo
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados ao jogo. Nesse caso o jogo é o MMORPG chamado World of Warcraft (WoW)
+                            
+                        </td>
+                        
+                        <td style="">
+                            DataDeLancamento
+                            
+                        </td>
+                        
+                        <td style="">
+                            Data de lançamento do jogo no formato dd/mm/aaaa.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Jogo
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados ao jogo. Nesse caso o jogo é o MMORPG chamado World of Warcraft (WoW)
+                            
+                        </td>
+                        
+                        <td style="">
+                            Preco
+                            
+                        </td>
+                        
+                        <td style="">
+                            Preço do jogo atual, juntamente com as expansões;
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Jogo
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados ao jogo. Nesse caso o jogo é o MMORPG chamado World of Warcraft (WoW)
+                            
+                        </td>
+                        
+                        <td style="">
+                            Versao
+                            
+                        </td>
+                        
+                        <td style="">
+                            Versão atual do jogo.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Servidor
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados ao servidor. Podendo ser vários servidores que as contas criarão personagens.
+                            
+                        </td>
+                        
+                        <td style="">
+                            CodigoServidor
+                            
+                        </td>
+                        
+                        <td style="">
+                            Código de identificação do servidor.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Servidor
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados ao servidor. Podendo ser vários servidores que as contas criarão personagens.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Local
+                            
+                        </td>
+                        
+                        <td style="">
+                            Local no qual o servidor está localizado.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Servidor
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados ao servidor. Podendo ser vários servidores que as contas criarão personagens.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Capacidade
+                            
+                        </td>
+                        
+                        <td style="">
+                            Capacidade total de personagens que o servidor suporta simultâneamente.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Servidor
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados ao servidor. Podendo ser vários servidores que as contas criarão personagens.
+                            
+                        </td>
+                        
+                        <td style="">
+                            NomeJogo
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nome do jogo.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Expansao
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados à expansão. Possuindo o nome da expansão e seu respectivo preço.
+                            
+                        </td>
+                        
+                        <td style="">
+                            NomeExpansao
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nome da expansão.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Expansao
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados à expansão. Possuindo o nome da expansão e seu respectivo preço.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Preco
+                            
+                        </td>
+                        
+                        <td style="">
+                            Preço da expansão.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Expansao
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados à expansão. Possuindo o nome da expansão e seu respectivo preço.
+                            
+                        </td>
+                        
+                        <td style="">
+                            NomeJogo
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nome do jogo.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Conta
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados a conta de um pessoa. Contendo todos os seus dados pessoais e de acesso privádo à conta.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Login
+                            
+                        </td>
+                        
+                        <td style="">
+                            Login do personagem. Não pode ser maior que 15 caracteres.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Conta
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados a conta de um pessoa. Contendo todos os seus dados pessoais e de acesso privádo à conta.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Senha
+                            
+                        </td>
+                        
+                        <td style="">
+                            Senha do personagem. Não pode ser maior que 15 caracteres.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Conta
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados a conta de um pessoa. Contendo todos os seus dados pessoais e de acesso privádo à conta.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Email
+                            
+                        </td>
+                        
+                        <td style="">
+                            Email da conta.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Conta
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados a conta de um pessoa. Contendo todos os seus dados pessoais e de acesso privádo à conta.
+                            
+                        </td>
+                        
+                        <td style="">
+                            DataDeCriacao
+                            
+                        </td>
+                        
+                        <td style="">
+                            Data de criação da conta no formato dd/mm/aaaa.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Conta
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados a conta de um pessoa. Contendo todos os seus dados pessoais e de acesso privádo à conta.
+                            
+                        </td>
+                        
+                        <td style="">
+                            PrimeiroNome
+                            
+                        </td>
+                        
+                        <td style="">
+                            Primeiro nome do proprietário da conta.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Conta
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados a conta de um pessoa. Contendo todos os seus dados pessoais e de acesso privádo à conta.
+                            
+                        </td>
+                        
+                        <td style="">
+                            DataDeNascimento
+                            
+                        </td>
+                        
+                        <td style="">
+                            Data de nascimento do proprietário da conta, deve ser maior que 14 anos.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Conta
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados a conta de um pessoa. Contendo todos os seus dados pessoais e de acesso privádo à conta.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Pais
+                            
+                        </td>
+                        
+                        <td style="">
+                            País do proprietário da conta.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Conta
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados a conta de um pessoa. Contendo todos os seus dados pessoais e de acesso privádo à conta.
+                            
+                        </td>
+                        
+                        <td style="">
+                            PerguntaSecreta
+                            
+                        </td>
+                        
+                        <td style="">
+                            Pergunta secreta do proprietário da conta, usado para recuperar a conta.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Conta
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados a conta de um pessoa. Contendo todos os seus dados pessoais e de acesso privádo à conta.
+                            
+                        </td>
+                        
+                        <td style="">
+                            RespostaSecreta
+                            
+                        </td>
+                        
+                        <td style="">
+                            Resposta secreta do proprietário da conta, usado para recuperar a conta.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Conta
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados a conta de um pessoa. Contendo todos os seus dados pessoais e de acesso privádo à conta.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Sobrenome
+                            
+                        </td>
+                        
+                        <td style="">
+                            Sobrenome do proprietário da conta.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Conta
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados a conta de um pessoa. Contendo todos os seus dados pessoais e de acesso privádo à conta.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Estado
+                            
+                        </td>
+                        
+                        <td style="">
+                            Estado do proprietário da conta.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Conta
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados a conta de um pessoa. Contendo todos os seus dados pessoais e de acesso privádo à conta.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Cidade
+                            
+                        </td>
+                        
+                        <td style="">
+                            Cidade do proprietário da conta.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Conta
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados a conta de um pessoa. Contendo todos os seus dados pessoais e de acesso privádo à conta.
+                            
+                        </td>
+                        
+                        <td style="">
+                            CEP
+                            
+                        </td>
+                        
+                        <td style="">
+                            CEP do proprietário da conta.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Conta
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados a conta de um pessoa. Contendo todos os seus dados pessoais e de acesso privádo à conta.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Numero
+                            
+                        </td>
+                        
+                        <td style="">
+                            Número da residência do proprietário da conta.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Conta
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados a conta de um pessoa. Contendo todos os seus dados pessoais e de acesso privádo à conta.
+                            
+                        </td>
+                        
+                        <td style="">
+                            TelefoneFixo
+                            
+                        </td>
+                        
+                        <td style="">
+                            Número do telefone fixo do proprietário da conta. No formato (xx)xxxx-xxxx.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Conta
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados a conta de um pessoa. Contendo todos os seus dados pessoais e de acesso privádo à conta.
+                            
+                        </td>
+                        
+                        <td style="">
+                            TelefoneCelular
+                            
+                        </td>
+                        
+                        <td style="">
+                            Número do telefone celular do proprietário da conta. No formato (xx)xxxxx-xxxx.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Conta
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados a conta de um pessoa. Contendo todos os seus dados pessoais e de acesso privádo à conta.
+                            
+                        </td>
+                        
+                        <td style="">
+                            CodigoServidor
+                            
+                        </td>
+                        
+                        <td style="">
+                            Código de identificação do servidor.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Mapa
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados ao mapa. Determinando seu nome e suas dimensões.
+                            
+                        </td>
+                        
+                        <td style="">
+                            CodigoMapa
+                            
+                        </td>
+                        
+                        <td style="">
+                            Código de identificação do mapa.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Mapa
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados ao mapa. Determinando seu nome e suas dimensões.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nome
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nome do mapa.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Mapa
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados ao mapa. Determinando seu nome e suas dimensões.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Dimensoes
+                            
+                        </td>
+                        
+                        <td style="">
+                            Dimensões do mapa.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Mapa
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados ao mapa. Determinando seu nome e suas dimensões.
+                            
+                        </td>
+                        
+                        <td style="">
+                            NomeJogo
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nome do jogo.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Objeto
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados aos objetos. Os objetos serão encontrados nos mapas.
+                            
+                        </td>
+                        
+                        <td style="">
+                            CodigoObjeto
+                            
+                        </td>
+                        
+                        <td style="">
+                            Código de identificação do objeto.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Objeto
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados aos objetos. Os objetos serão encontrados nos mapas.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nome
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nome do objeto.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Objeto
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados aos objetos. Os objetos serão encontrados nos mapas.
+                            
+                        </td>
+                        
+                        <td style="">
+                            TempoDeCarregamento
+                            
+                        </td>
+                        
+                        <td style="">
+                            Tempo necessário para interagir completamente com o objeto. Calculado em segundos.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Objeto
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados aos objetos. Os objetos serão encontrados nos mapas.
+                            
+                        </td>
+                        
+                        <td style="">
+                            TempoDeReaparecimento
+                            
+                        </td>
+                        
+                        <td style="">
+                            Tempo que o objeto levará para reaparecer. Calculado em segundos.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            CriaturaNPC
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados à criatura. Também funciona como NPC, dependendo do tipo inserido.
+                            
+                        </td>
+                        
+                        <td style="">
+                            CodigoCriaturaNPC
+                            
+                        </td>
+                        
+                        <td style="">
+                            Código de identificação da criatura.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            CriaturaNPC
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados à criatura. Também funciona como NPC, dependendo do tipo inserido.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nome
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nome da criatura.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            CriaturaNPC
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados à criatura. Também funciona como NPC, dependendo do tipo inserido.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Vida
+                            
+                        </td>
+                        
+                        <td style="">
+                            Vida máxima da criatura.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            CriaturaNPC
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados à criatura. Também funciona como NPC, dependendo do tipo inserido.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Experiencia
+                            
+                        </td>
+                        
+                        <td style="">
+                            Experiência obtida ao matar a criatura.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            CriaturaNPC
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados à criatura. Também funciona como NPC, dependendo do tipo inserido.
+                            
+                        </td>
+                        
+                        <td style="">
+                            TempoDeReaparecimento
+                            
+                        </td>
+                        
+                        <td style="">
+                            Tempo que a criatura levará para reaparecer. Calculado em segundos.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            CriaturaNPC
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados à criatura. Também funciona como NPC, dependendo do tipo inserido.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nivel
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nível da criatura.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            CriaturaNPC
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados à criatura. Também funciona como NPC, dependendo do tipo inserido.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Tipo
+                            
+                        </td>
+                        
+                        <td style="">
+                            Determina se a criatura é um NPC ou é uma criatura.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Guilda
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados à guilda. Personagens podem pertencer a guildas, que é uma reunião de, no mínimo, três personagens.
+                            
+                        </td>
+                        
+                        <td style="">
+                            CodigoGuilda
+                            
+                        </td>
+                        
+                        <td style="">
+                            Código de identificação da guilda.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Guilda
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados à guilda. Personagens podem pertencer a guildas, que é uma reunião de, no mínimo, três personagens.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nome
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nome da guilda.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Guilda
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados à guilda. Personagens podem pertencer a guildas, que é uma reunião de, no mínimo, três personagens.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nivel
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nível atual da guilda.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Guilda
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados à guilda. Personagens podem pertencer a guildas, que é uma reunião de, no mínimo, três personagens.
+                            
+                        </td>
+                        
+                        <td style="">
+                            NumeroDeParticipantes
+                            
+                        </td>
+                        
+                        <td style="">
+                            Número de participantes da guilda.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Habilidade
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados às habilidades. Várias entidades podem conjurar habilidades, são todas as &quot;magias&quot; do jogo.
+                            
+                        </td>
+                        
+                        <td style="">
+                            CodigoHabilidade
+                            
+                        </td>
+                        
+                        <td style="">
+                            Código de identificação da habilidade.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Habilidade
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados às habilidades. Várias entidades podem conjurar habilidades, são todas as &quot;magias&quot; do jogo.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nome
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nome da habilidade.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Habilidade
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados às habilidades. Várias entidades podem conjurar habilidades, são todas as &quot;magias&quot; do jogo.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Descriacao
+                            
+                        </td>
+                        
+                        <td style="">
+                            Descrição da habilidade.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Habilidade
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados às habilidades. Várias entidades podem conjurar habilidades, são todas as &quot;magias&quot; do jogo.
+                            
+                        </td>
+                        
+                        <td style="">
+                            TempoDeCarregamento
+                            
+                        </td>
+                        
+                        <td style="">
+                            Tempo necessário para conjurar completamente a habilidade.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Habilidade
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados às habilidades. Várias entidades podem conjurar habilidades, são todas as &quot;magias&quot; do jogo.
+                            
+                        </td>
+                        
+                        <td style="">
+                            TempoDeResfriamento
+                            
+                        </td>
+                        
+                        <td style="">
+                            Tempo que a magia levará para resfriar-se (poder ser usada novamente). Calculado em segundos.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Habilidade
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados às habilidades. Várias entidades podem conjurar habilidades, são todas as &quot;magias&quot; do jogo.
+                            
+                        </td>
+                        
+                        <td style="">
+                            NivelRequerido
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nivel requerido para usar a habilidade.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Habilidade
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados às habilidades. Várias entidades podem conjurar habilidades, são todas as &quot;magias&quot; do jogo.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Custo
+                            
+                        </td>
+                        
+                        <td style="">
+                            Custo requerido de mana, energia, fúria... Para realizar a magia.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Habilidade
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados às habilidades. Várias entidades podem conjurar habilidades, são todas as &quot;magias&quot; do jogo.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Alcance
+                            
+                        </td>
+                        
+                        <td style="">
+                            Alcance máximo da magia, calculado em metros.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Habilidade
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados às habilidades. Várias entidades podem conjurar habilidades, são todas as &quot;magias&quot; do jogo.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Reagente
+                            
+                        </td>
+                        
+                        <td style="">
+                            Reagente necessário para realizar a habilidade.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Habilidade
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados às habilidades. Várias entidades podem conjurar habilidades, são todas as &quot;magias&quot; do jogo.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Produto
+                            
+                        </td>
+                        
+                        <td style="">
+                            Produto gerado a partir da habilidade.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            ProfissaoSecundaria
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados à profissão secundária do personagem. Um jogador pode ter algumas profissões secundárias.
+                            
+                        </td>
+                        
+                        <td style="">
+                            CodigoProfissaoSecundaria
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nome da profissão.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            ProfissaoSecundaria
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados à profissão secundária do personagem. Um jogador pode ter algumas profissões secundárias.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nivel
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nível da profissão secundária.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            ProfissaoSecundaria
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados à profissão secundária do personagem. Um jogador pode ter algumas profissões secundárias.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nome
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nome da profissão secundária.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Item
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados aos itens. Capaz de interagir com diversas outras entidades, controla a maioria dos atributos do personagem.
+                            
+                        </td>
+                        
+                        <td style="">
+                            CódigoItem
+                            
+                        </td>
+                        
+                        <td style="">
+                            Código de identificação do item.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Item
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados aos itens. Capaz de interagir com diversas outras entidades, controla a maioria dos atributos do personagem.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nome
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nome do item.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Item
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados aos itens. Capaz de interagir com diversas outras entidades, controla a maioria dos atributos do personagem.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Preço
+                            
+                        </td>
+                        
+                        <td style="">
+                            Preço de venda do item.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Item
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados aos itens. Capaz de interagir com diversas outras entidades, controla a maioria dos atributos do personagem.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Descrição
+                            
+                        </td>
+                        
+                        <td style="">
+                            Descrição do item. Uma pequena história referente ao item.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Item
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados aos itens. Capaz de interagir com diversas outras entidades, controla a maioria dos atributos do personagem.
+                            
+                        </td>
+                        
+                        <td style="">
+                            NívelRequerido
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nível requerido para a utilização do item.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Item
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados aos itens. Capaz de interagir com diversas outras entidades, controla a maioria dos atributos do personagem.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Travamento
+                            
+                        </td>
+                        
+                        <td style="">
+                            Possibilidade ou não de troca (do item) entre jogadores ou entre a própria conta.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Item
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados aos itens. Capaz de interagir com diversas outras entidades, controla a maioria dos atributos do personagem.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Forca
+                            
+                        </td>
+                        
+                        <td style="">
+                            Aumenta 2 pontos ao seu poder de ataque.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Item
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados aos itens. Capaz de interagir com diversas outras entidades, controla a maioria dos atributos do personagem.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Agilidade
+                            
+                        </td>
+                        
+                        <td style="">
+                            Aumenta a chance de acerto crítico de ataques físicos, esquiva e armadura em 2.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Item
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados aos itens. Capaz de interagir com diversas outras entidades, controla a maioria dos atributos do personagem.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Estamina
+                            
+                        </td>
+                        
+                        <td style="">
+                            Aumenta a vida em 10.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Item
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados aos itens. Capaz de interagir com diversas outras entidades, controla a maioria dos atributos do personagem.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Intelecto
+                            
+                        </td>
+                        
+                        <td style="">
+                            Aumenta a mana em 15 e a chance de acertos críticos com magia.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Item
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados aos itens. Capaz de interagir com diversas outras entidades, controla a maioria dos atributos do personagem.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Espirito
+                            
+                        </td>
+                        
+                        <td style="">
+                            Aumenta a generação de mana e vida.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Item
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados aos itens. Capaz de interagir com diversas outras entidades, controla a maioria dos atributos do personagem.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Dano
+                            
+                        </td>
+                        
+                        <td style="">
+                            Aumenta o dano corpo a corpo causado.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Item
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados aos itens. Capaz de interagir com diversas outras entidades, controla a maioria dos atributos do personagem.
+                            
+                        </td>
+                        
+                        <td style="">
+                            PoderDeAtaque
+                            
+                        </td>
+                        
+                        <td style="">
+                            Aumenta o dano causado.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Item
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados aos itens. Capaz de interagir com diversas outras entidades, controla a maioria dos atributos do personagem.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Velocidade
+                            
+                        </td>
+                        
+                        <td style="">
+                            Aumenta a velocidade dos ataques.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Item
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados aos itens. Capaz de interagir com diversas outras entidades, controla a maioria dos atributos do personagem.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Aceleracao
+                            
+                        </td>
+                        
+                        <td style="">
+                            Reduz o tempo entre ataques.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Item
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados aos itens. Capaz de interagir com diversas outras entidades, controla a maioria dos atributos do personagem.
+                            
+                        </td>
+                        
+                        <td style="">
+                            ChanceDeCritico
+                            
+                        </td>
+                        
+                        <td style="">
+                            Aumenta a chance de crític.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Item
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados aos itens. Capaz de interagir com diversas outras entidades, controla a maioria dos atributos do personagem.
+                            
+                        </td>
+                        
+                        <td style="">
+                            ChanceDeAcerto
+                            
+                        </td>
+                        
+                        <td style="">
+                            Aumenta a chance de acerto.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Item
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados aos itens. Capaz de interagir com diversas outras entidades, controla a maioria dos atributos do personagem.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Pericia
+                            
+                        </td>
+                        
+                        <td style="">
+                            Reduz a chance do oponente resistir à ataques.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Item
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados aos itens. Capaz de interagir com diversas outras entidades, controla a maioria dos atributos do personagem.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Dominio
+                            
+                        </td>
+                        
+                        <td style="">
+                            Adiciona atributos específicos dependendo do personagem em questão.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Item
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados aos itens. Capaz de interagir com diversas outras entidades, controla a maioria dos atributos do personagem.
+                            
+                        </td>
+                        
+                        <td style="">
+                            ForçaJvsJ
+                            
+                        </td>
+                        
+                        <td style="">
+                            Aumenta o poder referente a jogador contra jogador
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Item
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados aos itens. Capaz de interagir com diversas outras entidades, controla a maioria dos atributos do personagem.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armadura
+                            
+                        </td>
+                        
+                        <td style="">
+                            Reduz o dano físico recebido.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Item
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados aos itens. Capaz de interagir com diversas outras entidades, controla a maioria dos atributos do personagem.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Esquiva
+                            
+                        </td>
+                        
+                        <td style="">
+                            Aumenta a chance de esquiva.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Item
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados aos itens. Capaz de interagir com diversas outras entidades, controla a maioria dos atributos do personagem.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Desvio
+                            
+                        </td>
+                        
+                        <td style="">
+                            Aumenta a chance de desvio.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Item
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados aos itens. Capaz de interagir com diversas outras entidades, controla a maioria dos atributos do personagem.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Bloquear
+                            
+                        </td>
+                        
+                        <td style="">
+                            Aumenta a chance de bloquear.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Item
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados aos itens. Capaz de interagir com diversas outras entidades, controla a maioria dos atributos do personagem.
+                            
+                        </td>
+                        
+                        <td style="">
+                            JvsJResiliencia
+                            
+                        </td>
+                        
+                        <td style="">
+                            Reduz a chance de receber acerto crítico assim como o dano recebido de outros personagens.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Item
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados aos itens. Capaz de interagir com diversas outras entidades, controla a maioria dos atributos do personagem.
+                            
+                        </td>
+                        
+                        <td style="">
+                            JvsJPoder
+                            
+                        </td>
+                        
+                        <td style="">
+                            Aumenta o poder de dano e o efeito de cura à outros personagens.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Item
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados aos itens. Capaz de interagir com diversas outras entidades, controla a maioria dos atributos do personagem.
+                            
+                        </td>
+                        
+                        <td style="">
+                            TipoDeDano
+                            
+                        </td>
+                        
+                        <td style="">
+                            Em qual subclasse de dano tais atributos terão afeito (corpo a corpo, à distância, mágico)
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Item
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados aos itens. Capaz de interagir com diversas outras entidades, controla a maioria dos atributos do personagem.
+                            
+                        </td>
+                        
+                        <td style="">
+                            AumentaVelocidade
+                            
+                        </td>
+                        
+                        <td style="">
+                            Aumenta a velocidade máxima do consumidor.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Item
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados aos itens. Capaz de interagir com diversas outras entidades, controla a maioria dos atributos do personagem.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Alcance
+                            
+                        </td>
+                        
+                        <td style="">
+                            Alcance que o item possui. Quantidade de metros de distância que ele pode atingir.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Missao
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados à missão. NPCs podem fornecer missões, e personagens devem realizá-las.
+                            
+                        </td>
+                        
+                        <td style="">
+                            CodigoMissao
+                            
+                        </td>
+                        
+                        <td style="">
+                            Código de identificação da missão.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Missao
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados à missão. NPCs podem fornecer missões, e personagens devem realizá-las.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nome
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nome da missão.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Missao
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados à missão. NPCs podem fornecer missões, e personagens devem realizá-las.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Descricao
+                            
+                        </td>
+                        
+                        <td style="">
+                            Descrição da missão, incluindo suas metas e recompensas.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Missao
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados à missão. NPCs podem fornecer missões, e personagens devem realizá-las.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Experiencia
+                            
+                        </td>
+                        
+                        <td style="">
+                            Experência obtida pela realização da missão.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Missao
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados à missão. NPCs podem fornecer missões, e personagens devem realizá-las.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Tempo
+                            
+                        </td>
+                        
+                        <td style="">
+                            Possível tempo limite para a realização da missão.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Equipavel
+                            
+                        </td>
+                        
+                        <td style="">
+                            Itens que podem ser equipados. Podem não possuir nenhum atributo, mas são essenciais para o progresso do personagem.
+                            
+                        </td>
+                        
+                        <td style="">
+                            ItemLevel
+                            
+                        </td>
+                        
+                        <td style="">
+                            Soma dos valores referentes aos itens que o personagem possui.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Equipavel
+                            
+                        </td>
+                        
+                        <td style="">
+                            Itens que podem ser equipados. Podem não possuir nenhum atributo, mas são essenciais para o progresso do personagem.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Durabilidade
+                            
+                        </td>
+                        
+                        <td style="">
+                            Durabilidade do item, fornecido em um certo intervalo e há um preço para reparo.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Equipavel
+                            
+                        </td>
+                        
+                        <td style="">
+                            Itens que podem ser equipados. Podem não possuir nenhum atributo, mas são essenciais para o progresso do personagem.
+                            
+                        </td>
+                        
+                        <td style="">
+                            CodigoItem
+                            
+                        </td>
+                        
+                        <td style="">
+                            Código de identificação do item.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Consumivel
+                            
+                        </td>
+                        
+                        <td style="">
+                            Itens que podem ser consumidos. Podem possuir efeitos positivos ou negativos.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Duracao
+                            
+                        </td>
+                        
+                        <td style="">
+                            Duração do efeito do item consumível.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Consumivel
+                            
+                        </td>
+                        
+                        <td style="">
+                            Itens que podem ser consumidos. Podem possuir efeitos positivos ou negativos.
+                            
+                        </td>
+                        
+                        <td style="">
+                            TempoDeResfriamento
+                            
+                        </td>
+                        
+                        <td style="">
+                            Tempo que o item consumível levará para resfriar-se (poder ser usada novamente). Calculado em segundos.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Consumivel
+                            
+                        </td>
+                        
+                        <td style="">
+                            Itens que podem ser consumidos. Podem possuir efeitos positivos ou negativos.
+                            
+                        </td>
+                        
+                        <td style="">
+                            CodigoItem
+                            
+                        </td>
+                        
+                        <td style="">
+                            Código de identificação do item.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Guilda Habilidade
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            CodigoGuilda
+                            
+                        </td>
+                        
+                        <td style="">
+                            Código de identificação da guilda.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Guilda Habilidade
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            CodigoHabilidade
+                            
+                        </td>
+                        
+                        <td style="">
+                            Código de identificação da habilidade.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Item Habilidade
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            CódigoItem
+                            
+                        </td>
+                        
+                        <td style="">
+                            Código de identificação do item.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Item Habilidade
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            CodigoHabilidade
+                            
+                        </td>
+                        
+                        <td style="">
+                            Código de identificação da habilidade.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            ProfissãoSecundária Habilidade
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            CodigoProfissaoSecundaria
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nome da profissão.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            ProfissãoSecundária Habilidade
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            CodigoHabilidade
+                            
+                        </td>
+                        
+                        <td style="">
+                            Código de identificação da habilidade.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Criatura Mapa
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            CodigoCriaturaNPC
+                            
+                        </td>
+                        
+                        <td style="">
+                            Código de identificação da criatura.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Criatura Mapa
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            CodigoMapa
+                            
+                        </td>
+                        
+                        <td style="">
+                            Código de identificação do mapa.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Criatura Item
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            CodigoCriaturaNPC
+                            
+                        </td>
+                        
+                        <td style="">
+                            Código de identificação da criatura.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Criatura Item
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            CódigoItem
+                            
+                        </td>
+                        
+                        <td style="">
+                            Código de identificação do item.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Criatura Habilidade
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            CodigoCriaturaNPC
+                            
+                        </td>
+                        
+                        <td style="">
+                            Código de identificação da criatura.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Criatura Habilidade
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            CodigoHabilidade
+                            
+                        </td>
+                        
+                        <td style="">
+                            Código de identificação da habilidade.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Personagem
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados ao personagem. Uma das principais entidades do jogo, capaz de interagir com diversas outras entidades.
+                            
+                        </td>
+                        
+                        <td style="">
+                            CodigoPersonagem
+                            
+                        </td>
+                        
+                        <td style="">
+                            Código de identificação do personagem.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Personagem
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados ao personagem. Uma das principais entidades do jogo, capaz de interagir com diversas outras entidades.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nome
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nome do personagem.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Personagem
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados ao personagem. Uma das principais entidades do jogo, capaz de interagir com diversas outras entidades.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Vida
+                            
+                        </td>
+                        
+                        <td style="">
+                            Vida máxima do personagem.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Personagem
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados ao personagem. Uma das principais entidades do jogo, capaz de interagir com diversas outras entidades.
+                            
+                        </td>
+                        
+                        <td style="">
+                            CodigoGuilda
+                            
+                        </td>
+                        
+                        <td style="">
+                            Código de identificação da guilda.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Personagem
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados ao personagem. Uma das principais entidades do jogo, capaz de interagir com diversas outras entidades.
+                            
+                        </td>
+                        
+                        <td style="">
+                            NomeDaRaca
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nome da classe do personagem.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Personagem
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados ao personagem. Uma das principais entidades do jogo, capaz de interagir com diversas outras entidades.
+                            
+                        </td>
+                        
+                        <td style="">
+                            NomeDaClasse
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nome da classe do personagem.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Personagem
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados ao personagem. Uma das principais entidades do jogo, capaz de interagir com diversas outras entidades.
+                            
+                        </td>
+                        
+                        <td style="">
+                            ArvoreDeTalentoPrimaria
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nome da árvore de talento primária do personagem.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Personagem
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados ao personagem. Uma das principais entidades do jogo, capaz de interagir com diversas outras entidades.
+                            
+                        </td>
+                        
+                        <td style="">
+                            ArvoreDeTalentoSecundaria
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nome da árvore de talento segundária do personagem.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Personagem
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados ao personagem. Uma das principais entidades do jogo, capaz de interagir com diversas outras entidades.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Honra
+                            
+                        </td>
+                        
+                        <td style="">
+                            Quantidade de honra do personagem.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Personagem
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados ao personagem. Uma das principais entidades do jogo, capaz de interagir com diversas outras entidades.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Dinheiro
+                            
+                        </td>
+                        
+                        <td style="">
+                            Quantidade de dinheiro do personagem.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Personagem
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados ao personagem. Uma das principais entidades do jogo, capaz de interagir com diversas outras entidades.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nivel
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nível do personagem. 1 a 80.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Personagem
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados ao personagem. Uma das principais entidades do jogo, capaz de interagir com diversas outras entidades.
+                            
+                        </td>
+                        
+                        <td style="">
+                            NomeProfissaoPrimariaUm
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nome da primeira possível profissal do personagem.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Personagem
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados ao personagem. Uma das principais entidades do jogo, capaz de interagir com diversas outras entidades.
+                            
+                        </td>
+                        
+                        <td style="">
+                            NomeProfissaoPrimariaDois
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nome da segunda possível profissão do personagem.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Personagem
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados ao personagem. Uma das principais entidades do jogo, capaz de interagir com diversas outras entidades.
+                            
+                        </td>
+                        
+                        <td style="">
+                            NivelProfissaoPrimariaUm
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nível da primeira possível profissal do personagem.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Personagem
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados ao personagem. Uma das principais entidades do jogo, capaz de interagir com diversas outras entidades.
+                            
+                        </td>
+                        
+                        <td style="">
+                            NivelProfissaoPrimariaDois
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nível da segunda possível profissal do personagem.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Personagem
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados ao personagem. Uma das principais entidades do jogo, capaz de interagir com diversas outras entidades.
+                            
+                        </td>
+                        
+                        <td style="">
+                            CodigoMissao
+                            
+                        </td>
+                        
+                        <td style="">
+                            Código de identificação da missão.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Personagem
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados ao personagem. Uma das principais entidades do jogo, capaz de interagir com diversas outras entidades.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Login
+                            
+                        </td>
+                        
+                        <td style="">
+                            Login do personagem. Não pode ser maior que 15 caracteres.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Personagem
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados ao personagem. Uma das principais entidades do jogo, capaz de interagir com diversas outras entidades.
+                            
+                        </td>
+                        
+                        <td style="">
+                            Mana
+                            
+                        </td>
+                        
+                        <td style="">
+                            Mana máxima do personagem.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Personagem
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados ao personagem. Uma das principais entidades do jogo, capaz de interagir com diversas outras entidades.
+                            
+                        </td>
+                        
+                        <td style="">
+                            TipoDeMana
+                            
+                        </td>
+                        
+                        <td style="">
+                            Tipo de mana do personagem (energia, mana, fúria...)
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Personagem
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados ao personagem. Uma das principais entidades do jogo, capaz de interagir com diversas outras entidades.
+                            
+                        </td>
+                        
+                        <td style="">
+                            CodigoProfissaoSecundaria
+                            
+                        </td>
+                        
+                        <td style="">
+                            Nome da profissão.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Personagem
+                            
+                        </td>
+                        
+                        <td style="">
+                            Armazena os valores associados ao personagem. Uma das principais entidades do jogo, capaz de interagir com diversas outras entidades.
+                            
+                        </td>
+                        
+                        <td style="">
+                            CodigoServidor
+                            
+                        </td>
+                        
+                        <td style="">
+                            Código de identificação do servidor.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Personagem Item
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            CodigoPersonagem
+                            
+                        </td>
+                        
+                        <td style="">
+                            Código de identificação do personagem.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Personagem Item
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            CódigoItem
+                            
+                        </td>
+                        
+                        <td style="">
+                            Código de identificação do item.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Personagem Habilidade
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            CodigoPersonagem
+                            
+                        </td>
+                        
+                        <td style="">
+                            Código de identificação do personagem.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Personagem Habilidade
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            CodigoHabilidade
+                            
+                        </td>
+                        
+                        <td style="">
+                            Código de identificação da habilidade.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Personagem Criatura
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            CodigoPersonagem
+                            
+                        </td>
+                        
+                        <td style="">
+                            Código de identificação do personagem.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                    <thead>
+                        <tr>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        
+                        <td style="">
+                            Personagem Criatura
+                            
+                        </td>
+                        
+                        <td style="">
+                            
+                            
+                        </td>
+                        
+                        <td style="">
+                            CodigoCriaturaNPC
+                            
+                        </td>
+                        
+                        <td style="">
+                            Código de identificação da criatura.
+                            
+                        </td>
+                        
+                    </tr>
+                     
+                
+                <caption></caption>
+                </table>
+            </div>
+            <div id="footer" style="float: right"><p></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

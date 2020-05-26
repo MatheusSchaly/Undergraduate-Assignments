@@ -1,0 +1,21 @@
+
+State Machine - |adap_traffic|nios2_soc:u0|interface:traffic_light_0|traffic_light_top:top|BC:bc_map|currentState
+Name currentState.S8 currentState.S7 currentState.S6 currentState.S5 currentState.S4 currentState.S3 currentState.S2 currentState.S0 currentState.init 
+currentState.init 0 0 0 0 0 0 0 0 0 
+currentState.S0 0 0 0 0 0 0 0 1 1 
+currentState.S2 0 0 0 0 0 0 1 0 1 
+currentState.S3 0 0 0 0 0 1 0 0 1 
+currentState.S4 0 0 0 0 1 0 0 0 1 
+currentState.S5 0 0 0 1 0 0 0 0 1 
+currentState.S6 0 0 1 0 0 0 0 0 1 
+currentState.S7 0 1 0 0 0 0 0 0 1 
+currentState.S8 1 0 0 0 0 0 0 0 1 
+
+State Machine - |adap_traffic|nios2_soc:u0|nios2_soc_cpu:cpu|nios2_soc_cpu_nios2_oci:the_nios2_soc_cpu_nios2_oci|nios2_soc_cpu_jtag_debug_module_wrapper:the_nios2_soc_cpu_jtag_debug_module_wrapper|nios2_soc_cpu_jtag_debug_module_tck:the_nios2_soc_cpu_jtag_debug_module_tck|DRsize
+Name DRsize.101 DRsize.100 DRsize.011 DRsize.010 DRsize.001 DRsize.000 
+DRsize.000 0 0 0 0 0 0 
+DRsize.001 0 0 0 0 1 1 
+DRsize.010 0 0 0 1 0 1 
+DRsize.011 0 0 1 0 0 1 
+DRsize.100 0 1 0 0 0 1 
+DRsize.101 1 0 0 0 0 1 

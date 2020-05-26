@@ -1,0 +1,42 @@
+m255
+K3
+13
+cModel Technology
+Z0 dC:\Users\HsMatheus\Desktop\Sistema_de_Um_Semáforo_Para_Controle_de_Um_Cruzamento_-_Alan_Djon_Ludke_e_Matheus_Henrique_Schaly\VHDL\simulation\modelsim
+Etraffic_light_top
+Z1 w1539216307
+Z2 DPx4 ieee 11 numeric_std 0 22 O3PF8EB`?j9=z7KT`fn941
+Z3 DPx3 std 6 textio 0 22 5>J:;AW>W0[[dW0I6EN1Q0
+Z4 DPx4 ieee 14 std_logic_1164 0 22 5=aWaoGZSMWIcH0i^f`XF1
+Z5 dC:\Users\HsMatheus\Desktop\Sistema_de_Um_Semáforo_Para_Controle_de_Um_Cruzamento_-_Alan_Djon_Ludke_e_Matheus_Henrique_Schaly\VHDL\simulation\modelsim
+Z6 8C:/Users/HsMatheus/Desktop/Sistema_de_Um_Semáforo_Para_Controle_de_Um_Cruzamento_-_Alan_Djon_Ludke_e_Matheus_Henrique_Schaly/VHDL/traffic_light_top.vhd
+Z7 FC:/Users/HsMatheus/Desktop/Sistema_de_Um_Semáforo_Para_Controle_de_Um_Cruzamento_-_Alan_Djon_Ludke_e_Matheus_Henrique_Schaly/VHDL/traffic_light_top.vhd
+l0
+L5
+VaAOSJLFPAzakQ5mOWMoC]0
+!s100 g6^:B5ElGnIYO=2R9ZSnJ2
+Z8 OV;C;10.1d;51
+31
+!i10b 1
+Z9 !s108 1539216375.498000
+Z10 !s90 -reportprogress|300|-93|-work|work|C:/Users/HsMatheus/Desktop/Sistema_de_Um_Semáforo_Para_Controle_de_Um_Cruzamento_-_Alan_Djon_Ludke_e_Matheus_Henrique_Schaly/VHDL/traffic_light_top.vhd|
+Z11 !s107 C:/Users/HsMatheus/Desktop/Sistema_de_Um_Semáforo_Para_Controle_de_Um_Cruzamento_-_Alan_Djon_Ludke_e_Matheus_Henrique_Schaly/VHDL/traffic_light_top.vhd|
+Z12 o-93 -work work -O0
+Z13 tExplicit 1
+Aarchtop
+R2
+R3
+R4
+DEx4 work 17 traffic_light_top 0 22 aAOSJLFPAzakQ5mOWMoC]0
+l53
+L13
+VC?F?ZKMdE[=gK_dN=VeKi1
+!s100 lz4FSD11goDg]BWoFTKGW2
+R8
+31
+!i10b 1
+R9
+R10
+R11
+R12
+R13

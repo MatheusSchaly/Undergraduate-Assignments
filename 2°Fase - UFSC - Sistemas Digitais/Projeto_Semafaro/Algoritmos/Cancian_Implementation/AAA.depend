@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1535822948 source:d:\gitrepo\ine5406-sistemas-digitais\projeto_semafaro\cancian_implementation\main.cpp
+	<iostream>
+	<string>
+

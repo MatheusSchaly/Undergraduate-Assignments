@@ -1,0 +1,1 @@
+A figura 4.7 simula os sinais gerados pelo Bloco de Controle e a alteração dos outputs gerados em decorrência desta simulação. Como ele é responsável pelo gerenciamento de decisões, a partir dos sinais advindos do Bloco operativo e seguindo a lógica de próximo estado prevista na figura 3.2.

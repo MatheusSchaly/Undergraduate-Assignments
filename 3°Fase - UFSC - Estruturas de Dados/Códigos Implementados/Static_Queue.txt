@@ -1,0 +1,130 @@
+//! Copyright 2018 Matheus Henrique Schaly
+
+#ifndef STRUCTURES_ARRAY_QUEUE_H
+#define STRUCTURES_ARRAY_QUEUE_H
+
+#include <cstdint>  // std::size_t
+#include <stdexcept>  // C++ Exceptions
+
+namespace structures {
+
+//! Static queue
+template<typename T>
+class ArrayQueue {
+ public:
+//! Constructor
+ArrayQueue();
+
+//! Constructor with parameter
+ArrayQueue(std::size_t max);
+
+//! Destructor
+~ArrayQueue();
+
+//! Insert an element to the the end of the queue
+void enqueue(const T& data);
+
+//! Remove an element from the start of the queue
+T dequeue();
+
+//! Get the element from the back of the queue
+T& back();
+
+//! Clear the queue
+void clear();
+
+//! Return the size of the queue
+std::size_t size();
+
+//! Return the storage capacity of the queue
+std::size_t max_size();
+
+//! Return True if empty, false otherwise
+bool empty();
+
+//! Return True if full, false otherwise
+bool full();
+
+ private:
+T* contents;
+std::size_t size_;
+std::size_t max_size_;
+static const auto DEFAULT_SIZE = 10u;
+};
+}  // namespace structures
+
+template<typename T>
+structures::ArrayQueue<T>::ArrayQueue() {
+    ArrayQueue(DEFAULT_SIZE);
+}
+
+template<typename T>
+structures::ArrayQueue<T>::ArrayQueue(std::size_t max) {
+    size_ = 0;
+    max_size_ = max;
+    contents = new T[max];
+}
+
+template<typename T>
+structures::ArrayQueue<T>::~ArrayQueue() {
+    delete[] contents;
+}
+
+template<typename T>
+void structures::ArrayQueue<T>::enqueue(const T& data) {
+    if (full()) {
+        throw std::out_of_range("A fila esta cheia!");
+    } else {
+        for (int i = 0; i < size_; i++) {
+            contents[size_ - i] = contents[size_ - i - 1];
+        }
+        size_++;
+        contents[0] = data;
+    }
+}
+
+template<typename T>
+T structures::ArrayQueue<T>::dequeue() {
+    if (empty()) {
+        throw std::out_of_range("A fila esta vazia!");
+    } else {
+        size_--;
+        return contents[size_];
+    }
+}
+
+template<typename T>
+T& structures::ArrayQueue<T>::back() {
+    if (empty()) {
+        throw std::out_of_range("A fila esta vazia!");
+    } else {
+        return contents[0];
+    }
+}
+
+template<typename T>
+void structures::ArrayQueue<T>::clear() {
+    size_ = 0;
+}
+
+template<typename T>
+std::size_t structures::ArrayQueue<T>::size() {
+    return size_;
+}
+
+template<typename T>
+std::size_t structures::ArrayQueue<T>::max_size() {
+    return max_size_;
+}
+
+template<typename T>
+bool structures::ArrayQueue<T>::empty() {
+    return (size_ == 0);
+}
+
+template<typename T>
+bool structures::ArrayQueue<T>::full() {
+    return (size_ == max_size_);
+}
+
+#endif

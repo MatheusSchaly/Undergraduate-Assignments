@@ -1,0 +1,3 @@
+arvore (teorica e implementacao)
+metodos pesquisa (teorica e dicionario)
+metodos classificação de dados (sorts) insertion - shaker - 

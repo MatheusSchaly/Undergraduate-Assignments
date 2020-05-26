@@ -1,0 +1,15 @@
+force inpt0 100 0 ns
+force inpt1 010 0 ns
+force inpt2 001 0 ns
+force inpt3 000 0 ns
+force sel 00 0 ns
+force sel 01 50 ns
+force sel 10 100 ns
+force sel 11 150 ns
+force inpt0 111 200 ns
+force inpt1 101 200 ns
+force inpt2 010 200 ns
+force inpt3 110 200 ns
+force sel 00 250 ns
+force sel 01 300 ns
+force sel 10 350 ns

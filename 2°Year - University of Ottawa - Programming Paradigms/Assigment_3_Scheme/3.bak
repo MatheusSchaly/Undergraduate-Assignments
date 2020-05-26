@@ -1,0 +1,14 @@
+#lang scheme
+
+; Finds the index of element e in the list L
+(define (index e L)
+  (let [(tail (member e (reverse L)))]
+    (and tail (length (cdr tail)))))
+
+
+
+(define L '("peru" "greece" "vietnam"))
+(index "peru" L)
+(index "vietnam" L)
+(index "greece" L)
+(index "brazil" L)

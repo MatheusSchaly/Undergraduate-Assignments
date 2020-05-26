@@ -1,0 +1,360 @@
+//! Copyright 2018 Matheus Henrique Schaly
+
+#ifndef STRUCTURES_LINKED_LIST_H
+#define STRUCTURES_LINKED_LIST_H
+
+#include <cstdint>
+#include <stdexcept>
+
+
+namespace structures {
+
+//! Dynamic Simple Linked List
+template<typename T>
+class DoublyLinkedList {
+ public:
+    //! Constructor
+    DoublyLinkedList();
+    //! Destructor
+    ~DoublyLinkedList();
+    //! Removes list's elements
+    void clear();
+    //! Inserts an element at the list's leftmost part of the list
+    void push_back(const T& data);
+    //! Inserts an element at the list's leftmost part
+    void push_front(const T& data);
+    //! Inserts an element at the given index
+    void insert(const T& data, std::size_t index);
+    //! Inserts an element sorted by data
+    void insert_sorted(const T& data);
+    //! Returns an element's data at index
+    T& at(std::size_t index);
+    //! Removes an element from index
+    T pop(std::size_t index);
+    //! Removes an element from the rightmost part of the list
+    T pop_back();
+    //! Removes an element from the leftmost part of the list
+    T pop_front();
+    //! Removes an element with the given data
+    void remove(const T& data);
+    //! Returns true if list is empty and false otherwise
+    bool empty() const;
+    //! Checks if the list contais the node with the given data
+    bool contains(const T& data) const;
+    //! Returns the index of the given data
+    std::size_t find(const T& data) const;
+    //! Returns the current size of the list
+    std::size_t size() const;
+
+ private:
+    class Node {  // Elemento
+     public:
+        //! Constructor with 1 parameter
+        explicit Node(const T& data):
+            data_{data}
+        {}
+
+        //! Constructor with 2 parameters
+        Node(const T& data, Node* next):
+            data_{data},
+            next_{next}
+        {}
+
+        //! Constructor with 3 parameters
+        Node(const T& data, Node* next, Node* prev):
+            data_{data},
+            next_{next},
+            prev_{prev}
+        {}
+
+        //! Data's getter
+        T& data() {
+            return data_;
+        }
+
+        //! Data's constant getter
+        const T& data() const {
+            return data_;
+        }
+
+        //! Next's getter
+        Node* next() {
+            return next_;
+        }
+
+        //! Next's constant getter
+        const Node* next() const {
+            return next_;
+        }
+
+        //! Prev's constant
+        Node *prev() {
+            return prev_;
+        }
+
+        //! Prev's constant getter
+        const Node* prev() const {
+            return prev_;
+        }
+
+        //" Prev's setter
+        void prev(Node* node) {
+            prev_ = node;
+        }
+
+        //! Next's setter
+        void next(Node* node) {
+            next_ = node;
+        }
+
+     private:
+        //! Node's data
+        T data_;
+
+        //! Nodes next node
+        Node* next_{nullptr};
+        Node* prev_{nullptr};
+    };
+
+    //! Returns the list's last node
+    Node* end() {  // último nodo da lista
+        auto it = head;
+        for (auto i = 1u; i < size(); ++i) {
+            it = it->next();
+        }
+        return it;
+    }
+
+    //! List's leftmost node
+    Node* head{nullptr};
+
+    //! List's rightmost node
+    Node* tail{nullptr};
+
+    //! List's current size
+    std::size_t size_{0u};
+};
+
+}  // namespace structures
+
+//! Constructor
+template<typename T>
+structures::DoublyLinkedList<T>::DoublyLinkedList() {}
+
+//! Destructor
+template<typename T>
+structures::DoublyLinkedList<T>::~DoublyLinkedList() {
+    clear();
+}
+
+//! Removes list's elements
+template<typename T>
+void structures::DoublyLinkedList<T>::clear() {
+    while (!empty()) {
+        pop_front();
+    }
+}
+
+//! Inserts an element at the list's leftmost part of the list
+template<typename T>
+void structures::DoublyLinkedList<T>::push_back(const T& data) {
+    insert(data, size_);
+}
+
+//! Inserts an element at the list's leftmost part
+template<typename T>
+void structures::DoublyLinkedList<T>::push_front(const T& data) {
+    Node* node = new Node(data, head);
+    if (node == nullptr) {
+        throw std::out_of_range("A lista esta cheia.");
+    }
+    head = node;
+    if (size_ == 0) {
+        tail = node;
+    }
+    size_++;
+}
+
+//! Inserts an element at the given index
+template<typename T>
+void structures::DoublyLinkedList<T>::insert(const T& data, std::size_t index) {
+    if (index > size_ || index < 0) {
+        throw std::out_of_range("Indice invalido");
+    }
+    if (index == 0) {
+        push_front(data);
+    } else {
+        Node* node = new Node(data);
+        Node* previous_node = head;
+        if (node == nullptr) {
+            throw std::out_of_range("A lista esta cheia.");
+        }
+        if (index == size_) {
+            node -> next(tail);
+            tail -> next(node);
+            tail = node;
+        } else {
+            std::size_t i = 1;
+            while (i < index) {
+                previous_node = previous_node -> next();
+                i++;
+            }
+            node -> next(previous_node -> next());
+            node -> prev(previous_node);
+            previous_node -> next() -> prev(node);
+            previous_node -> next(node);
+        }
+        size_++;
+    }
+}
+
+//! Inserts an element sorted by data
+template<typename T>
+void structures::DoublyLinkedList<T>::insert_sorted(const T& data) {
+    if (head == nullptr) {
+        push_front(data);
+    } else {
+        Node* previous_node = head;
+        std::size_t i = 0;
+        while (previous_node != nullptr && data > previous_node -> data()) {
+            previous_node = previous_node -> next();
+            i++;
+        }
+        try {
+            insert(data, i);
+        } catch (std::out_of_range error) {
+            throw error;
+        }
+    }
+}
+
+//! Returns an element's data at index
+template<typename T>
+T& structures::DoublyLinkedList<T>::at(std::size_t index) {
+    if (index >= size_ || index < 0) {
+        throw std::out_of_range("Indice invalido.");
+    }
+    Node* node = head;
+    std::size_t i = 1;
+    while (i <= index) {
+        node = node -> next();
+        i++;
+    }
+    return node -> data();
+}
+
+//! Removes an element from index
+template<typename T>
+T structures::DoublyLinkedList<T>::pop(std::size_t index) {
+    if (empty() || index >= size_ || index < 0) {
+        throw std::out_of_range("Indice invalido.");
+    }
+    if (index == 0) {
+        return pop_front();
+    } else {
+        Node* node;
+        Node* previous_node = head;
+        std::size_t i = 1;
+        while (i < index) {
+            previous_node = previous_node -> next();
+            i++;
+        }
+        if (index == size_) {
+            node = tail;
+            tail = node -> prev();
+        } else {
+            node = previous_node -> next();
+            previous_node -> next(node -> next());
+            // node -> next() -> prev(previous_node);
+        }
+        T deleted_data = node -> data();
+        delete node;
+        size_--;
+        return deleted_data;
+    }
+}
+
+//! Removes an element from the rightmost part of the list
+template<typename T>
+T structures::DoublyLinkedList<T>::pop_back() {
+    try {
+        return pop(size_ - 1);
+    } catch (std::out_of_range error) {
+        throw error;
+    }
+}
+
+//! Removes an element from the leftmost part of the list
+template<typename T>
+T structures::DoublyLinkedList<T>::pop_front() {
+    if (empty()) {
+        throw std::out_of_range("A lista esta vazia");
+    }
+    Node* node = head;
+    T deleted_data = node -> data();
+    head = node -> next();
+    delete node;
+    size_--;
+    return deleted_data;
+}
+
+//! Removes an element with the given data
+template<typename T>
+void structures::DoublyLinkedList<T>::remove(const T& data) {
+    pop(find(data));
+}
+
+//! Returns true if list is empty and false otherwise
+template<typename T>
+bool structures::DoublyLinkedList<T>::empty() const {
+    return size_ == 0;
+}
+
+//! Checks if the list contais the node with the given data
+template<typename T>
+bool structures::DoublyLinkedList<T>::contains(const T& data) const {
+    if (empty()) {
+        throw std::out_of_range("A lista esta vazia.");
+    } else {
+        Node* node = head;
+        std::size_t i = 1;
+        while (i < size_) {
+            if (node -> data() == data) {
+                return true;
+            }
+            node = node -> next();
+            i++;
+        }
+        return false;
+    }
+}
+
+//! Returns the index of the given data
+template<typename T>
+std::size_t structures::DoublyLinkedList<T>::find(const T& data) const {
+    if (empty()) {
+        throw std::out_of_range("A lista esta vazia.");
+    } else {
+        Node* node = head;
+        std::size_t i = 0;
+        while (i < size_ - 1) {
+            if (node -> data() == data) {
+                return i;
+            }
+            node = node -> next();
+            i++;
+        }
+        if (node -> data() == data) {
+            return size_ - 1;
+        }
+    }
+    return size_;
+}
+
+//! Returns the current size of the list
+template<typename T>
+std::size_t structures::DoublyLinkedList<T>::size() const {
+    return size_;
+}
+
+#endif

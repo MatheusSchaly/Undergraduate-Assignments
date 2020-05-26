@@ -1,0 +1,37 @@
+# depslib dependency file v1.0
+1497467091 source:/Users/alessandromueller/Documents/UNIVALI/Estruturas de Dados/C++/Dicionario/Implementacao/Dicionario/main.cpp
+	<iostream>
+	"Associacao.cpp"
+	"Dicionario.cpp"
+
+1496781738 /Users/alessandromueller/Documents/UNIVALI/Estruturas de Dados/C++/Dicionario/Implementacao/Dicionario/Associacao.cpp
+	"Associacao.h"
+
+1496781306 /Users/alessandromueller/Documents/UNIVALI/Estruturas de Dados/C++/Dicionario/Implementacao/Dicionario/Associacao.h
+
+1497467672 /Users/alessandromueller/Documents/UNIVALI/Estruturas de Dados/C++/Dicionario/Implementacao/Dicionario/Dicionario.cpp
+	<iostream>
+	"Dicionario.h"
+
+1496781442 /Users/alessandromueller/Documents/UNIVALI/Estruturas de Dados/C++/Dicionario/Implementacao/Dicionario/Dicionario.h
+	<list>
+
+1530012614 source:d:\cc\3° fase\estruturas de dados\unidade 7\dicionario\main.cpp
+	<iostream>
+	"Associacao.cpp"
+	"Dicionario.cpp"
+	<time.h>
+	<cstdlib>
+
+1497467922 d:\cc\3° fase\estruturas de dados\unidade 7\dicionario\associacao.cpp
+	"Associacao.h"
+
+1496781306 d:\cc\3° fase\estruturas de dados\unidade 7\dicionario\associacao.h
+
+1497467922 d:\cc\3° fase\estruturas de dados\unidade 7\dicionario\dicionario.cpp
+	<iostream>
+	"Dicionario.h"
+
+1497467922 d:\cc\3° fase\estruturas de dados\unidade 7\dicionario\dicionario.h
+	<list>
+

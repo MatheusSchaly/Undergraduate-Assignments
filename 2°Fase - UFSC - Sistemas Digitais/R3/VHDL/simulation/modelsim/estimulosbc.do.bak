@@ -1,0 +1,58 @@
+force clock 1 0, 0 {0.5 ns} -r 1 ns
+force reset 1 0 ns
+force reset 0 2 ns
+
+force s1 0 4 ns
+force s45 0 4 ns
+force s50 0 4 ns
+force s55 0 4 ns
+force s100 0 4 ns
+force s105 0 4 ns
+force s110 0 4 ns
+force s135 0 4 ns
+force s140 0 4 ns
+
+force s1 1 8 ns
+force s45 1 10 ns
+force s1 0 12 ns
+force s45 0 14 ns
+
+force s1 1 16 ns
+force s50 1 18 ns
+force s1 0 20 ns
+force s50 0 22 ns
+
+force s1 1 24 ns
+force s55 1 26 ns
+force s1 0 28 ns
+force s55 0 30 ns
+
+force s1 1 32 ns
+force s100 1 34 ns
+force s1 0 36 ns
+force s100 0 38 ns
+
+force s1 1 40 ns
+force s105 1 42 ns
+force s1 0 44 ns
+force s105 0 46 ns
+
+force s1 1 48 ns
+force s110 1 50 ns
+force s1 0 52 ns
+force s110 0 54 ns
+
+force s1 1 56 ns
+force s135 1 58 ns
+force s1 0 60 ns
+force s135 0 62 ns
+
+force s1 1 64 ns
+force s140 1 66 ns
+force s1 0 68 ns
+force s140 0 70 ns
+
+force s1 1 72 ns
+force s45 1 74 ns
+force s1 0 76 ns
+force s45 0 78 ns

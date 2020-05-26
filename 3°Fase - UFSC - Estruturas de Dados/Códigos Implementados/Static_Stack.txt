@@ -1,0 +1,125 @@
+//! Copyright 2018 Matheus Henrique Schaly
+
+#ifndef STRUCTURES_ARRAY_STACK_H
+#define STRUCTURES_ARRAY_STACK_H
+
+#include <cstdint>  // std::size_t
+#include <stdexcept>  // C++ exceptions
+
+namespace structures {
+
+//! Static stack
+template<typename T>
+class ArrayStack {
+ public:
+//! Constructor
+ArrayStack();
+
+//! Constructor with parameter
+ArrayStack(std::size_t max);
+
+//! Destructor
+~ArrayStack();
+
+//! Push an object to the top of the stack
+void push(const T& data);
+
+//! Remove an object from the top of the stack
+T pop();
+
+//! Get the element from the top of the stack
+T& top();
+
+//! Clear the stack
+void clear();
+
+//! Return the size of the stack
+std::size_t size();
+
+//! Return the storage capacity of the stack
+std::size_t max_size();
+
+//! Return True if empty, false otherwise
+bool empty();
+
+//! Return True if full, false otherwise
+bool full();
+
+ private:
+static const  auto DEFAULT_SIZE = 10u;
+T* contents;
+int top_;
+std::size_t max_size_;
+};
+}  // namespace structures
+
+template<typename T>
+structures::ArrayStack<T>::ArrayStack() {
+    ArrayStack(DEFAULT_SIZE);
+}
+
+template<typename T>
+structures::ArrayStack<T>::ArrayStack(std::size_t max) {
+    top_ = -1;
+    max_size_ = max;
+    contents = new T[max];
+}
+
+template<typename T>
+structures::ArrayStack<T>::~ArrayStack() {
+    top_ = -1;
+    max_size_ = 0;
+    delete[] contents;
+}
+
+template<typename T>
+void structures::ArrayStack<T>::push(const T& data) {
+    if (full()) {
+        throw std::out_of_range("A pilha esta cheia");
+    } else {
+        top_++;
+        contents[top_] = data;
+    }
+}
+
+template<typename T>
+T structures::ArrayStack<T>::pop() {
+    if (empty()) {
+        throw std::out_of_range("A pilha esta vazia");
+    } else {
+        top_--;
+        return contents[top_+1];
+    }
+}
+
+template<typename T>
+T& structures::ArrayStack<T>::top() {
+    return contents[top_];
+}
+
+template<typename T>
+void structures::ArrayStack<T>::clear() {
+    top_ = -1;
+}
+
+template<typename T>
+std::size_t structures::ArrayStack<T>::size() {
+    return top_ + 1;
+}
+
+template<typename T>
+std::size_t structures::ArrayStack<T>::max_size() {
+    return max_size_;
+}
+
+template<typename T>
+bool structures::ArrayStack<T>::empty() {
+    return top_ == -1;
+}
+
+template<typename T>
+bool structures::ArrayStack<T>::full() {
+    return size() == max_size();
+}
+
+#endif

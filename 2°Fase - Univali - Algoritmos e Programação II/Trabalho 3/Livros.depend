@@ -1,0 +1,1067 @@
+# depslib dependency file v1.0
+1498674532 source:c:\users\hsmatheus\desktop\tt - copia - copia - copia - copia - copia\cliente.cpp
+	"Cliente.h"
+
+1498666396 c:\users\hsmatheus\desktop\tt - copia - copia - copia - copia - copia\cliente.h
+	"Pedido.h"
+	<iostream>
+	<vector>
+	<fstream>
+	<cstring>
+
+1498393087 c:\users\hsmatheus\desktop\tt - copia - copia - copia - copia - copia\pedido.h
+	<iostream>
+	<vector>
+	"ItemPedido.h"
+
+1498487368 c:\users\hsmatheus\desktop\tt - copia - copia - copia - copia - copia\itempedido.h
+	<iostream>
+	<vector>
+	"Livro.h"
+
+1498666075 c:\users\hsmatheus\desktop\tt - copia - copia - copia - copia - copia\livro.h
+	<iostream>
+	<fstream>
+	<cstring>
+
+1498487368 source:c:\users\hsmatheus\desktop\tt - copia - copia - copia - copia - copia\itempedido.cpp
+	"ItemPedido.h"
+
+1498675118 source:c:\users\hsmatheus\desktop\tt - copia - copia - copia - copia - copia\livro.cpp
+	"Livro.h"
+
+1498679536 source:c:\users\hsmatheus\desktop\tt - copia - copia - copia - copia - copia\main.cpp
+	<iostream>
+	"Cliente.h"
+	"Pedido.h"
+	"ItemPedido.h"
+	"Livro.h"
+
+1498598952 source:c:\users\hsmatheus\desktop\tt - copia - copia - copia - copia - copia\pedido.cpp
+	"Pedido.h"
+
+1498674532 source:c:\users\hsmatheus\desktop\tt - copia - copia - copia - copia - copia - copia\cliente.cpp
+	"Cliente.h"
+
+1498666396 c:\users\hsmatheus\desktop\tt - copia - copia - copia - copia - copia - copia\cliente.h
+	"Pedido.h"
+	<iostream>
+	<vector>
+	<fstream>
+	<cstring>
+
+1498393087 c:\users\hsmatheus\desktop\tt - copia - copia - copia - copia - copia - copia\pedido.h
+	<iostream>
+	<vector>
+	"ItemPedido.h"
+
+1498487368 c:\users\hsmatheus\desktop\tt - copia - copia - copia - copia - copia - copia\itempedido.h
+	<iostream>
+	<vector>
+	"Livro.h"
+
+1498684205 c:\users\hsmatheus\desktop\tt - copia - copia - copia - copia - copia - copia\livro.h
+	<iostream>
+	<fstream>
+	<cstring>
+
+1498487368 source:c:\users\hsmatheus\desktop\tt - copia - copia - copia - copia - copia - copia\itempedido.cpp
+	"ItemPedido.h"
+
+1498680744 source:c:\users\hsmatheus\desktop\tt - copia - copia - copia - copia - copia - copia\livro.cpp
+	"Livro.h"
+
+1498598952 source:c:\users\hsmatheus\desktop\tt - copia - copia - copia - copia - copia - copia\pedido.cpp
+	"Pedido.h"
+
+1498674532 source:c:\users\hsmatheus\desktop\tt - copia - copia - copia - copia - copia - copia - copia\cliente.cpp
+	"Cliente.h"
+
+1498666396 c:\users\hsmatheus\desktop\tt - copia - copia - copia - copia - copia - copia - copia\cliente.h
+	"Pedido.h"
+	<iostream>
+	<vector>
+	<fstream>
+	<cstring>
+
+1498685204 c:\users\hsmatheus\desktop\tt - copia - copia - copia - copia - copia - copia - copia\pedido.h
+	<iostream>
+	<vector>
+	"ItemPedido.h"
+
+1498487368 c:\users\hsmatheus\desktop\tt - copia - copia - copia - copia - copia - copia - copia\itempedido.h
+	<iostream>
+	<vector>
+	"Livro.h"
+
+1498684205 c:\users\hsmatheus\desktop\tt - copia - copia - copia - copia - copia - copia - copia\livro.h
+	<iostream>
+	<fstream>
+	<cstring>
+
+1498487368 source:c:\users\hsmatheus\desktop\tt - copia - copia - copia - copia - copia - copia - copia\itempedido.cpp
+	"ItemPedido.h"
+
+1498684277 source:c:\users\hsmatheus\desktop\tt - copia - copia - copia - copia - copia - copia - copia\livro.cpp
+	"Livro.h"
+
+1498685198 source:c:\users\hsmatheus\desktop\tt - copia - copia - copia - copia - copia - copia - copia\pedido.cpp
+	"Pedido.h"
+
+1498684794 source:c:\users\hsmatheus\desktop\tt - copia - copia - copia - copia - copia - copia - copia\main.cpp
+	<iostream>
+	"Cliente.h"
+	"Pedido.h"
+	"ItemPedido.h"
+	"Livro.h"
+
+1498674532 source:c:\users\hsmatheus\desktop\new tt\cliente.cpp
+	"Cliente.h"
+
+1498666396 c:\users\hsmatheus\desktop\new tt\cliente.h
+	"Pedido.h"
+	<iostream>
+	<vector>
+	<fstream>
+	<cstring>
+
+1498685204 c:\users\hsmatheus\desktop\new tt\pedido.h
+	<iostream>
+	<vector>
+	"ItemPedido.h"
+
+1498487368 c:\users\hsmatheus\desktop\new tt\itempedido.h
+	<iostream>
+	<vector>
+	"Livro.h"
+
+1498684205 c:\users\hsmatheus\desktop\new tt\livro.h
+	<iostream>
+	<fstream>
+	<cstring>
+
+1498487368 source:c:\users\hsmatheus\desktop\new tt\itempedido.cpp
+	"ItemPedido.h"
+
+1498684277 source:c:\users\hsmatheus\desktop\new tt\livro.cpp
+	"Livro.h"
+
+1498687903 source:c:\users\hsmatheus\desktop\new tt\main.cpp
+	<iostream>
+	"Cliente.h"
+	"Pedido.h"
+	"ItemPedido.h"
+	"Livro.h"
+
+1498686948 source:c:\users\hsmatheus\desktop\new tt\pedido.cpp
+	"Pedido.h"
+
+1498693688 source:c:\users\hsmatheus\desktop\new tt - copia\cliente.cpp
+	"Cliente.h"
+
+1498691629 c:\users\hsmatheus\desktop\new tt - copia\cliente.h
+	"Pedido.h"
+	<iostream>
+	<vector>
+	<fstream>
+	<cstring>
+
+1498692128 c:\users\hsmatheus\desktop\new tt - copia\pedido.h
+	<iostream>
+	<vector>
+	"ItemPedido.h"
+
+1498487368 c:\users\hsmatheus\desktop\new tt - copia\itempedido.h
+	<iostream>
+	<vector>
+	"Livro.h"
+
+1498693907 c:\users\hsmatheus\desktop\new tt - copia\livro.h
+	<iostream>
+	<fstream>
+	<cstring>
+
+1498487368 source:c:\users\hsmatheus\desktop\new tt - copia\itempedido.cpp
+	"ItemPedido.h"
+
+1498694065 source:c:\users\hsmatheus\desktop\new tt - copia\livro.cpp
+	"Livro.h"
+
+1498694021 source:c:\users\hsmatheus\desktop\new tt - copia\main.cpp
+	<iostream>
+	"Cliente.h"
+	"Pedido.h"
+	"ItemPedido.h"
+	"Livro.h"
+
+1498692128 source:c:\users\hsmatheus\desktop\new tt - copia\pedido.cpp
+	"Pedido.h"
+
+1498693688 source:c:\users\hsmatheus\desktop\new tt - copia - copia\cliente.cpp
+	"Cliente.h"
+
+1498691629 c:\users\hsmatheus\desktop\new tt - copia - copia\cliente.h
+	"Pedido.h"
+	<iostream>
+	<vector>
+	<fstream>
+	<cstring>
+
+1498692128 c:\users\hsmatheus\desktop\new tt - copia - copia\pedido.h
+	<iostream>
+	<vector>
+	"ItemPedido.h"
+
+1498695097 c:\users\hsmatheus\desktop\new tt - copia - copia\itempedido.h
+	<iostream>
+	<vector>
+	"Livro.h"
+
+1498696168 c:\users\hsmatheus\desktop\new tt - copia - copia\livro.h
+	<iostream>
+	<fstream>
+	<cstring>
+
+1498695540 source:c:\users\hsmatheus\desktop\new tt - copia - copia\itempedido.cpp
+	"ItemPedido.h"
+
+1498696168 source:c:\users\hsmatheus\desktop\new tt - copia - copia\livro.cpp
+	"Livro.h"
+
+1498696199 source:c:\users\hsmatheus\desktop\new tt - copia - copia\main.cpp
+	<iostream>
+	"Cliente.h"
+	"Pedido.h"
+	"ItemPedido.h"
+	"Livro.h"
+
+1498692128 source:c:\users\hsmatheus\desktop\new tt - copia - copia\pedido.cpp
+	"Pedido.h"
+
+1498743147 source:c:\users\hsmatheus\desktop\new tt - copia - copia - copia - copia - copia\cliente.cpp
+	"Cliente.h"
+
+1498743153 c:\users\hsmatheus\desktop\new tt - copia - copia - copia - copia - copia\cliente.h
+	"Pedido.h"
+	<iostream>
+	<vector>
+	<fstream>
+	<cstring>
+
+1498743066 c:\users\hsmatheus\desktop\new tt - copia - copia - copia - copia - copia\pedido.h
+	<iostream>
+	<vector>
+	"ItemPedido.h"
+	"Cliente.h"
+
+1498695097 c:\users\hsmatheus\desktop\new tt - copia - copia - copia - copia - copia\itempedido.h
+	<iostream>
+	<vector>
+	"Livro.h"
+
+1498696168 c:\users\hsmatheus\desktop\new tt - copia - copia - copia - copia - copia\livro.h
+	<iostream>
+	<fstream>
+	<cstring>
+
+1498695540 source:c:\users\hsmatheus\desktop\new tt - copia - copia - copia - copia - copia\itempedido.cpp
+	"ItemPedido.h"
+
+1498696168 source:c:\users\hsmatheus\desktop\new tt - copia - copia - copia - copia - copia\livro.cpp
+	"Livro.h"
+
+1498744132 source:c:\users\hsmatheus\desktop\new tt - copia - copia - copia - copia - copia\main.cpp
+	<iostream>
+	"Cliente.h"
+	"Pedido.h"
+	"ItemPedido.h"
+	"Livro.h"
+
+1498743042 source:c:\users\hsmatheus\desktop\new tt - copia - copia - copia - copia - copia\pedido.cpp
+	"Pedido.h"
+
+1498743147 source:c:\users\hsmatheus\desktop\new tt - copia - copia - copia - copia - copia - copia\cliente.cpp
+	"Cliente.h"
+
+1498743153 c:\users\hsmatheus\desktop\new tt - copia - copia - copia - copia - copia - copia\cliente.h
+	"Pedido.h"
+	<iostream>
+	<vector>
+	<fstream>
+	<cstring>
+
+1498743066 c:\users\hsmatheus\desktop\new tt - copia - copia - copia - copia - copia - copia\pedido.h
+	<iostream>
+	<vector>
+	"ItemPedido.h"
+	"Cliente.h"
+
+1498745107 c:\users\hsmatheus\desktop\new tt - copia - copia - copia - copia - copia - copia\itempedido.h
+	<iostream>
+	<vector>
+	"Livro.h"
+
+1498696168 c:\users\hsmatheus\desktop\new tt - copia - copia - copia - copia - copia - copia\livro.h
+	<iostream>
+	<fstream>
+	<cstring>
+
+1498695540 source:c:\users\hsmatheus\desktop\new tt - copia - copia - copia - copia - copia - copia\itempedido.cpp
+	"ItemPedido.h"
+
+1498743042 source:c:\users\hsmatheus\desktop\new tt - copia - copia - copia - copia - copia - copia\pedido.cpp
+	"Pedido.h"
+
+1498744834 source:c:\users\hsmatheus\desktop\new tt - copia - copia - copia - copia - copia - copia\livro.cpp
+	"Livro.h"
+
+1498744835 source:c:\users\hsmatheus\desktop\new tt - copia - copia - copia - copia - copia - copia\main.cpp
+	<iostream>
+	"Cliente.h"
+	"Pedido.h"
+	"ItemPedido.h"
+	"Livro.h"
+
+1498743147 source:c:\users\hsmatheus\desktop\tt arquivo\cliente.cpp
+	"Cliente.h"
+
+1498743153 c:\users\hsmatheus\desktop\tt arquivo\cliente.h
+	"Pedido.h"
+	<iostream>
+	<vector>
+	<fstream>
+	<cstring>
+
+1498743066 c:\users\hsmatheus\desktop\tt arquivo\pedido.h
+	<iostream>
+	<vector>
+	"ItemPedido.h"
+	"Cliente.h"
+
+1498745107 c:\users\hsmatheus\desktop\tt arquivo\itempedido.h
+	<iostream>
+	<vector>
+	"Livro.h"
+
+1498696168 c:\users\hsmatheus\desktop\tt arquivo\livro.h
+	<iostream>
+	<fstream>
+	<cstring>
+
+1498745107 source:c:\users\hsmatheus\desktop\tt arquivo\itempedido.cpp
+	"ItemPedido.h"
+
+1498744834 source:c:\users\hsmatheus\desktop\tt arquivo\livro.cpp
+	"Livro.h"
+
+1498743042 source:c:\users\hsmatheus\desktop\tt arquivo\pedido.cpp
+	"Pedido.h"
+
+1498745996 source:c:\users\hsmatheus\desktop\tt arquivo\main.cpp
+	<iostream>
+	"Cliente.h"
+	"Pedido.h"
+	"ItemPedido.h"
+	"Livro.h"
+
+1498743147 source:c:\users\hsmatheus\desktop\tt arquivo - copia\cliente.cpp
+	"Cliente.h"
+
+1498743153 c:\users\hsmatheus\desktop\tt arquivo - copia\cliente.h
+	"Pedido.h"
+	<iostream>
+	<vector>
+	<fstream>
+	<cstring>
+
+1498743066 c:\users\hsmatheus\desktop\tt arquivo - copia\pedido.h
+	<iostream>
+	<vector>
+	"ItemPedido.h"
+	"Cliente.h"
+
+1498745107 c:\users\hsmatheus\desktop\tt arquivo - copia\itempedido.h
+	<iostream>
+	<vector>
+	"Livro.h"
+
+1498696168 c:\users\hsmatheus\desktop\tt arquivo - copia\livro.h
+	<iostream>
+	<fstream>
+	<cstring>
+
+1498745107 source:c:\users\hsmatheus\desktop\tt arquivo - copia\itempedido.cpp
+	"ItemPedido.h"
+
+1498744834 source:c:\users\hsmatheus\desktop\tt arquivo - copia\livro.cpp
+	"Livro.h"
+
+1498746615 source:c:\users\hsmatheus\desktop\tt arquivo - copia\main.cpp
+	<iostream>
+	"Cliente.h"
+	"Pedido.h"
+	"ItemPedido.h"
+	"Livro.h"
+
+1498743042 source:c:\users\hsmatheus\desktop\tt arquivo - copia\pedido.cpp
+	"Pedido.h"
+
+1498743147 source:c:\users\hsmatheus\desktop\tt arquivo - copia - copia\cliente.cpp
+	"Cliente.h"
+
+1498743153 c:\users\hsmatheus\desktop\tt arquivo - copia - copia\cliente.h
+	"Pedido.h"
+	<iostream>
+	<vector>
+	<fstream>
+	<cstring>
+
+1498743066 c:\users\hsmatheus\desktop\tt arquivo - copia - copia\pedido.h
+	<iostream>
+	<vector>
+	"ItemPedido.h"
+	"Cliente.h"
+
+1498745107 c:\users\hsmatheus\desktop\tt arquivo - copia - copia\itempedido.h
+	<iostream>
+	<vector>
+	"Livro.h"
+
+1498696168 c:\users\hsmatheus\desktop\tt arquivo - copia - copia\livro.h
+	<iostream>
+	<fstream>
+	<cstring>
+
+1498745107 source:c:\users\hsmatheus\desktop\tt arquivo - copia - copia\itempedido.cpp
+	"ItemPedido.h"
+
+1498744834 source:c:\users\hsmatheus\desktop\tt arquivo - copia - copia\livro.cpp
+	"Livro.h"
+
+1498746925 source:c:\users\hsmatheus\desktop\tt arquivo - copia - copia\main.cpp
+	<iostream>
+	"Cliente.h"
+	"Pedido.h"
+	"ItemPedido.h"
+	"Livro.h"
+
+1498743042 source:c:\users\hsmatheus\desktop\tt arquivo - copia - copia\pedido.cpp
+	"Pedido.h"
+
+1498743147 source:c:\users\hsmatheus\desktop\tt arquivo - copia - copia - copia\cliente.cpp
+	"Cliente.h"
+
+1498743153 c:\users\hsmatheus\desktop\tt arquivo - copia - copia - copia\cliente.h
+	"Pedido.h"
+	<iostream>
+	<vector>
+	<fstream>
+	<cstring>
+
+1498743066 c:\users\hsmatheus\desktop\tt arquivo - copia - copia - copia\pedido.h
+	<iostream>
+	<vector>
+	"ItemPedido.h"
+	"Cliente.h"
+
+1498745107 c:\users\hsmatheus\desktop\tt arquivo - copia - copia - copia\itempedido.h
+	<iostream>
+	<vector>
+	"Livro.h"
+
+1498696168 c:\users\hsmatheus\desktop\tt arquivo - copia - copia - copia\livro.h
+	<iostream>
+	<fstream>
+	<cstring>
+
+1498745107 source:c:\users\hsmatheus\desktop\tt arquivo - copia - copia - copia\itempedido.cpp
+	"ItemPedido.h"
+
+1498744834 source:c:\users\hsmatheus\desktop\tt arquivo - copia - copia - copia\livro.cpp
+	"Livro.h"
+
+1498743042 source:c:\users\hsmatheus\desktop\tt arquivo - copia - copia - copia\pedido.cpp
+	"Pedido.h"
+
+1498747356 source:c:\users\hsmatheus\desktop\tt arquivo - copia - copia - copia\main.cpp
+	<iostream>
+	"Cliente.h"
+	"Pedido.h"
+	"ItemPedido.h"
+	"Livro.h"
+
+1498743147 source:c:\users\hsmatheus\desktop\tt arquivo - copia - copia - copia - copia\cliente.cpp
+	"Cliente.h"
+
+1498743153 c:\users\hsmatheus\desktop\tt arquivo - copia - copia - copia - copia\cliente.h
+	"Pedido.h"
+	<iostream>
+	<vector>
+	<fstream>
+	<cstring>
+
+1498743066 c:\users\hsmatheus\desktop\tt arquivo - copia - copia - copia - copia\pedido.h
+	<iostream>
+	<vector>
+	"ItemPedido.h"
+	"Cliente.h"
+
+1498745107 c:\users\hsmatheus\desktop\tt arquivo - copia - copia - copia - copia\itempedido.h
+	<iostream>
+	<vector>
+	"Livro.h"
+
+1498696168 c:\users\hsmatheus\desktop\tt arquivo - copia - copia - copia - copia\livro.h
+	<iostream>
+	<fstream>
+	<cstring>
+
+1498745107 source:c:\users\hsmatheus\desktop\tt arquivo - copia - copia - copia - copia\itempedido.cpp
+	"ItemPedido.h"
+
+1498744834 source:c:\users\hsmatheus\desktop\tt arquivo - copia - copia - copia - copia\livro.cpp
+	"Livro.h"
+
+1498747684 source:c:\users\hsmatheus\desktop\tt arquivo - copia - copia - copia - copia\main.cpp
+	<iostream>
+	"Cliente.h"
+	"Pedido.h"
+	"ItemPedido.h"
+	"Livro.h"
+
+1498743042 source:c:\users\hsmatheus\desktop\tt arquivo - copia - copia - copia - copia\pedido.cpp
+	"Pedido.h"
+
+1498743147 source:c:\users\hsmatheus\desktop\tt arquivo - copia - copia - copia - copia - copia (2)\cliente.cpp
+	"Cliente.h"
+
+1498743153 c:\users\hsmatheus\desktop\tt arquivo - copia - copia - copia - copia - copia (2)\cliente.h
+	"Pedido.h"
+	<iostream>
+	<vector>
+	<fstream>
+	<cstring>
+
+1498743066 c:\users\hsmatheus\desktop\tt arquivo - copia - copia - copia - copia - copia (2)\pedido.h
+	<iostream>
+	<vector>
+	"ItemPedido.h"
+	"Cliente.h"
+
+1498745107 c:\users\hsmatheus\desktop\tt arquivo - copia - copia - copia - copia - copia (2)\itempedido.h
+	<iostream>
+	<vector>
+	"Livro.h"
+
+1498696168 c:\users\hsmatheus\desktop\tt arquivo - copia - copia - copia - copia - copia (2)\livro.h
+	<iostream>
+	<fstream>
+	<cstring>
+
+1498745107 source:c:\users\hsmatheus\desktop\tt arquivo - copia - copia - copia - copia - copia (2)\itempedido.cpp
+	"ItemPedido.h"
+
+1498744834 source:c:\users\hsmatheus\desktop\tt arquivo - copia - copia - copia - copia - copia (2)\livro.cpp
+	"Livro.h"
+
+1498743042 source:c:\users\hsmatheus\desktop\tt arquivo - copia - copia - copia - copia - copia (2)\pedido.cpp
+	"Pedido.h"
+
+1498756233 source:c:\users\hsmatheus\desktop\tt arquivo - copia - copia - copia - copia - copia (2)\main.cpp
+	<iostream>
+	"Cliente.h"
+	"Pedido.h"
+	"ItemPedido.h"
+	"Livro.h"
+
+1498743147 source:c:\users\hsmatheus\desktop\super tt\cliente.cpp
+	"Cliente.h"
+
+1498743153 c:\users\hsmatheus\desktop\super tt\cliente.h
+	"Pedido.h"
+	<iostream>
+	<vector>
+	<fstream>
+	<cstring>
+
+1498743066 c:\users\hsmatheus\desktop\super tt\pedido.h
+	<iostream>
+	<vector>
+	"ItemPedido.h"
+	"Cliente.h"
+
+1498745107 c:\users\hsmatheus\desktop\super tt\itempedido.h
+	<iostream>
+	<vector>
+	"Livro.h"
+
+1498696168 c:\users\hsmatheus\desktop\super tt\livro.h
+	<iostream>
+	<fstream>
+	<cstring>
+
+1498745107 source:c:\users\hsmatheus\desktop\super tt\itempedido.cpp
+	"ItemPedido.h"
+
+1498744834 source:c:\users\hsmatheus\desktop\super tt\livro.cpp
+	"Livro.h"
+
+1498757199 source:c:\users\hsmatheus\desktop\super tt\main.cpp
+	<iostream>
+	"Cliente.h"
+	"Pedido.h"
+	"ItemPedido.h"
+	"Livro.h"
+
+1498743042 source:c:\users\hsmatheus\desktop\super tt\pedido.cpp
+	"Pedido.h"
+
+1498743147 source:c:\users\hsmatheus\desktop\super tt - copia\cliente.cpp
+	"Cliente.h"
+
+1498743153 c:\users\hsmatheus\desktop\super tt - copia\cliente.h
+	"Pedido.h"
+	<iostream>
+	<vector>
+	<fstream>
+	<cstring>
+
+1498743066 c:\users\hsmatheus\desktop\super tt - copia\pedido.h
+	<iostream>
+	<vector>
+	"ItemPedido.h"
+	"Cliente.h"
+
+1498745107 c:\users\hsmatheus\desktop\super tt - copia\itempedido.h
+	<iostream>
+	<vector>
+	"Livro.h"
+
+1498696168 c:\users\hsmatheus\desktop\super tt - copia\livro.h
+	<iostream>
+	<fstream>
+	<cstring>
+
+1498745107 source:c:\users\hsmatheus\desktop\super tt - copia\itempedido.cpp
+	"ItemPedido.h"
+
+1498744834 source:c:\users\hsmatheus\desktop\super tt - copia\livro.cpp
+	"Livro.h"
+
+1498764303 source:c:\users\hsmatheus\desktop\super tt - copia\main.cpp
+	<iostream>
+	"Cliente.h"
+	"Pedido.h"
+	"ItemPedido.h"
+	"Livro.h"
+
+1498743042 source:c:\users\hsmatheus\desktop\super tt - copia\pedido.cpp
+	"Pedido.h"
+
+1498743147 source:c:\users\hsmatheus\desktop\super tt - copia - copia\cliente.cpp
+	"Cliente.h"
+
+1498743153 c:\users\hsmatheus\desktop\super tt - copia - copia\cliente.h
+	"Pedido.h"
+	<iostream>
+	<vector>
+	<fstream>
+	<cstring>
+
+1498743066 c:\users\hsmatheus\desktop\super tt - copia - copia\pedido.h
+	<iostream>
+	<vector>
+	"ItemPedido.h"
+	"Cliente.h"
+
+1498745107 c:\users\hsmatheus\desktop\super tt - copia - copia\itempedido.h
+	<iostream>
+	<vector>
+	"Livro.h"
+
+1498769096 c:\users\hsmatheus\desktop\super tt - copia - copia\livro.h
+	<iostream>
+	<fstream>
+	<cstring>
+
+1498745107 source:c:\users\hsmatheus\desktop\super tt - copia - copia\itempedido.cpp
+	"ItemPedido.h"
+
+1498744834 source:c:\users\hsmatheus\desktop\super tt - copia - copia\livro.cpp
+	"Livro.h"
+
+1498743042 source:c:\users\hsmatheus\desktop\super tt - copia - copia\pedido.cpp
+	"Pedido.h"
+
+1498822146 source:c:\users\hsmatheus\desktop\super tt - copia - copia\main.cpp
+	<iostream>
+	"Cliente.h"
+	"Pedido.h"
+	"ItemPedido.h"
+	"Livro.h"
+
+1498743147 source:c:\users\hsmatheus\desktop\t3\cliente.cpp
+	"Cliente.h"
+
+1498743153 c:\users\hsmatheus\desktop\t3\cliente.h
+	"Pedido.h"
+	<iostream>
+	<vector>
+	<fstream>
+	<cstring>
+
+1498743066 c:\users\hsmatheus\desktop\t3\pedido.h
+	<iostream>
+	<vector>
+	"ItemPedido.h"
+	"Cliente.h"
+
+1498745107 c:\users\hsmatheus\desktop\t3\itempedido.h
+	<iostream>
+	<vector>
+	"Livro.h"
+
+1498769096 c:\users\hsmatheus\desktop\t3\livro.h
+	<iostream>
+	<fstream>
+	<cstring>
+
+1498745107 source:c:\users\hsmatheus\desktop\t3\itempedido.cpp
+	"ItemPedido.h"
+
+1498744834 source:c:\users\hsmatheus\desktop\t3\livro.cpp
+	"Livro.h"
+
+1498822146 source:c:\users\hsmatheus\desktop\t3\main.cpp
+	<iostream>
+	"Cliente.h"
+	"Pedido.h"
+	"ItemPedido.h"
+	"Livro.h"
+
+1498743042 source:c:\users\hsmatheus\desktop\t3\pedido.cpp
+	"Pedido.h"
+
+1498743147 source:c:\users\hsmatheus\desktop\t3 - copia\cliente.cpp
+	"Cliente.h"
+
+1498743153 c:\users\hsmatheus\desktop\t3 - copia\cliente.h
+	"Pedido.h"
+	<iostream>
+	<vector>
+	<fstream>
+	<cstring>
+
+1498743066 c:\users\hsmatheus\desktop\t3 - copia\pedido.h
+	<iostream>
+	<vector>
+	"ItemPedido.h"
+	"Cliente.h"
+
+1498745107 c:\users\hsmatheus\desktop\t3 - copia\itempedido.h
+	<iostream>
+	<vector>
+	"Livro.h"
+
+1498769096 c:\users\hsmatheus\desktop\t3 - copia\livro.h
+	<iostream>
+	<fstream>
+	<cstring>
+
+1498745107 source:c:\users\hsmatheus\desktop\t3 - copia\itempedido.cpp
+	"ItemPedido.h"
+
+1498836229 source:c:\users\hsmatheus\desktop\t3 - copia\livro.cpp
+	"Livro.h"
+
+1498743042 source:c:\users\hsmatheus\desktop\t3 - copia\pedido.cpp
+	"Pedido.h"
+
+1498835967 source:c:\users\hsmatheus\desktop\t3 - copia\main.cpp
+	<iostream>
+	"Cliente.h"
+	"Pedido.h"
+	"ItemPedido.h"
+	"Livro.h"
+
+1498743147 source:c:\users\hsmatheus\desktop\t3 - copia - copia - copia\cliente.cpp
+	"Cliente.h"
+
+1498743153 c:\users\hsmatheus\desktop\t3 - copia - copia - copia\cliente.h
+	"Pedido.h"
+	<iostream>
+	<vector>
+	<fstream>
+	<cstring>
+
+1498743066 c:\users\hsmatheus\desktop\t3 - copia - copia - copia\pedido.h
+	<iostream>
+	<vector>
+	"ItemPedido.h"
+	"Cliente.h"
+
+1498745107 c:\users\hsmatheus\desktop\t3 - copia - copia - copia\itempedido.h
+	<iostream>
+	<vector>
+	"Livro.h"
+
+1498769096 c:\users\hsmatheus\desktop\t3 - copia - copia - copia\livro.h
+	<iostream>
+	<fstream>
+	<cstring>
+
+1498835967 source:c:\users\hsmatheus\desktop\t3 - copia - copia - copia\main.cpp
+	<iostream>
+	"Cliente.h"
+	"Pedido.h"
+	"ItemPedido.h"
+	"Livro.h"
+
+1498743042 source:c:\users\hsmatheus\desktop\t3 - copia - copia - copia\pedido.cpp
+	"Pedido.h"
+
+1498743147 source:c:\users\hsmatheus\desktop\t4\cliente.cpp
+	"Cliente.h"
+
+1498743153 c:\users\hsmatheus\desktop\t4\cliente.h
+	"Pedido.h"
+	<iostream>
+	<vector>
+	<fstream>
+	<cstring>
+
+1498743066 c:\users\hsmatheus\desktop\t4\pedido.h
+	<iostream>
+	<vector>
+	"ItemPedido.h"
+	"Cliente.h"
+
+1498745107 c:\users\hsmatheus\desktop\t4\itempedido.h
+	<iostream>
+	<vector>
+	"Livro.h"
+
+1498769096 c:\users\hsmatheus\desktop\t4\livro.h
+	<iostream>
+	<fstream>
+	<cstring>
+
+1498743042 source:c:\users\hsmatheus\desktop\t4\pedido.cpp
+	"Pedido.h"
+
+1498836684 source:c:\users\hsmatheus\desktop\t4\itempedido.cpp
+	"ItemPedido.h"
+
+1498836259 source:c:\users\hsmatheus\desktop\t4\livro.cpp
+	"Livro.h"
+
+1498840311 source:c:\users\hsmatheus\desktop\t4\main.cpp
+	<iostream>
+	"Cliente.h"
+	"Pedido.h"
+	"ItemPedido.h"
+	"Livro.h"
+
+1498743147 source:c:\users\hsmatheus\desktop\trabalho 3 vetores\cliente.cpp
+	"Cliente.h"
+
+1498743153 c:\users\hsmatheus\desktop\trabalho 3 vetores\cliente.h
+	"Pedido.h"
+	<iostream>
+	<vector>
+	<fstream>
+	<cstring>
+
+1498743066 c:\users\hsmatheus\desktop\trabalho 3 vetores\pedido.h
+	<iostream>
+	<vector>
+	"ItemPedido.h"
+	"Cliente.h"
+
+1498745107 c:\users\hsmatheus\desktop\trabalho 3 vetores\itempedido.h
+	<iostream>
+	<vector>
+	"Livro.h"
+
+1498769096 c:\users\hsmatheus\desktop\trabalho 3 vetores\livro.h
+	<iostream>
+	<fstream>
+	<cstring>
+
+1498836684 source:c:\users\hsmatheus\desktop\trabalho 3 vetores\itempedido.cpp
+	"ItemPedido.h"
+
+1498836259 source:c:\users\hsmatheus\desktop\trabalho 3 vetores\livro.cpp
+	"Livro.h"
+
+1498851317 source:c:\users\hsmatheus\desktop\trabalho 3 vetores\main.cpp
+	<iostream>
+	"Cliente.h"
+	"Pedido.h"
+	"ItemPedido.h"
+	"Livro.h"
+
+1498851102 source:c:\users\hsmatheus\desktop\trabalho 3 vetores\pedido.cpp
+	"Pedido.h"
+
+1498743147 source:c:\users\hsmatheus\desktop\trabalho 3 vetores - copia\cliente.cpp
+	"Cliente.h"
+
+1498743153 c:\users\hsmatheus\desktop\trabalho 3 vetores - copia\cliente.h
+	"Pedido.h"
+	<iostream>
+	<vector>
+	<fstream>
+	<cstring>
+
+1498743066 c:\users\hsmatheus\desktop\trabalho 3 vetores - copia\pedido.h
+	<iostream>
+	<vector>
+	"ItemPedido.h"
+	"Cliente.h"
+
+1498745107 c:\users\hsmatheus\desktop\trabalho 3 vetores - copia\itempedido.h
+	<iostream>
+	<vector>
+	"Livro.h"
+
+1498769096 c:\users\hsmatheus\desktop\trabalho 3 vetores - copia\livro.h
+	<iostream>
+	<fstream>
+	<cstring>
+
+1498836684 source:c:\users\hsmatheus\desktop\trabalho 3 vetores - copia\itempedido.cpp
+	"ItemPedido.h"
+
+1498851759 source:c:\users\hsmatheus\desktop\trabalho 3 vetores - copia\livro.cpp
+	"Livro.h"
+
+1498851102 source:c:\users\hsmatheus\desktop\trabalho 3 vetores - copia\pedido.cpp
+	"Pedido.h"
+
+1498851978 source:c:\users\hsmatheus\desktop\trabalho 3 vetores - copia\main.cpp
+	<iostream>
+	"Cliente.h"
+	"Pedido.h"
+	"ItemPedido.h"
+	"Livro.h"
+
+1498743147 source:c:\users\hsmatheus\desktop\trabalho 3 vetores - copia (2)\cliente.cpp
+	"Cliente.h"
+
+1498743153 c:\users\hsmatheus\desktop\trabalho 3 vetores - copia (2)\cliente.h
+	"Pedido.h"
+	<iostream>
+	<vector>
+	<fstream>
+	<cstring>
+
+1498743066 c:\users\hsmatheus\desktop\trabalho 3 vetores - copia (2)\pedido.h
+	<iostream>
+	<vector>
+	"ItemPedido.h"
+	"Cliente.h"
+
+1498745107 c:\users\hsmatheus\desktop\trabalho 3 vetores - copia (2)\itempedido.h
+	<iostream>
+	<vector>
+	"Livro.h"
+
+1498769096 c:\users\hsmatheus\desktop\trabalho 3 vetores - copia (2)\livro.h
+	<iostream>
+	<fstream>
+	<cstring>
+
+1498836684 source:c:\users\hsmatheus\desktop\trabalho 3 vetores - copia (2)\itempedido.cpp
+	"ItemPedido.h"
+
+1498851759 source:c:\users\hsmatheus\desktop\trabalho 3 vetores - copia (2)\livro.cpp
+	"Livro.h"
+
+1498851102 source:c:\users\hsmatheus\desktop\trabalho 3 vetores - copia (2)\pedido.cpp
+	"Pedido.h"
+
+1498855345 source:c:\users\hsmatheus\desktop\trabalho 3 vetores - copia (2)\main.cpp
+	<iostream>
+	"Cliente.h"
+	"Pedido.h"
+	"ItemPedido.h"
+	"Livro.h"
+
+1498743147 source:c:\users\hsmatheus\desktop\trabalho 3\cliente.cpp
+	"Cliente.h"
+
+1498743153 c:\users\hsmatheus\desktop\trabalho 3\cliente.h
+	"Pedido.h"
+	<iostream>
+	<vector>
+	<fstream>
+	<cstring>
+
+1498743066 c:\users\hsmatheus\desktop\trabalho 3\pedido.h
+	<iostream>
+	<vector>
+	"ItemPedido.h"
+	"Cliente.h"
+
+1498745107 c:\users\hsmatheus\desktop\trabalho 3\itempedido.h
+	<iostream>
+	<vector>
+	"Livro.h"
+
+1498769096 c:\users\hsmatheus\desktop\trabalho 3\livro.h
+	<iostream>
+	<fstream>
+	<cstring>
+
+1498836684 source:c:\users\hsmatheus\desktop\trabalho 3\itempedido.cpp
+	"ItemPedido.h"
+
+1498851759 source:c:\users\hsmatheus\desktop\trabalho 3\livro.cpp
+	"Livro.h"
+
+1498855345 source:c:\users\hsmatheus\desktop\trabalho 3\main.cpp
+	<iostream>
+	"Cliente.h"
+	"Pedido.h"
+	"ItemPedido.h"
+	"Livro.h"
+
+1498851102 source:c:\users\hsmatheus\desktop\trabalho 3\pedido.cpp
+	"Pedido.h"
+
+1498743146 source:d:\cc\2° fase\algoritmos e programação\trabalho 3\cliente.cpp
+	"Cliente.h"
+
+1498743152 d:\cc\2° fase\algoritmos e programação\trabalho 3\cliente.h
+	"Pedido.h"
+	<iostream>
+	<vector>
+	<fstream>
+	<cstring>
+
+1498743066 d:\cc\2° fase\algoritmos e programação\trabalho 3\pedido.h
+	<iostream>
+	<vector>
+	"ItemPedido.h"
+	"Cliente.h"
+
+1498745106 d:\cc\2° fase\algoritmos e programação\trabalho 3\itempedido.h
+	<iostream>
+	<vector>
+	"Livro.h"
+
+1498769096 d:\cc\2° fase\algoritmos e programação\trabalho 3\livro.h
+	<iostream>
+	<fstream>
+	<cstring>
+
+1498836684 source:d:\cc\2° fase\algoritmos e programação\trabalho 3\itempedido.cpp
+	"ItemPedido.h"
+
+1498851758 source:d:\cc\2° fase\algoritmos e programação\trabalho 3\livro.cpp
+	"Livro.h"
+
+1498851102 source:d:\cc\2° fase\algoritmos e programação\trabalho 3\pedido.cpp
+	"Pedido.h"
+

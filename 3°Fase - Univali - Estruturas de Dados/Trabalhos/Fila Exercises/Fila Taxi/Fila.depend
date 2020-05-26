@@ -1,0 +1,83 @@
+# depslib dependency file v1.0
+1493216327 source:/Users/alessandromueller/Documents/UNIVALI/Estruturas de Dados/C++/Fila/Implementacao/Fila OO (1)/Fila/main.cpp
+	<iostream>
+	"Fila.cpp"
+
+1493246903 source:/Users/alessandromueller/Documents/UNIVALI/Estruturas de Dados/C++/Fila/Implementacao/Fila OO (1)/Fila/Fila.cpp
+	<iostream>
+	"Fila.h"
+
+1493246903 /Users/alessandromueller/Documents/UNIVALI/Estruturas de Dados/C++/Fila/Implementacao/Fila OO (1)/Fila/Fila.h
+
+1493246903 /Users/alessandromueller/Documents/UNIVALI/Estruturas de Dados/C++/Fila/Implementacao/Fila OO (1)/Fila/Fila.cpp
+	<iostream>
+	"Fila.h"
+
+1506290314 source:/home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Fila/Fila.cpp
+	<iostream>
+	"Fila.h"
+
+1506288169 /home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Fila/Fila.h
+
+1506289545 source:/home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Fila/main.cpp
+	<iostream>
+	<stdlib.h>
+	"Fila.cpp"
+
+1506290314 /home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Fila/Fila.cpp
+	<iostream>
+	"Fila.h"
+
+1506290314 source:/home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Fila/Fila Base/Fila.cpp
+	<iostream>
+	"Fila.h"
+
+1506288169 /home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Fila/Fila Base/Fila.h
+
+1506290352 source:/home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Fila/Fila Base/main.cpp
+	<iostream>
+	<stdlib.h>
+	"Fila.cpp"
+
+1506290314 /home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Fila/Fila Base/Fila.cpp
+	<iostream>
+	"Fila.h"
+
+1506359284 source:/home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Fila/Fila Taxi/Fila.cpp
+	<iostream>
+	"Fila.h"
+
+1506357759 /home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Fila/Fila Taxi/Fila.h
+	"Passageiro.h"
+
+1506360227 source:/home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Fila/Fila Taxi/main.cpp
+	<iostream>
+	<stdlib.h>
+	"Fila.cpp"
+
+1506359284 /home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Fila/Fila Taxi/Fila.cpp
+	<iostream>
+	"Fila.h"
+
+1506357995 /home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Fila/Fila Taxi/Passageiro.h
+	<iostream>
+
+1506359284 source:/home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Fila Exercises/Fila Taxi/Fila.cpp
+	<iostream>
+	"Fila.h"
+
+1506357759 /home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Fila Exercises/Fila Taxi/Fila.h
+	"Passageiro.h"
+
+1506357995 /home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Fila Exercises/Fila Taxi/Passageiro.h
+	<iostream>
+
+1506468343 source:/home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Fila Exercises/Fila Taxi/main.cpp
+	<iostream>
+	<stdlib.h>
+	"Fila.cpp"
+
+1506359284 /home/hsmatheus/Documents/GitRepo/Data-Structures-Exercises/Fila Exercises/Fila Taxi/Fila.cpp
+	<iostream>
+	"Fila.h"
+

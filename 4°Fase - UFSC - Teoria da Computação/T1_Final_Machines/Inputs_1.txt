@@ -1,0 +1,17 @@
+>abc x
+>abbbbcc x
+>aaaabcc x
+>aabbcc x
+>aabbbbbbbbcccc
+>aaaaaaaabbcccc
+
+Empty
+>a
+>b
+>c
+>ab
+>ac
+>abcc
+>aabcc
+>abbcc
+>aabbccc

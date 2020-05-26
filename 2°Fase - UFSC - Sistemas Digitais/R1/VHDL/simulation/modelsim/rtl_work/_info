@@ -1,0 +1,303 @@
+m255
+K3
+13
+cModel Technology
+Z0 dC:\Users\HsMatheus\Desktop\SD\INE5406-Sistemas-Digitais\Projeto_Semafaro\Desenvolvimento\simulation\modelsim
+Eadder_n_bits
+Z1 w1538924575
+Z2 DPx4 ieee 11 numeric_std 0 22 O3PF8EB`?j9=z7KT`fn941
+Z3 DPx3 std 6 textio 0 22 5>J:;AW>W0[[dW0I6EN1Q0
+Z4 DPx4 ieee 14 std_logic_1164 0 22 5=aWaoGZSMWIcH0i^f`XF1
+Z5 dC:\Users\HsMatheus\Desktop\SD\INE5406-Sistemas-Digitais\Projeto_Semafaro\Desenvolvimento\simulation\modelsim
+Z6 8C:/Users/HsMatheus/Desktop/SD/INE5406-Sistemas-Digitais/Projeto_Semafaro/Desenvolvimento/adder_n_bits.vhd
+Z7 FC:/Users/HsMatheus/Desktop/SD/INE5406-Sistemas-Digitais/Projeto_Semafaro/Desenvolvimento/adder_n_bits.vhd
+l0
+L5
+Vk<VOQ2[OIYBe:zN_U;VG@0
+Z8 OV;C;10.1d;51
+31
+Z9 !s108 1538936869.882000
+Z10 !s90 -reportprogress|300|-93|-work|work|C:/Users/HsMatheus/Desktop/SD/INE5406-Sistemas-Digitais/Projeto_Semafaro/Desenvolvimento/adder_n_bits.vhd|
+Z11 !s107 C:/Users/HsMatheus/Desktop/SD/INE5406-Sistemas-Digitais/Projeto_Semafaro/Desenvolvimento/adder_n_bits.vhd|
+Z12 o-93 -work work -O0
+Z13 tExplicit 1
+!s100 ``L=>@<6Ri8b5ThRbHVRJ1
+!i10b 1
+Aarchadder
+R2
+R3
+R4
+DEx4 work 12 adder_n_bits 0 22 k<VOQ2[OIYBe:zN_U;VG@0
+l14
+L13
+V5Zdf@EOK1g99X`oeb<j6l2
+R8
+31
+R9
+R10
+R11
+R12
+R13
+!s100 d>_JXj@jXo0zgUB2<<9b>1
+!i10b 1
+Ebc
+R1
+R3
+R4
+R5
+Z14 8C:/Users/HsMatheus/Desktop/SD/INE5406-Sistemas-Digitais/Projeto_Semafaro/Desenvolvimento/BC.vhd
+Z15 FC:/Users/HsMatheus/Desktop/SD/INE5406-Sistemas-Digitais/Projeto_Semafaro/Desenvolvimento/BC.vhd
+l0
+L4
+VAfEET55XLMaK8P^^e`E4Y3
+R8
+31
+Z16 !s108 1538936869.763000
+Z17 !s90 -reportprogress|300|-93|-work|work|C:/Users/HsMatheus/Desktop/SD/INE5406-Sistemas-Digitais/Projeto_Semafaro/Desenvolvimento/BC.vhd|
+Z18 !s107 C:/Users/HsMatheus/Desktop/SD/INE5406-Sistemas-Digitais/Projeto_Semafaro/Desenvolvimento/BC.vhd|
+R12
+R13
+!s100 k=`@7D4bN9JkNSHG46K5m0
+!i10b 1
+Aarchbc
+R3
+R4
+DEx4 work 2 bc 0 22 AfEET55XLMaK8P^^e`E4Y3
+l20
+L17
+VY6`YD?mm5B@@fX_Li2@BY1
+R8
+31
+R16
+R17
+R18
+R12
+R13
+!s100 an1=d2S7_c6^ZCn8ijN8U0
+!i10b 1
+Ebo
+R1
+Z19 DPx4 ieee 9 math_real 0 22 :iME`dTX54_U49lJNF5JI3
+R2
+R3
+R4
+R5
+Z20 8C:/Users/HsMatheus/Desktop/SD/INE5406-Sistemas-Digitais/Projeto_Semafaro/Desenvolvimento/BO.vhd
+Z21 FC:/Users/HsMatheus/Desktop/SD/INE5406-Sistemas-Digitais/Projeto_Semafaro/Desenvolvimento/BO.vhd
+l0
+L6
+VIoNoI<46PTW8HMKdO]Ojo1
+R8
+31
+Z22 !s108 1538936869.622000
+Z23 !s90 -reportprogress|300|-93|-work|work|C:/Users/HsMatheus/Desktop/SD/INE5406-Sistemas-Digitais/Projeto_Semafaro/Desenvolvimento/BO.vhd|
+Z24 !s107 C:/Users/HsMatheus/Desktop/SD/INE5406-Sistemas-Digitais/Projeto_Semafaro/Desenvolvimento/BO.vhd|
+R12
+R13
+!s100 eL_QTK7ge[h:XYfMSV]d;1
+!i10b 1
+Aarchbo
+R19
+R2
+R3
+R4
+DEx4 work 2 bo 0 22 IoNoI<46PTW8HMKdO]Ojo1
+l87
+L22
+VAg]aBW2FJM8Nf5mK1WK:I3
+R8
+31
+R22
+R23
+R24
+R12
+R13
+!s100 N<Q>]3Fcj:PO8WDizgd@H2
+!i10b 1
+Eclock_x
+R1
+R19
+R2
+R3
+R4
+R5
+Z25 8C:/Users/HsMatheus/Desktop/SD/INE5406-Sistemas-Digitais/Projeto_Semafaro/Desenvolvimento/clock_x.vhd
+Z26 FC:/Users/HsMatheus/Desktop/SD/INE5406-Sistemas-Digitais/Projeto_Semafaro/Desenvolvimento/clock_x.vhd
+l0
+L6
+VV=QY[jnbLJVYD09JF563L2
+!s100 EQHaI9E9CYR8ZzlIOgi233
+R8
+31
+!i10b 1
+Z27 !s108 1538936870.666000
+Z28 !s90 -reportprogress|300|-93|-work|work|C:/Users/HsMatheus/Desktop/SD/INE5406-Sistemas-Digitais/Projeto_Semafaro/Desenvolvimento/clock_x.vhd|
+Z29 !s107 C:/Users/HsMatheus/Desktop/SD/INE5406-Sistemas-Digitais/Projeto_Semafaro/Desenvolvimento/clock_x.vhd|
+R12
+R13
+Aarchclock
+R19
+R2
+R3
+R4
+DEx4 work 7 clock_x 0 22 V=QY[jnbLJVYD09JF563L2
+l17
+L14
+VP_h4lG_AF@cm>zP4Q6gI@3
+!s100 ag`MDbETU0fUd=za<ED3G2
+R8
+31
+!i10b 1
+R27
+R28
+R29
+R12
+R13
+Ecompareifequal_n_bits
+R1
+R2
+R3
+R4
+R5
+Z30 8C:/Users/HsMatheus/Desktop/SD/INE5406-Sistemas-Digitais/Projeto_Semafaro/Desenvolvimento/compareIfEqual_n_bits.vhd
+Z31 FC:/Users/HsMatheus/Desktop/SD/INE5406-Sistemas-Digitais/Projeto_Semafaro/Desenvolvimento/compareIfEqual_n_bits.vhd
+l0
+L5
+VfCVUbe8jJ=_aiJoG81Hl32
+R8
+31
+Z32 !s108 1538936870.542000
+Z33 !s90 -reportprogress|300|-93|-work|work|C:/Users/HsMatheus/Desktop/SD/INE5406-Sistemas-Digitais/Projeto_Semafaro/Desenvolvimento/compareIfEqual_n_bits.vhd|
+Z34 !s107 C:/Users/HsMatheus/Desktop/SD/INE5406-Sistemas-Digitais/Projeto_Semafaro/Desenvolvimento/compareIfEqual_n_bits.vhd|
+R12
+R13
+!s100 dlalzhZMk?CXSVH:I^74V3
+!i10b 1
+Aarchcompareifequal
+R2
+R3
+R4
+DEx4 work 21 compareifequal_n_bits 0 22 fCVUbe8jJ=_aiJoG81Hl32
+l14
+L13
+VfJP0G8nKEagae^O=O:nHO0
+R8
+31
+R32
+R33
+R34
+R12
+R13
+!s100 >dHHG@S2[zP@iP5:k2n2J2
+!i10b 1
+Emux_nxm
+R1
+R19
+R2
+R3
+R4
+R5
+Z35 8C:/Users/HsMatheus/Desktop/SD/INE5406-Sistemas-Digitais/Projeto_Semafaro/Desenvolvimento/mux_nxm.vhd
+Z36 FC:/Users/HsMatheus/Desktop/SD/INE5406-Sistemas-Digitais/Projeto_Semafaro/Desenvolvimento/mux_nxm.vhd
+l0
+L6
+VMn_IzlKV4G_84HZWjmT860
+R8
+31
+Z37 !s108 1538936870.216000
+Z38 !s90 -reportprogress|300|-93|-work|work|C:/Users/HsMatheus/Desktop/SD/INE5406-Sistemas-Digitais/Projeto_Semafaro/Desenvolvimento/mux_nxm.vhd|
+Z39 !s107 C:/Users/HsMatheus/Desktop/SD/INE5406-Sistemas-Digitais/Projeto_Semafaro/Desenvolvimento/mux_nxm.vhd|
+R12
+R13
+!s100 _H8Q6>aP[a?IR:lJdA1590
+!i10b 1
+Abehavioral
+R19
+R2
+R3
+R4
+DEx4 work 7 mux_nxm 0 22 Mn_IzlKV4G_84HZWjmT860
+l19
+L18
+Vziz]9ZZ1RlOd]8li<H<Yf3
+R8
+31
+R37
+R38
+R39
+R12
+R13
+!s100 WXEn_mWOMoZc[m_5j^25=1
+!i10b 1
+Eregister_n_bits
+R1
+R3
+R4
+R5
+Z40 8C:/Users/HsMatheus/Desktop/SD/INE5406-Sistemas-Digitais/Projeto_Semafaro/Desenvolvimento/register_n_bits.vhd
+Z41 FC:/Users/HsMatheus/Desktop/SD/INE5406-Sistemas-Digitais/Projeto_Semafaro/Desenvolvimento/register_n_bits.vhd
+l0
+L4
+VYA0f`7cU_6UM:C91zI:eG1
+R8
+31
+Z42 !s108 1538936870.032000
+Z43 !s90 -reportprogress|300|-93|-work|work|C:/Users/HsMatheus/Desktop/SD/INE5406-Sistemas-Digitais/Projeto_Semafaro/Desenvolvimento/register_n_bits.vhd|
+Z44 !s107 C:/Users/HsMatheus/Desktop/SD/INE5406-Sistemas-Digitais/Projeto_Semafaro/Desenvolvimento/register_n_bits.vhd|
+R12
+R13
+!s100 JOnI;8DFld3ChdHBNzn;b1
+!i10b 1
+Aarchregister
+R3
+R4
+DEx4 work 15 register_n_bits 0 22 YA0f`7cU_6UM:C91zI:eG1
+l19
+L16
+VZ@QS4RTJC6Bgd0=0R8U1O1
+R8
+31
+R42
+R43
+R44
+R12
+R13
+!s100 U=ILCK@O3^9<j4mGQz9XA3
+!i10b 1
+Etraffic_light_top
+R1
+R2
+R3
+R4
+R5
+Z45 8C:/Users/HsMatheus/Desktop/SD/INE5406-Sistemas-Digitais/Projeto_Semafaro/Desenvolvimento/traffic_light_top.vhd
+Z46 FC:/Users/HsMatheus/Desktop/SD/INE5406-Sistemas-Digitais/Projeto_Semafaro/Desenvolvimento/traffic_light_top.vhd
+l0
+L5
+VaAOSJLFPAzakQ5mOWMoC]0
+R8
+31
+Z47 !s108 1538936869.342000
+Z48 !s90 -reportprogress|300|-93|-work|work|C:/Users/HsMatheus/Desktop/SD/INE5406-Sistemas-Digitais/Projeto_Semafaro/Desenvolvimento/traffic_light_top.vhd|
+Z49 !s107 C:/Users/HsMatheus/Desktop/SD/INE5406-Sistemas-Digitais/Projeto_Semafaro/Desenvolvimento/traffic_light_top.vhd|
+R12
+R13
+!s100 g6^:B5ElGnIYO=2R9ZSnJ2
+!i10b 1
+Aarchtop
+R2
+R3
+R4
+DEx4 work 17 traffic_light_top 0 22 aAOSJLFPAzakQ5mOWMoC]0
+l52
+L13
+V2kW9XbHXR9az^F;nPcEZh2
+R8
+31
+R47
+R48
+R49
+R12
+R13
+!s100 AL5PF3[I`N<d<HA6];8_e1
+!i10b 1

@@ -1,0 +1,15 @@
+cd C:\Program Files (x86)\Google\Chrome\Application
+chrome --allow-file-access-from-files file:///C:/Users/Matheus_Schaly/Documents/uOttawa_2020/CSI4130_Computer_Graphics/Labs/lab5/three/lab4/camera.html
+chrome --allow-file-access-from-files file:///C:/Users/Matheus_Schaly/Desktop/Assignment_2_CG_Backup/1/camera_exploring.html
+chrome --allow-file-access-from-files file:///C:/Users/Matheus_Schaly/Desktop/Assignment_2_CG/1/camera.html
+
+http-server "C:\Users\Matheus_Schaly\Documents\uOttawa_2020\CSI4130_Computer_Graphics\Labs\
+
+http-server "C:\Users\Matheus_Schaly\Desktop\Assignment_2_CG"
+cd C:\Program Files\nodejs
+host:8080
+
+cd C:\Program Files (x86)\Google\Chrome\Application
+chrome --allow-file-access-from-files file:///C:/Users/Matheus_Schaly/Desktop/Assignment_3_CG/Assignment_3/boxes/MaterialBoxes.html
+chrome --allow-file-access-from-files file:///C:/Users/Matheus_Schaly/Desktop/Assignment_3_CG/Assignment_3/lighting/LitBoxes.html
+http-server "C:\Users\Matheus_Schaly\Desktop\Assignment_3_CG"
