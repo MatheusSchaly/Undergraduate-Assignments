@@ -1,0 +1,7 @@
+S -> aSa | FdD | E
+A -> aA | CB | &
+B -> bB | FE
+C -> cCb | Dc
+D -> Dd | fF | c
+E -> DC | eE | EF
+F -> fF | Dd

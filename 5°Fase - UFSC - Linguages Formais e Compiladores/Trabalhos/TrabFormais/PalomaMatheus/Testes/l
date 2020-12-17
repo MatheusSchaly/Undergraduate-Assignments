@@ -1,0 +1,7 @@
+E -> TE'
+T -> FT'
+F -> (E) | I
+I -> bI' | aI'
+E' -> & | +TE'
+T' -> & | *FT'
+I' -> aI' | & | bI' | zI' | uI'

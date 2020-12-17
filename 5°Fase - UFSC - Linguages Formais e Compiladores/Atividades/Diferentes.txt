@@ -1,0 +1,47 @@
+a < b < c: abbccc (X)
+a < c < b: aabccc (Y)
+b < a < c: abbbcc (?)
+b < c < a: aaabcc (K)
+c < b < a: aaabbc (L)
+c < a < b: aabbbc (M)
+c < a < b: abb
+b < a < c: acc
+a < b < c: bcc
+a < c < b: bbc
+
+
+S -> aSBC | X | Y | K | L | M | A | E | D
+X -> bXC | D | E
+D -> cD | c
+E -> bE | b
+Y -> aYC | D
+K -> aKC | A
+L -> aLb | A
+M -> aMb | E
+A -> aA | a
+CB -> BC
+cB -> Bc
+aB -> ab
+bB -> bb
+cC -> cc
+
+abbccc ~~> S -> X -> aSBC -> aXBC -> abXCBC -> abDCBC -> abcCBC -> abcBCC -> abBcCC -> abbccC -> abbccc
+aabccc ~~> S -> Y -> aSBC -> aYBC -> ??? 
+
+
+
+
+
+L={a^i b^j c^ | i, j, k ≥ 0 e i < j < k}
+Exemplos de palavras:
+bcc, aabbbbcccccc
+
+S' -> aSBC | BXC | bXc
+S -> aSBC | BXC
+X -> BXC | D
+D -> DC | C
+CB -> BC
+aB -> ab
+bB -> bb
+bC -> bc
+cC -> cc

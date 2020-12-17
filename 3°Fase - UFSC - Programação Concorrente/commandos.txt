@@ -1,0 +1,13 @@
+No terminal Linux:
+
+gcc main.c helper.c thread.c -o main -lpthread; ./main arg1 arg2
+
+gcc main.c -o main -fopenmp; ./main 5
+
+make; ./program
+
+make
+
+make submission
+
+make; ./dog 10 2 1 1 3

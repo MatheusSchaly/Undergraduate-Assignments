@@ -1,0 +1,52 @@
+Tabela de transição:
+    & | a | b | c | E
+-> S' | A | {A, C} | C | F
+    S | A | {A, C} | C | -
+    A | - | {S, F} | {D, F} | -
+    C | {E, F} | {S, F} | - | -
+    D | A | {A, C} | - | -
+    E | - | {A, C} | C | -
+    F | - | - | - | -
+
+
+Determinização:
+Tabela de transição:
+
+E-fecho(S') = {S', F}
+E-fecho(S) = {S}
+E-fecho(A) = {A}
+E-fecho(B) = {B}
+E-fecho(C) = {C}
+E-fecho(D) = {D}
+E-fecho(E) = {E}
+
+    & | a | b | c
+->* {S', F} | A | {A, C} | C
+    A | - | {S, F} | {D, F}
+   {A, C} | {E, F} | {S, F} | {D, F}
+    C | {E, F} | {S, F} | -
+*  {S, F} | A | {A, C} | C
+*  {D, F} | A | {A, C} | -
+*  {E, F} | - | {A, C} | C
+
+Dessa forma não há estados mortos e todos são alcançáveis.
+
+Classes de equivalência:
+F | K - F
+{{S', F}, {S, F}, {D, F}, {E, F}}, {{A}, {A,C}, {C}} // a
+{{S', F}, {S, F}, {D, F}}, {{E, F}}, {{A}}, {{A, C}, {C}} // b
+{{S', F}, {S, F}, {D, F}}, {{E, F}}, {{A}}, {{A, C}, {C}} // c
+{{S', F}, {S, F}}, {{D, F}}, {{E, F}}, {{A}}, {{A, C}}, {{C}} // a
+{{S', F}, {S, F}}, {{D, F}}, {{E, F}}, {{A}}, {{A, C}}, {{C}} // b
+{{S', F}, {S, F}}, {{D, F}}, {{E, F}}, {{A}}, {{A, C}}, {{C}} // c Nada mudou ao reusar os símbolos
+q0,                     q1,        q2,        q3,     q4,        q5
+
+Autômato minimizado:
+Tabela de transição:
+     & | a | b | c
+->* q0 | q3 | q4 | q5
+     q3 | - | q0 | q1
+     q4 | q2 | q0 | q1
+     q5 | q2 | q0 | -
+*    q1 | q3 | q4 | -
+*    q2 | - | q4 | q5

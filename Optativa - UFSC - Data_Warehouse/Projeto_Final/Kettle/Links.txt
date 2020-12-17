@@ -1,0 +1,7 @@
+Tutorial completo Kettle (aula 1): http://www.slideshare.net/jarleynobrega/aula-01tutorialpdi
+Explicação da Pentaho steps: http://wiki.pentaho.com/display/EAI/Pentaho+Data+Integration+Steps
+Kettle beginners (Luciano): http://kettlebeginners.blogspot.com.br/
+Plugin que gera os htmls de documentação do kettle chama-se cookbook e pode ser encontrado em:  http://code.google.com/p/kettle-cookbook/
+
+Links para cursos do Pentaho kettle
+https://moodle.ufsc.br/mod/page/view.php?id=2380602

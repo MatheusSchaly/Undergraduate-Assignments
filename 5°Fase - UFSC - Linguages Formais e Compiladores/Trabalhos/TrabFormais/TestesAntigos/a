@@ -1,0 +1,8 @@
+S -> dDC | cCC | aS'
+S' -> BC | DC
+A -> aD | cC
+B -> aB | dD
+C -> eC'
+C' -> A | C
+D -> eD' | fD
+D' -> AB | CB

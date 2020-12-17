@@ -1,0 +1,93 @@
+L={a^i b^j c^k} i, j, k ≥ 0 e k < j < i}
+Exemplos de palavras:
+aabc, aaaaaaabbbbbcc
+
+S -> CSBA | aXB
+X -> AXB | D
+D -> DA | A
+Ca -> aC
+CA -> AC
+CB -> BC
+BA -> AB
+aA -> aa
+aB -> ab
+bB -> bb
+bC -> bc
+cC -> cc
+
+S -> aXB -> aDB -> aAB -> aab
+S -> CSBA -> CaXBBA -> CaDBBA -> CaABBA -> aaabbc
+S -> CSBA -> CCSBABA -> CCaXBBABA -> CCaAXBBBABA -> CCaAAXBBBBABA -> CCaAADBBBBABA -> CCaAADBBBBABA -> CCaAADABBBBABA
+  -> CCaAAAABBBBABA -> CCaAAAABBBBABA -> CCaAAAAAABBBBB -> aCCAAAAAABBBBB -> aCCAAAAAABBBBB -> aAAAAAABBBBBCC
+  -> aaaaaaaBBBBBCC -> aaaaaaaBBBBBCC -> aaaaaaabbbbbCC -> aaaaaaabbbbbcc
+
+L={a^i b^j c^k | i, j, k ≥ 0 e i < j < k}
+Exemplos de palavras:
+bcc, aabbbbcccccc
+
+S' -> aSBC | BXC | bXc
+S -> aSBC | BXC
+X -> BXC | D
+D -> DC | C
+CB -> BC
+aB -> ab
+bB -> bb
+bC -> bc
+cC -> cc
+
+S' -> bXc -> bDc -> bCc -> bcc
+S' -> aSBC -> aaSBCBC -> aaBXCBCBC -> aaBBXCCBCBC -> aaBBDCCBCBC -> aaBBCCCCBCBC -> aaBBBBCCCCCC -> aabbbbcccccc
+
+L={a^i b^j c^k | i, j, k ≥ 0 e i < k < j}
+Exemplos de palavras:
+bbc, aabbbbbbcccc
+
+S' -> aSBC | BXC | bXc
+S -> aSBC | BXC
+X -> BXC | D
+D -> DB | B
+CB -> BC
+aB -> ab
+bB -> bb
+bC -> bc
+cC -> cc
+
+S' -> bXc -> bDc -> bBc -> bbc
+S' -> aSBC -> aaSBCBC -> aaBBBBCCBCBC -> aaBBBBBBCCCC -> aabbbbbbCCCC -> aabbbbbbcccc
+
+L={a^i b^j c^k | i, j, k ≥ 0 e j < i < k}
+Exemplos de palavras:
+acc, aaaabbcccccc
+
+S' -> aSBC | AXC | aXc
+S -> aSBC | AXC
+X -> AXC | D
+D -> DC | C
+Cc -> cC
+cC -> cc
+CB -> BC
+aB -> ab
+bB -> bb
+bC -> bc
+
+S' -> aXc -> aDc -> aCc -> acC -> acc
+S' -> aSBC -> aaSBCBC -> aaAXCBCBC -> aaAAXCCBCBC -> aaAADCCBCBC -> aaAACCCCBCBC -> aaAACCCCBCBC
+   -> aaaaCCCCBCBC -> aaaaBBCCCCCC -> aaaabbcccccc
+   
+L={a^i b^j c^k | i, j, k ≥ 0 e k < i < j}
+Exemplos de palavras:
+abb, aaaabbbbbbcc
+
+S' -> aSBC | AXB | aXb
+S -> aSBC | AXB
+X -> AXB | D
+D -> DB | B
+aB -> ab
+aA -> aa
+bB -> bb
+CB -> BC
+bC -> bc
+cC -> cc
+
+S' -> aXb -> aDb -> aBb -> abb
+S' -> aSBC -> aaSBCBC -> aaAAXBBBCBC -> aaAADBBBCBC -> aaAABBBBBCBC -> aaaabbbbbbcc
