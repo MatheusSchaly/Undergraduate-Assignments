@@ -1,0 +1,200 @@
+AF 1.2 - Organização de sistemas computacionais (questionário)
+
+1)	Processador: 2 GHz
+		1 segundo = 10^9 nanosegundos (pela calculadora do Google)
+		2 GHz = 2*10^9 ciclos / segundo = 2*10^9 ciclos / 10^9ns = 2 ciclos / ns = ns / 2 ciclos = 0.5 ns/ciclos
+		0.5 ns = tempo de cada instrução
+	Memória: 357 ciclos
+		357 * 0.5 ns = 178.5 ns
+		178.5 = tempo de acesso a memória
+	Cache: 2 ciclos
+		2 * 0.5 = 1 ns
+		1 ns = tempo de acesso a cache
+	Acessam a memória: 14%
+	Acessam a cache: 81%
+
+	Resposta:
+	% de NÃO acessos a memória * tempo de cada instrução + % de acessos a memória * (% de acessos a cache * tempo de acesso a cache + % de NÃO acessos a cache * tempo de acesso a memória) = 
+	0,86 * 0.5 + 0,14 * (0,81 * 1 + 0,19 * 178.5) = 
+	5.2915 =
+	5.29
+	
+3)	Processador: 2.6 GHz
+		1 segundo = 10^9 nanosegundos (pela calculadora do Google)
+		2.6 GHz = 2.6*10^9 / segundo = 2.6*10^9 ciclos / 10^9ns = 2.6 ciclos / ns = 1 ns / 2.6 ciclos
+		1/2.6 ns = tempo de cada instrução
+	Memória: 125 ciclos
+		125 * 1/2.6 ns
+		125 * 1/2.6 ns = tempo de acesso a memória
+	Acessam a memória: 7%
+	
+	Resposta:
+	% de NÃO acessos a memória * tempo de cada instrução + % de acessos a memória * tempo de acesso a memória =
+	0,93 * 1/2.6 + 0,07 * (125 * 1/2.6) =
+	3.72307 =
+	3.72
+
+
+AF 2.2 - Escalonamento (questionário)
+
+1)	Ordem: A(13) -> C(31) -> D(1) -> E(6) -> B(8)
+	Algoritmo FCFS
+	
+	((13) + (13+31) + (13+31+1) + (13+31+1+6) + (13+31+1+6+8)) / 5 = 42,4
+	
+9)	Ordem: A(20) -> C(44) -> D(4) -> E(7) -> B(15)
+	Algoritmo SJF
+		Ordena em ordem crescent:
+		D(4) -> E(7) -> B(15) -> A(20) -> C(44)
+	
+	((4) + (4+7) + (4+7+15) + (4+7+15+20) + (4+7+15+20+44)) / 5 = 35,4
+	
+	
+AF 3.1 - Memória virtual e paginação (questionário)
+
+6)
+Endereços virtuais: 64 bits
+Tamanho de páginas: 1KB
+Memória física: 4096KB
+
+Para encontrar quantos bits serão utilizados para identificar as molduras de página fazemos:
+log2(memória física / tamanho de páginas) =
+log2(4096KB/1KB) =
+log2(4096) =
+12 bits
+
+5)
+Endereços virtuais: 31 bits
+Tamanho de páginas: 2KB
+Memória física: 2GB
+
+Para encontrar quantas entradas terá a tabela de páginas fazemos:
+2^(endereços virtuais - log2(tamanho de páginas)) =
+2^(31 - log2(2KB)) =
+2^(31 - 11) = 2^20 =
+1048576 entradas
+
+4)
+Endereços virtuais: 32 bits
+Tamanho de páginas: 16KB
+Memória física: 4096KB
+
+Para encontrar quantos bits terá o endereço físico de saída da MMU fazemos:
+log2(memória física / tamanho de páginas) + log2(tamanho de páginas) =
+log2(4096KB/16KB) + log(16KB) =
+log2(256) + 14 =
+8 + 14 =
+22 bits
+
+3)
+Endereços virtuais: 24 bits
+Tamanho de páginas: 1KB
+Memória física: 512MB
+
+Para encontrar quantos bits do endereço virtual serão utilizados para endereçar a tabela de páginas fazemos:
+endereços virtuais - log2(tamanho de páginas) =
+24 - log2(1KB) =
+24 - log2(2^10) =
+24 - 10 =
+14
+
+2)
+Endereços virtuais: 20 bits
+Tamanho de páginas: 32KB
+Memória física: 256KB
+
+Para encontrar quantos bits do endereço virtual serão utilizados para o deslocamento dentro da página fazemos:
+log2(tamanho de páginas) =
+log2(32KB) = 
+15 bits
+
+
+AF 3.4 - Projeto e implementação de paginação (questionário)
+
+5)	Tamanho: 127 MB
+	Operações de escrita: 47%
+	Técnica: copy on write
+	
+	Total de memóri física, respota:
+	Tamanho * Operações de escrita + Tamanho =
+	127 * 0.47 + 127 =
+	186.69
+	
+
+AF 4.1 - Sistemas de arquivos (questionário)
+
+1)	Disco: 8 GB
+	Bloco: 4 KB
+	Bits: 64
+	
+	Resposta: 
+	Endereço por bloco = Bloco / bits = 4 KB / 64 = 2^2 * 2^10 / 2^6 = 2^6 - 1
+	Blocos no total do disco = Disco / bloco = 8 GB / 4 KB = 2^3 * 2^30 * 2^3 = 2^2 * 2^10 = 2^24
+	Resposta = 2^24 / (2^6 - 1)
+	
+	Resposta:
+	(Disco * 1024 * 1024 / Bloco) / (((Bloco * 1024) / (Bits/8)) - 1)
+	(8 GB * 1024 * 1024 / 4 KB) / (((4 KB * 1024) / (64/8)) - 1)
+	(8 * 2^33 * 1024 * 1024 / 4 * 2^13) / (((4 * 2^13 * 1024) / (64/8)) -1)
+	
+
+6)	Tamanho de bloco: 2 KB
+		2 KB = 2^1 * 2^10 * 2^3 = 2^14 bits
+	Bits para representar um bloco: 32 bits
+	Capacidade do disco: 1 GB
+		1 GB = 2^30 * 2^3 = 2^33
+	
+	Resposta:
+	1 GB / 4 KB = 
+	
+
+AF 4.4 - Discos rígidos (questionário)
+
+1)
+cilindro inicial: 20
+cilindros: 10, 22, 20, 2, 40, 6, 38
+tempo de deslocamento: 38 ms
+algoritmo FCFS
+
+20 -> 10 -> 22 -> 20 -> 2 -> 40 -> 6 -> 38
+10 + 12 + 2 + 18 + 38 + 34 + 32 = 146 cilindros de distância percorrida
+
+Resposta:
+cilindros de distância percorrida * tempo de deslocamento
+146 * 38 = 5548
+
+4) 
+cilindro inicial: 20
+cilindros: 10, 22, 20, 2, 40, 6, 38
+tempo de deslocamento: 18 ms
+algoritmo elevador
+
+20 -> 20 -> 22 -> 38 -> 40 -> 10 -> 6 -> 2
+0 + 2 + 16 + 2 +30 + 4 + 4 = 58
+
+Resposta:
+cilindros de distância percorrida * tempo de deslocamento
+58 * 18 = 1044
+
+PROVA:
+cilindro inicial: 20
+cilindros: 10, 22, 20, 2, 40, 6, 38
+tempo de deslocamento: 6 ms
+algoritmo elevador
+
+Resposta:
+cilindros de distância percorrida * tempo de deslocamento
+58 * 6 = 348
+
+5) 
+cilindro inicial: 20
+cilindros: 10, 22, 20, 2, 40, 6, 38
+tempo de deslocamento: 35 ms
+algoritmo SSF
+
+20 -> 20 -> 22 -> 10 -> 6 -> 2 -> 38 -> 40
+0 + 2 + 12 + 4 + 4 + 36 + 2 = 60
+
+Resposta:
+cilindros de distância percorrida * tempo de deslocamento
+60 * 35 = 2100
