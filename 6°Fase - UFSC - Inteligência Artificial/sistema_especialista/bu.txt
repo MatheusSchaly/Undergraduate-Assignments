@@ -1,0 +1,84 @@
+energia(baixa).
+energia(media).
+energia(alta).
+
+obediencia(baixa).
+obediencia(media).
+obediencia(alta).
+
+inteligencia(baixa).
+inteligencia(media).
+inteligencia(alta).
+
+territorialista(baixa).
+territorialista(media).
+territorialista(alta).
+
+amizade_com_criancas(baixa).
+amizade_com_criancas(media).
+amizade_com_criancas(alta).
+
+amizade_com_outros_animais(baixa).
+amizade_com_outros_animais(media).
+amizade_com_outros_animais(alta).
+
+raca(rw, E, O, I, T, A, C) :- (E = alta), (O = alta), (I = alta), (T = alta), (A = alta), (C = baixa), !.
+raca(pa, E, O, I, T, A, C) :- (E = alta), (O = alta), (I = alta), (T = alta), (A = alta), (C = baixa), !.
+raca(dh, E, O, I, T, A, C) :- (E = alta), (O = baixa), (I = alta), (T = media), (A = alta), (C = alta), !.
+raca(fb, E, O, I, T, A, C) :- (E = alta), (O = baixa), (I = baixa), (T = alta), (A = media), (C = media), !.
+raca(ch, E, O, I, T, A, C) :- (E = media), (O = media), (I = alta), (T = baixa), (A = alta), (C = alta), !.
+raca(hs, E, O, I, T, A, C) :- (E = alta), (O = baixa), (I = alta), (T = baixa), (A = alta), (C = alta), !.
+raca(pu, E, O, I, T, A, C) :- (E = alta), (O = media), (I = alta), (T = alta), (A = alta), (C = alta), !.
+raca(sa, E, O, I, T, A, C) :- (E = alta), (O = baixa), (I = alta), (T = media), (A = alta), (C = media), !.
+raca(gh, E, O, I, T, A, C) :- (E = alta), (O = alta), (I = alta), (T = baixa), (A = alta), (C = alta), !.
+raca(bo, E, O, I, T, A, C) :- (E = alta), (O = media), (I = alta), (T = baixa), (A = alta), (C = alta), !.
+raca(st, E, O, I, T, A, C) :- (E = media), (O = media), (I = alta), (T = baixa), (A = alta), (C = media), !.
+raca(bc, E, O, I, T, A, C) :- (E = alta), (O = alta), (I = alta), (T = alta), (A = alta), (C = media), !.
+raca(cc, E, O, I, T, A, C) :- (E = media), (O = media), (I = media), (T = alta), (A = baixa), (C = baixa), !.
+raca(be, E, O, I, T, A, C) :- (E = alta), (O = alta), (I = alta), (T = baixa), (A = alta), (C = alta), !.
+raca(po, E, O, I, T, A, C) :- (E = alta), (O = alta), (I = alta), (T = alta), (A = alta), (C = alta), !.
+raca(gr, E, O, I, T, A, C) :- (E = alta), (O = alta), (I = alta), (T = baixa), (A = alta), (C = alta), !.
+raca(lr, E, O, I, T, A, C) :- (E = alta), (O = alta), (I = alta), (T = media), (A = alta), (C = alta), !.
+raca(ma, E, O, I, T, A, C) :- (E = media), (O = alta), (I = alta), (T = media), (A = media), (C = alta), !.
+raca(sb, E, O, I, T, A, C) :- (E = baixa), (O = media), (I = media), (T = baixa), (A = alta), (C = alta), !.
+raca(mt, E, O, I, T, A, C) :- (E = baixa), (O = alta), (I = alta), (T = media), (A = alta), (C = alta), !.
+raca(pn, E, O, I, T, A, C) :- (E = alta), (O = baixa), (I = alta), (T = alta), (A = baixa), (C = baixa), !.
+raca(pc, E, O, I, T, A, C) :- (E = baixa), (O = alta), (I = alta), (T = alta), (A = alta), (C = media), !.
+raca(pe, E, O, I, T, A, C) :- (E = baixa), (O = media), (I = media), (T = alta), (A = baixa), (C = alta), !.
+raca(bh, E, O, I, T, A, C) :- (E = baixa), (O = media), (I = media), (T = baixa), (A = media), (C = alta), !.
+raca(ck, E, O, I, T, A, C) :- (E = baixa), (O = alta), (I = alta), (T = baixa), (A = alta), (C = alta), !.
+
+name(pa, 'Pastor Alemao').
+name(dh, 'Dachshund').
+name(fb, 'French Bulldog').
+name(ch, 'Chihuahua').
+name(hs, 'Husky Siberiano').
+name(pu, 'Pug').
+name(rw, 'Rottweiler').
+name(sa, 'Spitz Alemao').
+name(gh, 'Greyhound').
+name(bo, 'Boxer').
+name(st, 'Shih Tzu').
+name(bc, 'Border Collie').
+name(cc, 'Chow Chow').
+name(be, 'Beagle').
+name(po, 'Poodle').
+name(gr, 'Golden Retriever').
+name(lr, 'Labrador Retriever').
+name(ma, 'Maltes').
+name(sb, 'Sao Bernardo').
+name(mt, 'Mastiff').
+name(pn, 'Pastor da Anatolia').
+name(pc, 'Pastor do Caucaso').
+name(pe, 'Pequines').
+name(bh, 'Pastor do Caucaso').
+name(ck, 'Cavalier King Charles Spaniel').
+
+ask(X) :- writeln("Vamos achar o seu tipo de cachorro ideal! Opcoes: baixa, media, alta."),
+          writeln('Qual o nivel de energia do seu cachorro?'), read(E),
+          writeln('Qual o nivel de obediência do seu cachorro?'), read(O),
+          writeln('Quao inteligente o cachorro e?'), read(I),
+          writeln('O quao territorialista o seu cachorro e?'), read(T),
+          writeln('O quao amigo o seu cachorro e das criancas?'), read(A),
+	  	  writeln('O quao amigo o seu cachorro e dos outros animais?'), read(C),
+          raca(X, E, O, I, T, A, C).

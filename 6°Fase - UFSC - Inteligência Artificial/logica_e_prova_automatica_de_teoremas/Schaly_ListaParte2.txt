@@ -1,0 +1,129 @@
+1)	Demonstrar que W = odeia(marcos, cesar)
+
+~odeia(marcos, cesar)
+
+~romano(x2) V leal(x2, cesar) V odeia(x2, cesar)   |   ~odeia(marcos, cesar)   -   (x2 = marcos)
+~romano(x2) V leal(x2, cesar)
+
+~romano(x2) V leal(x2, cesar)   |   ~pompeano(x1) V romano(x1)   -   (x1 = marcos)
+leal(x2, cesar) V ~pompeano(x1)
+
+leal(x2, cesar) V ~pompeano(x1)   |   pompeano(marcos)
+leal(x2, cesar)
+
+leal(x2, cesar) | ~homem(x4) V ~soberano(y1) V ~tentaAssassinar(x4,y1) V ~leal(x4, y1)   -   (x4 = marcos, y1 = cesar)
+~homem(x4) V ~soberano(y1) V ~tentaAssassinar(x4,y1)
+
+~homem(x4) V ~soberano(y1) V ~tentaAssassinar(x4,y1)   |   homem(marcos)
+~soberano(y1) V ~tentaAssassinar(x4,y1)
+
+~soberano(y1) V ~tentaAssassinar(x4,y1)   |   soberano(cesar)
+~tentaAssassinar(x4,y1)
+
+~tentaAssassinar(x4,y1)   |   tentaAssasinar(marcos, cesar)
+contradição
+
+2) Método da resolução
+
+a)	1.	(P ^ (~Q V R)) -> ((P ^ ~Q) V (P ^ R))
+	2.	~((P ^ (~Q V R)) -> ((P ^ ~Q) V (P ^ R)))		negação do teorema
+	3.	~(~(P ^ (~Q V R)) V ((P ^ ~Q) V (P ^ R)))		eliminar ->
+	4.	~(~(P ^ (~Q V R))) ^ ~((P ^ ~Q) V (P ^ R))		redução do escopo das negações
+	5.	P ^ (~Q V R) ^ ~((P ^ ~Q) V (P ^ R))			redução do escopo das negações
+	6.	P ^ (~Q V R) ^ (~(P ^ ~Q) ^ ~(P ^ R))			redução do escopo das negações
+	7.	P ^ (~Q V R) ^ ((~P V ~Q) ^ (~P V ~R))			redução do escopo das negações
+	8.	P ^ (~Q V R) ^ (~P V ~Q) ^ (~P V ~R)			CNF
+	
+	Aplicar resolução:
+	(1) P
+	(2) (~Q V R)
+	(3) (~P V Q)
+	(4) (~P V ~R)
+	
+	Resolução:
+	(5) Q de (3) e (1)
+	(6) R de (5) e (2)
+	(7) ~P de (6) e (4)
+	Contradição de (1) e (7)
+	
+b)	1.	∃x.∀y.P(x, y) -> ∀y.∃x.P(x, y)
+	2.	~(∃x.∀y.P(x, y) -> ∀y.∃x.P(x, y))						negação do teorema
+	3.	~(~(∃x.∀y.P(x, y)) V ∀y.∃x.P(x, y))						eliminar ->
+	4.	~(~(∃x.∀y.P(x, y))) ^ ~(∀y.∃x.P(x, y))					redução do escopo das negações
+	5.	∃x.∀y.P(x, y) ^ ∃y.∀x.~P(x, y)							redução do escopo das negações
+	6.	∃x1.∀y1.P(x1, y1) ^ ∃y2.∀x2.~P(x2, y2)					substituição de nomes
+	7.	∃x1.∀y1.∃y2.∀x2.(P(x1, y1) ^ ~P(x2, y2))				mover quantificadores
+	8.	(P(x1, f(y1)) ^ ~P(x2, f(y2)))							eliminação dos quantificadores
+	9.	(P(a, b) ^ ~P(a, b)), {x1/a, x2/a, f(y1)/b, f(y2)/b}	eliminação dos quantificadores
+	10.	{}														contradição
+
+	Aplicar resolução:
+	(1) P(a, y1)
+	(2) ~P(a, y1)
+	
+	Resolução:
+	Contradição de (1) e (2)
+	
+c)	1.	∃x.(P(x) ^ Q(x)) -> (∃x.P(x) ^ ∃x.Q(x))
+	2.	~(∃x.(P(x) ^ Q(x)) -> (∃x.P(x) ^ ∃x.Q(x)))							sssnegação do teorema
+	3.	~(~(∃x.(P(x) ^ Q(x))) V (∃x.P(x) ^ ∃x.Q(x)))						eliminar ->
+	4.	~(~(∃x.(P(x) ^ Q(x)))) ^ ~(∃x.P(x) ^ ∃x.Q(x))						redução do escopo das negações
+	5.	∃x.(P(x) ^ Q(x)) ^ (~(∃x.P(x)) V ~(∃x.Q(x)))						redução do escopo das negações
+	6.	∃x.(P(x) ^ Q(x)) ^ (∀x.~P(x) V ∀x.~Q(x))							redução do escopo das negações
+	7.	(∃x.P(x) ^ ∃x.Q(x)) ^ (∀x.~P(x) V ∀x.~Q(x))							distributiva
+	8.	(∃x1.P(x1) ^ ∃x2.Q(x2)) ^ (∀x3.~P(x3) V ∀x4.~Q(x4))					substituição de nomes
+	9.	∃x1.∃x2.∀x3.∀x4.(((P(x1) ^ Q(x2)) ^ (~P(x3) V ~Q(x4)))				mover quantificadores
+	10.	(P(x1) ^ Q(x2)) ^ (~P(f(x3)) V ~Q(f(x4)))							eliminação dos quantificadores
+	11.	(P(a) ^ Q(b)) ^ (~P(a) V ~Q(b)), {x1/a, x2/b, f(x3)/a, f(x4)/b)}	eliminação dos quantificadores
+	
+	Aplicar resolução:
+	(1) P(a)
+	(2)	Q(b)
+	(3) (~P(a) V ~Q(b))
+	
+	Resolução:
+	(4) ~P(a) de (2) e (3)
+	Contradição de (1) e (4)
+	
+3) Método de Tableaux
+
+a)	1.	(P ^ ~Q) -> ~(P -> Q)
+	2.	~((P ^ ~Q) -> ~(P -> Q))		negação do teorema
+	3.	~(~(P ^ ~Q) V ~(~P V Q))		eliminar ->
+	4.	~(~(P ^ ~Q)) V ~(~(~P V Q))		redução do escopo das negações
+	5.	(P ^ ~Q) V (~P V Q)				redução do escopo das negações
+	6.	P de (5)
+	7.	~Q de (5)
+	8.	~P | Q de (5)
+	Contradição entre P e ~P de (6) e (8)
+
+b)	1.	∃x.(P(x) ^ Q(x)) -> (∃x.P(x) ^ ∃x.Q(x))
+	2.	~(∃x.(P(x) ^ Q(x)) -> (∃x.P(x) ^ ∃x.Q(x)))							snegação do teorema
+	3.	~(~(∃x.(P(x) ^ Q(x))) V (∃x.P(x) ^ ∃x.Q(x)))						eliminar ->
+	4.	~(~(∃x.(P(x) ^ Q(x)))) ^ ~(∃x.P(x) ^ ∃x.Q(x))						redução do escopo das negações
+	5.	∃x.(P(x) ^ Q(x)) ^ (~(∃x.P(x)) V ~(∃x.Q(x)))						redução do escopo das negações
+	6.	∃x.(P(x) ^ Q(x)) ^ (∀x.~P(x) V ∀x.~Q(x))							redução do escopo das negações
+	7.	(∃x.P(x) ^ ∃x.Q(x)) ^ (∀x.~P(x) V ∀x.~Q(x))							distributiva
+	8.	(∃x1.P(x1) ^ ∃x2.Q(x2)) ^ (∀x3.~P(x3) V ∀x4.~Q(x4))					substituição de nomes
+	9.	∃x1.∃x2.∀x3.∀x4.(((P(x1) ^ Q(x2)) ^ (~P(x3) V ~Q(x4)))				mover quantificadores
+	10.	(P(x1) ^ Q(x2)) ^ (~P(f(x3)) V ~Q(f(x4)))							eliminação dos quantificadores
+	11.	(P(a) ^ Q(b)) ^ (~P(a) V ~Q(b)), {x1/a, x2/b, f(x3)/a, f(x4)/b)}	eliminação dos quantificadores
+	12.	P(a) de (11)
+	13.	Q(b) de (11)
+	14.	~P(a) | ~Q(b) de (11)
+	Contradição entre P(a) e ~P(a) de (12) e (14)
+
+c)	1.	∀x.(P(x) V Q(x)) -> (∃x.P(x) V ∀x.Q(x))
+	2.	~(∀x.(P(x) V Q(x)) -> (∃x.P(x) V ∀x.Q(x)))							negação do teorema
+	3.	~(~(∀x.(P(x) V Q(x))) V (∃x.P(x) V ∀x.Q(x)))						eliminar ->
+	4.	∀x.(P(x) V Q(x)) ^ ~(∃x.P(x) V ∀x.Q(x)) 							redução do escopo das negações
+	5.	∀x.(P(x) V Q(x)) ^ (∀x.~P(x) ^ ∃x.~Q(x))							redução do escopo das negações
+	6.	(∀x.P(x) V ∀x.Q(x)) ^ (∀x.~P(x) ^ ∃x.~Q(x))							distributiva
+	7.	(∀x1.P(x1) V ∀x2.Q(x2)) ^ (∀x3.~P(x3) ^ ∃x4.~Q(x4))					substituição de nomes
+	8.	∀x1.∀x2.∀x3.∃x4.((P(x1) V Q(x2)) ^ (~P(x3) ^ ~Q(x4)))				mover quantificadores
+	9.	(P(f(x1)) V Q(f(x2))) ^ ~P(f(x3)) ^ ~Q(x4),							eliminação dos quantificadores
+	10.	(P(a) V Q(b)) ^ ~P(a) ^ ~Q(b), {f(x1)/a, f(x2)/b, f(x3)/a, x4/b}	eliminação dos quantificadores
+	11.	~P(a) de (10)
+	12.	~Q(b) de (10)
+	13.	P(a) | Q(b) de (10)
+	Contradição entre ~P(a) e P(a) de (11) e (13)

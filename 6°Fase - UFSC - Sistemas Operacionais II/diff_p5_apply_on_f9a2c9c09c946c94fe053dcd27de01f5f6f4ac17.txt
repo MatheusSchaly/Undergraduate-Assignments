@@ -1,0 +1,5486 @@
+diff --git a/.gitignore b/.gitignore
+new file mode 100644
+index 0000000..9a1b2be
+--- /dev/null
++++ b/.gitignore
+@@ -0,0 +1,56 @@
++# Prerequisites
++*.d
++
++# Object files
++*.o
++*.ko
++*.obj
++*.elf
++
++# Linker output
++*.ilk
++*.map
++*.exp
++
++# Precompiled Headers
++*.gch
++*.pch
++
++# Libraries
++*.lib
++*.a
++*.la
++*.lo
++
++# Shared objects (inc. Windows DLLs)
++*.dll
++*.so
++*.so.*
++*.dylib
++
++# Executables
++*.exe
++*.out
++*.app
++*.i*86
++*.x86_64
++*.hex
++
++# Debug files
++*.dSYM/
++*.su
++*.idb
++*.pdb
++
++# Kernel Module Compile Results
++*.mod*
++*.cmd
++.tmp_versions/
++modules.order
++Module.symvers
++Mkfile.old
++dkms.conf
++
++# bolovo
++diff_*
++img/*
+\ No newline at end of file
+diff --git a/README.md b/README.md
+index 28d7fc1..3883e23 100644
+--- a/README.md
++++ b/README.md
+@@ -57,3 +57,28 @@ See also the list of [contributors](https://epos.lisha.ufsc.br/EPOS+Developers)
+ ## License
+ 
+ This project is licensed under the GPL 2.0 License - see the [LICENSE](LICENSE) file for details
++
++# P5:
++
++## How to run app_loader
++
++make APPLICATION=hello <all optional>
++make APPLICATION=app_loader <all optional>
++./bin/eposmkbi . ./img/loader.img ./img/app_loader ./img/hello
++/usr/bin/arm-none-eabi-objcopy -O binary img/loader.img img/app_loader.bin
++
++make APPLICATION=app_loader <run / debug>
++
++But we've made that available on the execute_app_loader.sh script
++
++## app_loader status:
++
++Appears to be working.
++
++## IPC status:
++
++The solution seems on the right path, but there were a lot of weird errors.
++
++The apps sseg_writer and sseg_reader where meant to be the proof of concept,
++    we were able to build the classes, syscall and messaging that deals with the
++    shared segment stuff.
+diff --git a/app/app_loader/app_loader.cc b/app/app_loader/app_loader.cc
+new file mode 100644
+index 0000000..5d3e59f
+--- /dev/null
++++ b/app/app_loader/app_loader.cc
+@@ -0,0 +1,45 @@
++#include <utility/ostream.h>
++
++#include<utility/elf.h>
++
++#include <syscall/stub_loader.h>
++#include <syscall/stub_thread.h>
++#include <utility/load_app.h>
++
++#include <syscall/stub_segment.h>
++
++using namespace EPOS;
++
++OStream cout;
++
++int main(int argc, char** argv)
++{
++    cout << "Loader!" << endl;    
++
++    cout << "Argc: " << argc << endl;
++    cout << "Argv: " << argv << " / " << reinterpret_cast<unsigned int> (argv) << endl;
++
++    Stub_Loader * sld = new Stub_Loader();
++    cout << "Carregando aplicações:" << endl;
++
++    int tam_proximo_app = 0;
++    int tam_app = 0;
++    int off_set = 0;
++    int i = 1;
++    unsigned int addr = reinterpret_cast<unsigned int> (argv);
++
++    if (argc)
++    do {
++        tam_app = *(reinterpret_cast<int*> (addr + off_set));
++        sld -> new_app(off_set, addr);
++        
++        tam_proximo_app = *(reinterpret_cast<int*> (addr + off_set + tam_app + 4));
++        off_set = tam_app + 4;
++
++        cout << "Aplicação[" << i << "](" << tam_app << ") caregada, proxima tem tamanho:" << tam_proximo_app << endl;
++        i++;
++    } while (tam_proximo_app);
++
++    cout << "Fim Loader!" << endl;
++    return 0;
++}
+diff --git a/app/app_loader/app_loader_traits.h b/app/app_loader/app_loader_traits.h
+new file mode 100644
+index 0000000..3e4b438
+--- /dev/null
++++ b/app/app_loader/app_loader_traits.h
+@@ -0,0 +1,154 @@
++#ifndef __traits_h
++#define __traits_h
++
++#include <system/config.h>
++
++__BEGIN_SYS
++
++// Build
++template<> struct Traits<Build>: public Traits_Tokens
++{
++    // Basic configuration
++    static const unsigned int MODE = KERNEL;
++    static const unsigned int ARCHITECTURE = ARMv7;
++    static const unsigned int MACHINE = Cortex;
++    static const unsigned int MODEL = Raspberry_Pi3;
++    static const unsigned int CPUS = 1;
++    static const unsigned int NODES = 1; // (> 1 => NETWORKING)
++    static const unsigned int EXPECTED_SIMULATION_TIME = 10; // s (0 => not simulated)
++
++    // Default flags
++    static const bool enabled = true;
++    static const bool monitored = false;
++    static const bool debugged = true;
++    static const bool hysterically_debugged = false;
++
++    // Default aspects
++    typedef ALIST<> ASPECTS;
++};
++
++
++// Utilities
++template<> struct Traits<Debug>: public Traits<Build>
++{
++    static const bool error   = true;
++    static const bool warning = true;
++    static const bool info    = false;
++    static const bool trace   = true;
++};
++
++template<> struct Traits<Lists>: public Traits<Build>
++{
++    static const bool debugged = hysterically_debugged;
++};
++
++template<> struct Traits<Spin>: public Traits<Build>
++{
++    static const bool debugged = hysterically_debugged;
++};
++
++template<> struct Traits<Heaps>: public Traits<Build>
++{
++    static const bool debugged = hysterically_debugged;
++};
++
++template<> struct Traits<Observers>: public Traits<Build>
++{
++    // Some observed objects are created before initializing the Display
++    // Enabling debug may cause trouble in some Machines
++    static const bool debugged = false;
++};
++
++
++// System Parts (mostly to fine control debugging)
++template<> struct Traits<Boot>: public Traits<Build>
++{
++};
++
++template<> struct Traits<Setup>: public Traits<Build>
++{
++};
++
++template<> struct Traits<Init>: public Traits<Build>
++{
++};
++
++template<> struct Traits<Framework>: public Traits<Build>
++{
++};
++
++template<> struct Traits<Aspect>: public Traits<Build>
++{
++    static const bool debugged = hysterically_debugged;
++};
++
++
++__END_SYS
++
++// Mediators
++#include __ARCHITECTURE_TRAITS_H
++#include __MACHINE_TRAITS_H
++
++__BEGIN_SYS
++
++
++// API Components
++template<> struct Traits<Application>: public Traits<Build>
++{
++    static const unsigned int STACK_SIZE = Traits<Machine>::STACK_SIZE;
++    static const unsigned int HEAP_SIZE = Traits<Machine>::HEAP_SIZE;
++    static const unsigned int MAX_THREADS = Traits<Machine>::MAX_THREADS;
++};
++
++template<> struct Traits<System>: public Traits<Build>
++{
++    static const unsigned int mode = Traits<Build>::MODE;
++    static const bool multithread = (Traits<Build>::CPUS > 1) || (Traits<Application>::MAX_THREADS > 1);
++    static const bool multitask = (mode != Traits<Build>::LIBRARY);
++    static const bool multicore = (Traits<Build>::CPUS > 1) && multithread;
++    static const bool multiheap = multitask || Traits<Scratchpad>::enabled;
++
++    static const unsigned long LIFE_SPAN = 1 * YEAR; // s
++    static const unsigned int DUTY_CYCLE = 1000000; // ppm
++
++    static const bool reboot = true;
++
++    static const unsigned int STACK_SIZE = Traits<Machine>::STACK_SIZE;
++    static const unsigned int HEAP_SIZE = (Traits<Application>::MAX_THREADS + 1) * Traits<Application>::STACK_SIZE;
++};
++
++template<> struct Traits<Task>: public Traits<Build>
++{
++    static const bool enabled = Traits<System>::multitask;
++};
++
++template<> struct Traits<Thread>: public Traits<Build>
++{
++    static const bool enabled = Traits<System>::multithread;
++    static const bool smp = Traits<System>::multicore;
++    static const bool trace_idle = hysterically_debugged;
++    static const bool simulate_capacity = false;
++
++    typedef RR Criterion;
++    static const unsigned int QUANTUM = 10000; // us
++};
++
++template<> struct Traits<Scheduler<Thread>>: public Traits<Build>
++{
++    static const bool debugged = Traits<Thread>::trace_idle || hysterically_debugged;
++};
++
++template<> struct Traits<Synchronizer>: public Traits<Build>
++{
++    static const bool enabled = Traits<System>::multithread;
++};
++
++template<> struct Traits<Alarm>: public Traits<Build>
++{
++    static const bool visible = hysterically_debugged;
++};
++
++
++__END_SYS
++
++#endif
+diff --git a/app/app_loader/makefile b/app/app_loader/makefile
+new file mode 100644
+index 0000000..8a6578a
+--- /dev/null
++++ b/app/app_loader/makefile
+@@ -0,0 +1,17 @@
++# EPOS Application Makefile
++
++include ../../makedefs
++
++all: install
++
++$(APPLICATION):	$(APPLICATION).o $(LIB)/*
++		$(ALD) $(ALDFLAGS) -o $@ $(APPLICATION).o
++
++$(APPLICATION).o: $(APPLICATION).cc $(SRC)
++		$(ACC) $(ACCFLAGS) -o $@ $<
++
++install: $(APPLICATION)
++		$(INSTALL) $(APPLICATION) $(IMG)
++
++clean:
++		$(CLEAN) *.o $(APPLICATION)
+diff --git a/app/fork_test/fork_test.cc b/app/fork_test/fork_test.cc
+new file mode 100644
+index 0000000..f821098
+--- /dev/null
++++ b/app/fork_test/fork_test.cc
+@@ -0,0 +1,48 @@
++// EPOS Task Test Program
++
++#include <time.h>
++#include <process.h>
++#include <machine.h>
++#include <utility/fork.h>
++
++using namespace EPOS;
++
++int print_inf();
++
++OStream cout;
++
++int main()
++{
++    cout << "=====Test Task Fork "<< Task::self()->id()<<"=====" << endl;
++
++    if (Task::self()->id() == 0) {
++        fork(&main);
++        fork(&main);
++        cout << "Hello World! I'm Task: "<< Task::self()->id() << endl;
++    }
++    if (Task::self()->id() == 1) {
++        cout << "Konnichiwa I'm Task: "<< Task::self()->id() << endl;
++    }
++    if (Task::self()->id() == 2) {
++        cout << "Annyeong haseyo I'm Task: "<< Task::self()->id() << endl;
++    }
++
++    print_inf();
++    cout << "Sayonara, bye! o/" << endl;
++    return 0;
++}
++
++int print_inf() {
++    Task * task = Task::self();
++    Address_Space * as = task->address_space();
++    cout << "===========================================" << "\n"
++         << "=Address Space page directory: " << as->pd() << "=\n"
++         << "=Code Logical Addr: " << static_cast<void *>(task->code()) << "=\n"
++         << "=Code Physical Addr: " << static_cast<void *>(as->physical(task->code())) << "=\n"
++         << "=Code Size: " << task->code_segment()->size() << " bytes long" << "=\n"
++         << "=Data Logical Addr: " << static_cast<void *>(task->data()) << "=\n"
++         << "=Data Physical Addr: " << static_cast<void *>(as->physical(task->data())) << "=\n"
++         << "=Data Size: " << task->data_segment()->size() << " bytes long" << "=\n"
++         << "===========================================" << endl;
++    return 0;
++}
+diff --git a/app/fork_test/fork_test_traits.h b/app/fork_test/fork_test_traits.h
+new file mode 100644
+index 0000000..bb93335
+--- /dev/null
++++ b/app/fork_test/fork_test_traits.h
+@@ -0,0 +1,244 @@
++#ifndef __traits_h
++#define __traits_h
++
++#include <system/config.h>
++
++__BEGIN_SYS
++
++// Build
++template<> struct Traits<Build>: public Traits_Tokens
++{
++    // Basic configuration
++    static const unsigned int MODE = BUILTIN;
++    static const unsigned int ARCHITECTURE = ARMv7;
++    static const unsigned int MACHINE = Cortex;
++    static const unsigned int MODEL = Raspberry_Pi3;
++    static const unsigned int CPUS = 1;
++    static const unsigned int NODES = 1; // (> 1 => NETWORKING)
++    static const unsigned int EXPECTED_SIMULATION_TIME = 60; // s (0 => not simulated)
++
++    // Default flags
++    static const bool enabled = true;
++    static const bool monitored = false;
++    static const bool debugged = true;
++    static const bool hysterically_debugged = false;
++
++    // Default aspects
++    typedef ALIST<> ASPECTS;
++};
++
++
++// Utilities
++template<> struct Traits<Debug>: public Traits<Build>
++{
++    static const bool error   = true;
++    static const bool warning = true;
++    static const bool info    = false;
++    static const bool trace   = false;
++};
++
++template<> struct Traits<Lists>: public Traits<Build>
++{
++    static const bool debugged = hysterically_debugged;
++};
++
++template<> struct Traits<Spin>: public Traits<Build>
++{
++    static const bool debugged = hysterically_debugged;
++};
++
++template<> struct Traits<Heaps>: public Traits<Build>
++{
++    static const bool debugged = hysterically_debugged;
++};
++
++template<> struct Traits<Ciphers>: public Traits<Build>
++{
++};
++
++template<> struct Traits<Observers>: public Traits<Build>
++{
++    // Some observed objects are created before initializing the Display
++    // Enabling debug may cause trouble in some Machines
++    static const bool debugged = false;
++};
++
++
++// System Parts (mostly to fine control debugging)
++template<> struct Traits<Boot>: public Traits<Build>
++{
++};
++
++template<> struct Traits<Setup>: public Traits<Build>
++{
++};
++
++template<> struct Traits<Init>: public Traits<Build>
++{
++};
++
++template<> struct Traits<Framework>: public Traits<Build>
++{
++};
++
++template<> struct Traits<Aspect>: public Traits<Build>
++{
++    static const bool debugged = hysterically_debugged;
++
++    typedef ALIST<Shared, Authenticated> ASPECTS;
++};
++
++
++__END_SYS
++
++// Mediators
++#include __ARCHITECTURE_TRAITS_H
++#include __MACHINE_TRAITS_H
++
++__BEGIN_SYS
++
++
++// API Components
++template<> struct Traits<Application>: public Traits<Build>
++{
++    static const unsigned int STACK_SIZE = Traits<Machine>::STACK_SIZE;
++    static const unsigned int HEAP_SIZE = Traits<Machine>::HEAP_SIZE;
++    static const unsigned int MAX_THREADS = Traits<Machine>::MAX_THREADS;
++};
++
++template<> struct Traits<System>: public Traits<Build>
++{
++    static const unsigned int mode = Traits<Build>::MODE;
++    static const bool multithread = (Traits<Build>::CPUS > 1) || (Traits<Application>::MAX_THREADS > 1);
++    static const bool multitask = (mode != Traits<Build>::LIBRARY);
++    static const bool multicore = (Traits<Build>::CPUS > 1) && multithread;
++    static const bool multiheap = multitask || Traits<Scratchpad>::enabled;
++
++    static const unsigned long LIFE_SPAN = 1 * YEAR; // s
++    static const unsigned int DUTY_CYCLE = 1000000; // ppm
++
++    static const bool reboot = true;
++
++    static const unsigned int STACK_SIZE = Traits<Machine>::STACK_SIZE;
++    static const unsigned int HEAP_SIZE = (Traits<Application>::MAX_THREADS + 1) * Traits<Application>::STACK_SIZE;
++};
++
++template<> struct Traits<Task>: public Traits<Build>
++{
++    static const bool enabled = Traits<System>::multitask;
++};
++
++template<> struct Traits<Thread>: public Traits<Build>
++{
++    static const bool enabled = Traits<System>::multithread;
++    static const bool smp = Traits<System>::multicore;
++    static const bool simulate_capacity = false;
++    static const bool trace_idle = hysterically_debugged;
++
++    typedef RR Criterion;
++    static const unsigned int QUANTUM = 10000; // us
++};
++
++template<> struct Traits<Scheduler<Thread>>: public Traits<Build>
++{
++    static const bool debugged = Traits<Thread>::trace_idle || hysterically_debugged;
++};
++
++template<> struct Traits<Synchronizer>: public Traits<Build>
++{
++    static const bool enabled = Traits<System>::multithread;
++};
++
++template<> struct Traits<Alarm>: public Traits<Build>
++{
++    static const bool visible = hysterically_debugged;
++};
++
++template<> struct Traits<SmartData>: public Traits<Build>
++{
++    static const unsigned char PREDICTOR = NONE;
++};
++
++template<> struct Traits<Network>: public Traits<Build>
++{
++    typedef LIST<TSTP> NETWORKS;
++
++    static const unsigned int RETRIES = 3;
++    static const unsigned int TIMEOUT = 10; // s
++
++    static const bool enabled = (Traits<Build>::NODES > 1) && (NETWORKS::Length > 0);
++};
++
++template<> struct Traits<ELP>: public Traits<Network>
++{
++    typedef Ethernet NIC_Family;
++    static constexpr unsigned int NICS[] = {0}; // relative to NIC_Family (i.e. Traits<Ethernet>::DEVICES[NICS[i]]
++    static const unsigned int UNITS = COUNTOF(NICS);
++
++    static const bool enabled = Traits<Network>::enabled && (NETWORKS::Count<ELP>::Result > 0);
++};
++
++template<> struct Traits<TSTP>: public Traits<Network>
++{
++    typedef Ethernet NIC_Family;
++    static constexpr unsigned int NICS[] = {0}; // relative to NIC_Family (i.e. Traits<Ethernet>::DEVICES[NICS[i]]
++    static const unsigned int UNITS = COUNTOF(NICS);
++
++    static const unsigned int KEY_SIZE = 16;
++    static const unsigned int RADIO_RANGE = 8000; // approximated radio range in centimeters
++
++    static const bool enabled = Traits<Network>::enabled && (NETWORKS::Count<TSTP>::Result > 0);
++};
++
++template<> struct Traits<IP>: public Traits<Network>
++{
++    typedef Ethernet NIC_Family;
++    static constexpr unsigned int NICS[] = {0};  // relative to NIC_Family (i.e. Traits<Ethernet>::DEVICES[NICS[i]]
++    static const unsigned int UNITS = COUNTOF(NICS);
++
++    struct Default_Config {
++        static const unsigned int  TYPE    = DHCP;
++        static const unsigned long ADDRESS = 0;
++        static const unsigned long NETMASK = 0;
++        static const unsigned long GATEWAY = 0;
++    };
++
++    template<unsigned int UNIT>
++    struct Config: public Default_Config {};
++
++    static const unsigned int TTL  = 0x40; // Time-to-live
++
++    static const bool enabled = Traits<Network>::enabled && (NETWORKS::Count<IP>::Result > 0);
++};
++
++template<> struct Traits<UDP>: public Traits<Network>
++{
++    static const bool checksum = true;
++};
++
++template<> struct Traits<TCP>: public Traits<Network>
++{
++    static const unsigned int WINDOW = 4096;
++};
++
++template<> struct Traits<DHCP>: public Traits<Network>
++{
++};
++
++template<> struct Traits<Monitor>: public Traits<Build>
++{
++    static const bool enabled = monitored;
++
++    static constexpr System_Event SYSTEM_EVENTS[]                 = {ELAPSED_TIME, DEADLINE_MISSES, CPU_EXECUTION_TIME, THREAD_EXECUTION_TIME, RUNNING_THREAD};
++    static constexpr unsigned int SYSTEM_EVENTS_FREQUENCIES[]     = {           1,               1,                  1,                     1,              1}; // in Hz
++
++    static constexpr PMU_Event PMU_EVENTS[]                       = {COMMITED_INSTRUCTIONS, BRANCHES, CACHE_MISSES};
++    static constexpr unsigned int PMU_EVENTS_FREQUENCIES[]        = {                    1,        1,            1}; // in Hz
++
++    static constexpr unsigned int TRANSDUCER_EVENTS[]             = {CPU_VOLTAGE, CPU_TEMPERATURE};
++    static constexpr unsigned int TRANSDUCER_EVENTS_FREQUENCIES[] = {          1,           1}; // in Hz
++};
++
++__END_SYS
++
++#endif
+diff --git a/app/fork_test/makefile b/app/fork_test/makefile
+new file mode 100644
+index 0000000..8a6578a
+--- /dev/null
++++ b/app/fork_test/makefile
+@@ -0,0 +1,17 @@
++# EPOS Application Makefile
++
++include ../../makedefs
++
++all: install
++
++$(APPLICATION):	$(APPLICATION).o $(LIB)/*
++		$(ALD) $(ALDFLAGS) -o $@ $(APPLICATION).o
++
++$(APPLICATION).o: $(APPLICATION).cc $(SRC)
++		$(ACC) $(ACCFLAGS) -o $@ $<
++
++install: $(APPLICATION)
++		$(INSTALL) $(APPLICATION) $(IMG)
++
++clean:
++		$(CLEAN) *.o $(APPLICATION)
+diff --git a/app/hello/hello.cc b/app/hello/hello.cc
+index 40c7c05..07a069d 100644
+--- a/app/hello/hello.cc
++++ b/app/hello/hello.cc
+@@ -1,4 +1,5 @@
+ #include <utility/ostream.h>
++#include <syscall/stub_thread.h>
+ 
+ using namespace EPOS;
+ 
+@@ -6,7 +7,8 @@ OStream cout;
+ 
+ int main()
+ {
+-    cout << "Hello world!" << endl;
+-
++    cout << endl << "*********************************" << endl;
++    cout << endl << "           Hello world!          " << endl;
++    cout << endl << "*********************************" << endl;
+     return 0;
+ }
+diff --git a/app/hello/hello_traits.h b/app/hello/hello_traits.h
+index 457943e..2dd62d7 100644
+--- a/app/hello/hello_traits.h
++++ b/app/hello/hello_traits.h
+@@ -9,7 +9,7 @@ __BEGIN_SYS
+ template<> struct Traits<Build>: public Traits_Tokens
+ {
+     // Basic configuration
+-    static const unsigned int MODE = BUILTIN;
++    static const unsigned int MODE = KERNEL;
+     static const unsigned int ARCHITECTURE = ARMv7;
+     static const unsigned int MACHINE = Cortex;
+     static const unsigned int MODEL = Raspberry_Pi3;
+@@ -34,7 +34,7 @@ template<> struct Traits<Debug>: public Traits<Build>
+     static const bool error   = true;
+     static const bool warning = true;
+     static const bool info    = false;
+-    static const bool trace   = false;
++    static const bool trace   = true;
+ };
+ 
+ template<> struct Traits<Lists>: public Traits<Build>
+diff --git a/app/hello_fork/hello_fork.cc b/app/hello_fork/hello_fork.cc
+new file mode 100644
+index 0000000..ecddcd7
+--- /dev/null
++++ b/app/hello_fork/hello_fork.cc
+@@ -0,0 +1,16 @@
++#include <utility/ostream.h>
++#include <syscall/stub_fork.h>
++
++using namespace EPOS;
++
++OStream cout;
++
++int main()
++{
++    cout << "Hello world!" << endl;
++    int r;
++    r = fork();
++    cout << "HAHAHA FUNCIONOU : " << r << endl;
++    cout << "HOHOHO FUNCIONOU : " << r << endl;
++    return 0;
++}
+diff --git a/app/hello_fork/hello_fork_traits.h b/app/hello_fork/hello_fork_traits.h
+new file mode 100644
+index 0000000..2dd62d7
+--- /dev/null
++++ b/app/hello_fork/hello_fork_traits.h
+@@ -0,0 +1,154 @@
++#ifndef __traits_h
++#define __traits_h
++
++#include <system/config.h>
++
++__BEGIN_SYS
++
++// Build
++template<> struct Traits<Build>: public Traits_Tokens
++{
++    // Basic configuration
++    static const unsigned int MODE = KERNEL;
++    static const unsigned int ARCHITECTURE = ARMv7;
++    static const unsigned int MACHINE = Cortex;
++    static const unsigned int MODEL = Raspberry_Pi3;
++    static const unsigned int CPUS = 1;
++    static const unsigned int NODES = 1; // (> 1 => NETWORKING)
++    static const unsigned int EXPECTED_SIMULATION_TIME = 60; // s (0 => not simulated)
++
++    // Default flags
++    static const bool enabled = true;
++    static const bool monitored = false;
++    static const bool debugged = true;
++    static const bool hysterically_debugged = false;
++
++    // Default aspects
++    typedef ALIST<> ASPECTS;
++};
++
++
++// Utilities
++template<> struct Traits<Debug>: public Traits<Build>
++{
++    static const bool error   = true;
++    static const bool warning = true;
++    static const bool info    = false;
++    static const bool trace   = true;
++};
++
++template<> struct Traits<Lists>: public Traits<Build>
++{
++    static const bool debugged = hysterically_debugged;
++};
++
++template<> struct Traits<Spin>: public Traits<Build>
++{
++    static const bool debugged = hysterically_debugged;
++};
++
++template<> struct Traits<Heaps>: public Traits<Build>
++{
++    static const bool debugged = hysterically_debugged;
++};
++
++template<> struct Traits<Observers>: public Traits<Build>
++{
++    // Some observed objects are created before initializing the Display
++    // Enabling debug may cause trouble in some Machines
++    static const bool debugged = false;
++};
++
++
++// System Parts (mostly to fine control debugging)
++template<> struct Traits<Boot>: public Traits<Build>
++{
++};
++
++template<> struct Traits<Setup>: public Traits<Build>
++{
++};
++
++template<> struct Traits<Init>: public Traits<Build>
++{
++};
++
++template<> struct Traits<Framework>: public Traits<Build>
++{
++};
++
++template<> struct Traits<Aspect>: public Traits<Build>
++{
++    static const bool debugged = hysterically_debugged;
++};
++
++
++__END_SYS
++
++// Mediators
++#include __ARCHITECTURE_TRAITS_H
++#include __MACHINE_TRAITS_H
++
++__BEGIN_SYS
++
++
++// API Components
++template<> struct Traits<Application>: public Traits<Build>
++{
++    static const unsigned int STACK_SIZE = Traits<Machine>::STACK_SIZE;
++    static const unsigned int HEAP_SIZE = Traits<Machine>::HEAP_SIZE;
++    static const unsigned int MAX_THREADS = Traits<Machine>::MAX_THREADS;
++};
++
++template<> struct Traits<System>: public Traits<Build>
++{
++    static const unsigned int mode = Traits<Build>::MODE;
++    static const bool multithread = (Traits<Build>::CPUS > 1) || (Traits<Application>::MAX_THREADS > 1);
++    static const bool multitask = (mode != Traits<Build>::LIBRARY);
++    static const bool multicore = (Traits<Build>::CPUS > 1) && multithread;
++    static const bool multiheap = multitask || Traits<Scratchpad>::enabled;
++
++    static const unsigned long LIFE_SPAN = 1 * YEAR; // s
++    static const unsigned int DUTY_CYCLE = 1000000; // ppm
++
++    static const bool reboot = true;
++
++    static const unsigned int STACK_SIZE = Traits<Machine>::STACK_SIZE;
++    static const unsigned int HEAP_SIZE = (Traits<Application>::MAX_THREADS + 1) * Traits<Application>::STACK_SIZE;
++};
++
++template<> struct Traits<Task>: public Traits<Build>
++{
++    static const bool enabled = Traits<System>::multitask;
++};
++
++template<> struct Traits<Thread>: public Traits<Build>
++{
++    static const bool enabled = Traits<System>::multithread;
++    static const bool smp = Traits<System>::multicore;
++    static const bool trace_idle = hysterically_debugged;
++    static const bool simulate_capacity = false;
++
++    typedef RR Criterion;
++    static const unsigned int QUANTUM = 10000; // us
++};
++
++template<> struct Traits<Scheduler<Thread>>: public Traits<Build>
++{
++    static const bool debugged = Traits<Thread>::trace_idle || hysterically_debugged;
++};
++
++template<> struct Traits<Synchronizer>: public Traits<Build>
++{
++    static const bool enabled = Traits<System>::multithread;
++};
++
++template<> struct Traits<Alarm>: public Traits<Build>
++{
++    static const bool visible = hysterically_debugged;
++};
++
++
++__END_SYS
++
++#endif
+diff --git a/app/hello_fork/makefile b/app/hello_fork/makefile
+new file mode 100644
+index 0000000..8a6578a
+--- /dev/null
++++ b/app/hello_fork/makefile
+@@ -0,0 +1,17 @@
++# EPOS Application Makefile
++
++include ../../makedefs
++
++all: install
++
++$(APPLICATION):	$(APPLICATION).o $(LIB)/*
++		$(ALD) $(ALDFLAGS) -o $@ $(APPLICATION).o
++
++$(APPLICATION).o: $(APPLICATION).cc $(SRC)
++		$(ACC) $(ACCFLAGS) -o $@ $<
++
++install: $(APPLICATION)
++		$(INSTALL) $(APPLICATION) $(IMG)
++
++clean:
++		$(CLEAN) *.o $(APPLICATION)
+diff --git a/app/sseg_reader/makefile b/app/sseg_reader/makefile
+new file mode 100644
+index 0000000..8a6578a
+--- /dev/null
++++ b/app/sseg_reader/makefile
+@@ -0,0 +1,17 @@
++# EPOS Application Makefile
++
++include ../../makedefs
++
++all: install
++
++$(APPLICATION):	$(APPLICATION).o $(LIB)/*
++		$(ALD) $(ALDFLAGS) -o $@ $(APPLICATION).o
++
++$(APPLICATION).o: $(APPLICATION).cc $(SRC)
++		$(ACC) $(ACCFLAGS) -o $@ $<
++
++install: $(APPLICATION)
++		$(INSTALL) $(APPLICATION) $(IMG)
++
++clean:
++		$(CLEAN) *.o $(APPLICATION)
+diff --git a/app/sseg_reader/sseg_reader.cc b/app/sseg_reader/sseg_reader.cc
+new file mode 100644
+index 0000000..4500ffb
+--- /dev/null
++++ b/app/sseg_reader/sseg_reader.cc
+@@ -0,0 +1,45 @@
++// #include <utility/ostream.h>
++
++#include <syscall/stub_shared_segment.h>
++#include <syscall/stub_segment.h>
++#include <syscall/stub_task.h>
++
++using namespace EPOS;
++
++OStream cout;
++
++typedef long unsigned int Log_Addr;
++typedef long unsigned int Phy_Addr;
++
++int main()
++{
++    cout << "Reader begins" << endl;
++    
++    // TODO resolver com argc e argv esse port
++    unsigned int port = 1;
++
++    // Shared_Segment * sseg = new Shared_Segment(port, 1024, MMU::Flags::APPD);
++    Stub_Shared_Segment * sseg = new Stub_Shared_Segment(port, 1024);
++
++    Phy_Addr phy_addr = sseg->phy_address();
++    cout << "phy_addr_reader=" << phy_addr << endl;
++
++    Log_Addr sseg_log_addr = Stub_Task::active()->address_space()->attach(reinterpret_cast<Stub_Segment *>(sseg));
++    cout << "sseg_log_addr_reader=" << sseg_log_addr << endl;
++
++    long unsigned int * a = sseg_log_addr;    
++    cout << "reader pointer: " << *a << endl;
++
++    char * letters = reinterpret_cast<char *>(a + sizeof(long unsigned int));
++    cout << "letters:" << endl;
++    for(int i=0;i<23;i++){
++        cout << letters[i];
++    }
++    
++    cout << "Reader is finishing" << endl;
++    Stub_Task::active()->address_space()->detach(reinterpret_cast<Stub_Segment *>(sseg));
++
++    delete sseg; 
++
++    return 0;
++}
+diff --git a/app/sseg_reader/sseg_reader_traits.h b/app/sseg_reader/sseg_reader_traits.h
+new file mode 100644
+index 0000000..3e4b438
+--- /dev/null
++++ b/app/sseg_reader/sseg_reader_traits.h
+@@ -0,0 +1,154 @@
++#ifndef __traits_h
++#define __traits_h
++
++#include <system/config.h>
++
++__BEGIN_SYS
++
++// Build
++template<> struct Traits<Build>: public Traits_Tokens
++{
++    // Basic configuration
++    static const unsigned int MODE = KERNEL;
++    static const unsigned int ARCHITECTURE = ARMv7;
++    static const unsigned int MACHINE = Cortex;
++    static const unsigned int MODEL = Raspberry_Pi3;
++    static const unsigned int CPUS = 1;
++    static const unsigned int NODES = 1; // (> 1 => NETWORKING)
++    static const unsigned int EXPECTED_SIMULATION_TIME = 10; // s (0 => not simulated)
++
++    // Default flags
++    static const bool enabled = true;
++    static const bool monitored = false;
++    static const bool debugged = true;
++    static const bool hysterically_debugged = false;
++
++    // Default aspects
++    typedef ALIST<> ASPECTS;
++};
++
++
++// Utilities
++template<> struct Traits<Debug>: public Traits<Build>
++{
++    static const bool error   = true;
++    static const bool warning = true;
++    static const bool info    = false;
++    static const bool trace   = true;
++};
++
++template<> struct Traits<Lists>: public Traits<Build>
++{
++    static const bool debugged = hysterically_debugged;
++};
++
++template<> struct Traits<Spin>: public Traits<Build>
++{
++    static const bool debugged = hysterically_debugged;
++};
++
++template<> struct Traits<Heaps>: public Traits<Build>
++{
++    static const bool debugged = hysterically_debugged;
++};
++
++template<> struct Traits<Observers>: public Traits<Build>
++{
++    // Some observed objects are created before initializing the Display
++    // Enabling debug may cause trouble in some Machines
++    static const bool debugged = false;
++};
++
++
++// System Parts (mostly to fine control debugging)
++template<> struct Traits<Boot>: public Traits<Build>
++{
++};
++
++template<> struct Traits<Setup>: public Traits<Build>
++{
++};
++
++template<> struct Traits<Init>: public Traits<Build>
++{
++};
++
++template<> struct Traits<Framework>: public Traits<Build>
++{
++};
++
++template<> struct Traits<Aspect>: public Traits<Build>
++{
++    static const bool debugged = hysterically_debugged;
++};
++
++
++__END_SYS
++
++// Mediators
++#include __ARCHITECTURE_TRAITS_H
++#include __MACHINE_TRAITS_H
++
++__BEGIN_SYS
++
++
++// API Components
++template<> struct Traits<Application>: public Traits<Build>
++{
++    static const unsigned int STACK_SIZE = Traits<Machine>::STACK_SIZE;
++    static const unsigned int HEAP_SIZE = Traits<Machine>::HEAP_SIZE;
++    static const unsigned int MAX_THREADS = Traits<Machine>::MAX_THREADS;
++};
++
++template<> struct Traits<System>: public Traits<Build>
++{
++    static const unsigned int mode = Traits<Build>::MODE;
++    static const bool multithread = (Traits<Build>::CPUS > 1) || (Traits<Application>::MAX_THREADS > 1);
++    static const bool multitask = (mode != Traits<Build>::LIBRARY);
++    static const bool multicore = (Traits<Build>::CPUS > 1) && multithread;
++    static const bool multiheap = multitask || Traits<Scratchpad>::enabled;
++
++    static const unsigned long LIFE_SPAN = 1 * YEAR; // s
++    static const unsigned int DUTY_CYCLE = 1000000; // ppm
++
++    static const bool reboot = true;
++
++    static const unsigned int STACK_SIZE = Traits<Machine>::STACK_SIZE;
++    static const unsigned int HEAP_SIZE = (Traits<Application>::MAX_THREADS + 1) * Traits<Application>::STACK_SIZE;
++};
++
++template<> struct Traits<Task>: public Traits<Build>
++{
++    static const bool enabled = Traits<System>::multitask;
++};
++
++template<> struct Traits<Thread>: public Traits<Build>
++{
++    static const bool enabled = Traits<System>::multithread;
++    static const bool smp = Traits<System>::multicore;
++    static const bool trace_idle = hysterically_debugged;
++    static const bool simulate_capacity = false;
++
++    typedef RR Criterion;
++    static const unsigned int QUANTUM = 10000; // us
++};
++
++template<> struct Traits<Scheduler<Thread>>: public Traits<Build>
++{
++    static const bool debugged = Traits<Thread>::trace_idle || hysterically_debugged;
++};
++
++template<> struct Traits<Synchronizer>: public Traits<Build>
++{
++    static const bool enabled = Traits<System>::multithread;
++};
++
++template<> struct Traits<Alarm>: public Traits<Build>
++{
++    static const bool visible = hysterically_debugged;
++};
++
++
++__END_SYS
++
++#endif
+diff --git a/app/sseg_writer/makefile b/app/sseg_writer/makefile
+new file mode 100644
+index 0000000..8a6578a
+--- /dev/null
++++ b/app/sseg_writer/makefile
+@@ -0,0 +1,17 @@
++# EPOS Application Makefile
++
++include ../../makedefs
++
++all: install
++
++$(APPLICATION):	$(APPLICATION).o $(LIB)/*
++		$(ALD) $(ALDFLAGS) -o $@ $(APPLICATION).o
++
++$(APPLICATION).o: $(APPLICATION).cc $(SRC)
++		$(ACC) $(ACCFLAGS) -o $@ $<
++
++install: $(APPLICATION)
++		$(INSTALL) $(APPLICATION) $(IMG)
++
++clean:
++		$(CLEAN) *.o $(APPLICATION)
+diff --git a/app/sseg_writer/sseg_writer.cc b/app/sseg_writer/sseg_writer.cc
+new file mode 100644
+index 0000000..7901061
+--- /dev/null
++++ b/app/sseg_writer/sseg_writer.cc
+@@ -0,0 +1,50 @@
++#include <utility/ostream.h>
++#include <utility/elf.h>
++#include <architecture.h>
++#include <system.h>
++#include <time.h>
++
++#include <syscall/stub_shared_segment.h>
++#include <syscall/stub_segment.h>
++#include <syscall/stub_task.h>
++
++using namespace EPOS;
++
++OStream cout;
++
++typedef long unsigned int Log_Addr;
++typedef long unsigned int Phy_Addr;
++
++int main()
++{
++    cout << "Writer begins" << endl;
++    
++    // TODO resolver com argc e argv esse port
++    unsigned int port = 1;
++
++    // Criar shared segment stub
++    Stub_Shared_Segment * sseg = new Stub_Shared_Segment(port, 1024);
++    
++    Phy_Addr phy_addr = sseg->phy_address();
++    cout << "phy_addr_writer=" << phy_addr << endl;
++    
++    Log_Addr sseg_log_addr = Stub_Task::active()->address_space()->attach(reinterpret_cast<Stub_Segment *>(sseg));
++    cout << "sseg_log_addr_writer=" << sseg_log_addr << endl;
++    
++    long unsigned int * a = sseg_log_addr;    
++    cout << "writer pointer: " << *a << endl;
++    
++    char * letters = reinterpret_cast<char *>(a + sizeof(long unsigned int));
++    char all_letters[23] = "Test Message to be Read";
++
++    for(int i=0;i<23;i++){
++        letters[i] = all_letters[i];
++    }
++    
++    cout << "writer is finishing" << endl;
++    Stub_Task::active()->address_space()->detach(reinterpret_cast<Stub_Segment *>(sseg));
++
++    delete sseg;
++
++    return 0;
++}
+diff --git a/app/sseg_writer/sseg_writer_traits.h b/app/sseg_writer/sseg_writer_traits.h
+new file mode 100644
+index 0000000..3e4b438
+--- /dev/null
++++ b/app/sseg_writer/sseg_writer_traits.h
+@@ -0,0 +1,154 @@
++#ifndef __traits_h
++#define __traits_h
++
++#include <system/config.h>
++
++__BEGIN_SYS
++
++// Build
++template<> struct Traits<Build>: public Traits_Tokens
++{
++    // Basic configuration
++    static const unsigned int MODE = KERNEL;
++    static const unsigned int ARCHITECTURE = ARMv7;
++    static const unsigned int MACHINE = Cortex;
++    static const unsigned int MODEL = Raspberry_Pi3;
++    static const unsigned int CPUS = 1;
++    static const unsigned int NODES = 1; // (> 1 => NETWORKING)
++    static const unsigned int EXPECTED_SIMULATION_TIME = 10; // s (0 => not simulated)
++
++    // Default flags
++    static const bool enabled = true;
++    static const bool monitored = false;
++    static const bool debugged = true;
++    static const bool hysterically_debugged = false;
++
++    // Default aspects
++    typedef ALIST<> ASPECTS;
++};
++
++
++// Utilities
++template<> struct Traits<Debug>: public Traits<Build>
++{
++    static const bool error   = true;
++    static const bool warning = true;
++    static const bool info    = false;
++    static const bool trace   = true;
++};
++
++template<> struct Traits<Lists>: public Traits<Build>
++{
++    static const bool debugged = hysterically_debugged;
++};
++
++template<> struct Traits<Spin>: public Traits<Build>
++{
++    static const bool debugged = hysterically_debugged;
++};
++
++template<> struct Traits<Heaps>: public Traits<Build>
++{
++    static const bool debugged = hysterically_debugged;
++};
++
++template<> struct Traits<Observers>: public Traits<Build>
++{
++    // Some observed objects are created before initializing the Display
++    // Enabling debug may cause trouble in some Machines
++    static const bool debugged = false;
++};
++
++
++// System Parts (mostly to fine control debugging)
++template<> struct Traits<Boot>: public Traits<Build>
++{
++};
++
++template<> struct Traits<Setup>: public Traits<Build>
++{
++};
++
++template<> struct Traits<Init>: public Traits<Build>
++{
++};
++
++template<> struct Traits<Framework>: public Traits<Build>
++{
++};
++
++template<> struct Traits<Aspect>: public Traits<Build>
++{
++    static const bool debugged = hysterically_debugged;
++};
++
++
++__END_SYS
++
++// Mediators
++#include __ARCHITECTURE_TRAITS_H
++#include __MACHINE_TRAITS_H
++
++__BEGIN_SYS
++
++
++// API Components
++template<> struct Traits<Application>: public Traits<Build>
++{
++    static const unsigned int STACK_SIZE = Traits<Machine>::STACK_SIZE;
++    static const unsigned int HEAP_SIZE = Traits<Machine>::HEAP_SIZE;
++    static const unsigned int MAX_THREADS = Traits<Machine>::MAX_THREADS;
++};
++
++template<> struct Traits<System>: public Traits<Build>
++{
++    static const unsigned int mode = Traits<Build>::MODE;
++    static const bool multithread = (Traits<Build>::CPUS > 1) || (Traits<Application>::MAX_THREADS > 1);
++    static const bool multitask = (mode != Traits<Build>::LIBRARY);
++    static const bool multicore = (Traits<Build>::CPUS > 1) && multithread;
++    static const bool multiheap = multitask || Traits<Scratchpad>::enabled;
++
++    static const unsigned long LIFE_SPAN = 1 * YEAR; // s
++    static const unsigned int DUTY_CYCLE = 1000000; // ppm
++
++    static const bool reboot = true;
++
++    static const unsigned int STACK_SIZE = Traits<Machine>::STACK_SIZE;
++    static const unsigned int HEAP_SIZE = (Traits<Application>::MAX_THREADS + 1) * Traits<Application>::STACK_SIZE;
++};
++
++template<> struct Traits<Task>: public Traits<Build>
++{
++    static const bool enabled = Traits<System>::multitask;
++};
++
++template<> struct Traits<Thread>: public Traits<Build>
++{
++    static const bool enabled = Traits<System>::multithread;
++    static const bool smp = Traits<System>::multicore;
++    static const bool trace_idle = hysterically_debugged;
++    static const bool simulate_capacity = false;
++
++    typedef RR Criterion;
++    static const unsigned int QUANTUM = 10000; // us
++};
++
++template<> struct Traits<Scheduler<Thread>>: public Traits<Build>
++{
++    static const bool debugged = Traits<Thread>::trace_idle || hysterically_debugged;
++};
++
++template<> struct Traits<Synchronizer>: public Traits<Build>
++{
++    static const bool enabled = Traits<System>::multithread;
++};
++
++template<> struct Traits<Alarm>: public Traits<Build>
++{
++    static const bool visible = hysterically_debugged;
++};
++
++
++__END_SYS
++
++#endif
+diff --git a/app/syscall_test/makefile b/app/syscall_test/makefile
+new file mode 100644
+index 0000000..8a6578a
+--- /dev/null
++++ b/app/syscall_test/makefile
+@@ -0,0 +1,17 @@
++# EPOS Application Makefile
++
++include ../../makedefs
++
++all: install
++
++$(APPLICATION):	$(APPLICATION).o $(LIB)/*
++		$(ALD) $(ALDFLAGS) -o $@ $(APPLICATION).o
++
++$(APPLICATION).o: $(APPLICATION).cc $(SRC)
++		$(ACC) $(ACCFLAGS) -o $@ $<
++
++install: $(APPLICATION)
++		$(INSTALL) $(APPLICATION) $(IMG)
++
++clean:
++		$(CLEAN) *.o $(APPLICATION)
+diff --git a/app/syscall_test/syscall_test.cc b/app/syscall_test/syscall_test.cc
+new file mode 100644
+index 0000000..d5dba13
+--- /dev/null
++++ b/app/syscall_test/syscall_test.cc
+@@ -0,0 +1,56 @@
++#include <utility/ostream.h>
++#include <syscall/stub_thread.h>
++#include <syscall/stub_mutex.h>
++
++using namespace EPOS;
++
++OStream cout;
++
++Stub_Mutex m;
++
++int func_a();
++int func_b();
++
++int main()
++{
++    cout << "Hello Syscall!" << endl;
++    m.lock();
++    Stub_Thread * a = new Stub_Thread(&func_a);
++    Stub_Thread * b = new Stub_Thread(&func_b);
++    m.unlock();
++    a->join();
++    for (int i = 0; i < 10000000; ++i) {
++        if (!(i % 100000)) {
++            cout << "Apos A " << i / 100000 << endl;
++        }
++    }
++    b->join();
++    cout << "Bye Syscall!" << endl;
++    return 0;
++}
++
++int func_a(){
++    m.lock();
++    cout << "Funcao A" <<endl;
++    m.unlock();
++    for (int i = 0; i < 10000000; ++i) {
++        if (!(i % 100000)) {
++            cout << "FA " << i / 100000 << endl;
++        }
++    }
++    cout << "Bye A" <<endl;
++    return 0;
++}
++
++int func_b(){
++    m.lock();
++    cout << "Funcao B" <<endl;
++    m.unlock();
++    for (int i = 0; i < 10000000; ++i) {
++        if (!(i % 100000)) {
++            cout << "FB " << i / 100000 << endl;
++        }
++    }
++    cout << "Bye B" <<endl;
++    return 0;
++}
+diff --git a/app/syscall_test/syscall_test_traits.h b/app/syscall_test/syscall_test_traits.h
+new file mode 100644
+index 0000000..2dd62d7
+--- /dev/null
++++ b/app/syscall_test/syscall_test_traits.h
+@@ -0,0 +1,154 @@
++#ifndef __traits_h
++#define __traits_h
++
++#include <system/config.h>
++
++__BEGIN_SYS
++
++// Build
++template<> struct Traits<Build>: public Traits_Tokens
++{
++    // Basic configuration
++    static const unsigned int MODE = KERNEL;
++    static const unsigned int ARCHITECTURE = ARMv7;
++    static const unsigned int MACHINE = Cortex;
++    static const unsigned int MODEL = Raspberry_Pi3;
++    static const unsigned int CPUS = 1;
++    static const unsigned int NODES = 1; // (> 1 => NETWORKING)
++    static const unsigned int EXPECTED_SIMULATION_TIME = 60; // s (0 => not simulated)
++
++    // Default flags
++    static const bool enabled = true;
++    static const bool monitored = false;
++    static const bool debugged = true;
++    static const bool hysterically_debugged = false;
++
++    // Default aspects
++    typedef ALIST<> ASPECTS;
++};
++
++
++// Utilities
++template<> struct Traits<Debug>: public Traits<Build>
++{
++    static const bool error   = true;
++    static const bool warning = true;
++    static const bool info    = false;
++    static const bool trace   = true;
++};
++
++template<> struct Traits<Lists>: public Traits<Build>
++{
++    static const bool debugged = hysterically_debugged;
++};
++
++template<> struct Traits<Spin>: public Traits<Build>
++{
++    static const bool debugged = hysterically_debugged;
++};
++
++template<> struct Traits<Heaps>: public Traits<Build>
++{
++    static const bool debugged = hysterically_debugged;
++};
++
++template<> struct Traits<Observers>: public Traits<Build>
++{
++    // Some observed objects are created before initializing the Display
++    // Enabling debug may cause trouble in some Machines
++    static const bool debugged = false;
++};
++
++
++// System Parts (mostly to fine control debugging)
++template<> struct Traits<Boot>: public Traits<Build>
++{
++};
++
++template<> struct Traits<Setup>: public Traits<Build>
++{
++};
++
++template<> struct Traits<Init>: public Traits<Build>
++{
++};
++
++template<> struct Traits<Framework>: public Traits<Build>
++{
++};
++
++template<> struct Traits<Aspect>: public Traits<Build>
++{
++    static const bool debugged = hysterically_debugged;
++};
++
++
++__END_SYS
++
++// Mediators
++#include __ARCHITECTURE_TRAITS_H
++#include __MACHINE_TRAITS_H
++
++__BEGIN_SYS
++
++
++// API Components
++template<> struct Traits<Application>: public Traits<Build>
++{
++    static const unsigned int STACK_SIZE = Traits<Machine>::STACK_SIZE;
++    static const unsigned int HEAP_SIZE = Traits<Machine>::HEAP_SIZE;
++    static const unsigned int MAX_THREADS = Traits<Machine>::MAX_THREADS;
++};
++
++template<> struct Traits<System>: public Traits<Build>
++{
++    static const unsigned int mode = Traits<Build>::MODE;
++    static const bool multithread = (Traits<Build>::CPUS > 1) || (Traits<Application>::MAX_THREADS > 1);
++    static const bool multitask = (mode != Traits<Build>::LIBRARY);
++    static const bool multicore = (Traits<Build>::CPUS > 1) && multithread;
++    static const bool multiheap = multitask || Traits<Scratchpad>::enabled;
++
++    static const unsigned long LIFE_SPAN = 1 * YEAR; // s
++    static const unsigned int DUTY_CYCLE = 1000000; // ppm
++
++    static const bool reboot = true;
++
++    static const unsigned int STACK_SIZE = Traits<Machine>::STACK_SIZE;
++    static const unsigned int HEAP_SIZE = (Traits<Application>::MAX_THREADS + 1) * Traits<Application>::STACK_SIZE;
++};
++
++template<> struct Traits<Task>: public Traits<Build>
++{
++    static const bool enabled = Traits<System>::multitask;
++};
++
++template<> struct Traits<Thread>: public Traits<Build>
++{
++    static const bool enabled = Traits<System>::multithread;
++    static const bool smp = Traits<System>::multicore;
++    static const bool trace_idle = hysterically_debugged;
++    static const bool simulate_capacity = false;
++
++    typedef RR Criterion;
++    static const unsigned int QUANTUM = 10000; // us
++};
++
++template<> struct Traits<Scheduler<Thread>>: public Traits<Build>
++{
++    static const bool debugged = Traits<Thread>::trace_idle || hysterically_debugged;
++};
++
++template<> struct Traits<Synchronizer>: public Traits<Build>
++{
++    static const bool enabled = Traits<System>::multithread;
++};
++
++template<> struct Traits<Alarm>: public Traits<Build>
++{
++    static const bool visible = hysterically_debugged;
++};
++
++
++__END_SYS
++
++#endif
+diff --git a/app/task_test/makefile b/app/task_test/makefile
+new file mode 100644
+index 0000000..8a6578a
+--- /dev/null
++++ b/app/task_test/makefile
+@@ -0,0 +1,17 @@
++# EPOS Application Makefile
++
++include ../../makedefs
++
++all: install
++
++$(APPLICATION):	$(APPLICATION).o $(LIB)/*
++		$(ALD) $(ALDFLAGS) -o $@ $(APPLICATION).o
++
++$(APPLICATION).o: $(APPLICATION).cc $(SRC)
++		$(ACC) $(ACCFLAGS) -o $@ $<
++
++install: $(APPLICATION)
++		$(INSTALL) $(APPLICATION) $(IMG)
++
++clean:
++		$(CLEAN) *.o $(APPLICATION)
+diff --git a/app/task_test/task_test.cc b/app/task_test/task_test.cc
+new file mode 100644
+index 0000000..9094190
+--- /dev/null
++++ b/app/task_test/task_test.cc
+@@ -0,0 +1,56 @@
++// EPOS Task Test Program
++
++#include <time.h>
++#include <process.h>
++#include <machine.h>
++#include <system.h>
++
++using namespace EPOS;
++
++OStream cout;
++
++int main()
++{
++    cout << "Task Addres Space and Segment test" << endl;
++    System_Info * si = System::info();
++    cout << "App location in System Info \n" 
++         << " App Code Segment :" << CPU::Phy_Addr(si->pmm.app_code) << "\n"
++         << " App Data Segment :" << CPU::Phy_Addr(si->pmm.app_data)
++         << endl;
++
++    Task * task0 = Task::self();
++    Address_Space * as0 = task0->address_space();
++    cout << "\nMy address space's page directory is located at " << as0->pd() << endl;
++
++    Segment * cs0 = task0->code_segment();
++    CPU::Log_Addr code0 = task0->code();
++    CPU::Phy_Addr code_phy = as0->physical(code0);
++    cout << "\nMy code segment is : " << "\n"
++         << "Logical Addr: " << static_cast<void *>(code0) << "\n"
++         << "Physical Addr: " << static_cast<void *>(code_phy) << "\n"
++         << "Size: " << cs0->size() << " bytes long" << endl;
++
++    // Assert if Logical Memory is Valid in Code Segment
++    cout << "\nAssert if logic code is valid" << endl;
++    assert(code0 == Memory_Map::APP_CODE);
++
++    Segment * ds0 = task0->data_segment();
++    CPU::Log_Addr data0 = task0->data();
++    CPU::Phy_Addr data_phy = as0->physical(data0);
++    cout << "\nMy data segment is : " << "\n"
++         << "Logical Addr: " << static_cast<void *>(data0) << "\n"
++         << "Physical Addr: " << static_cast<void *>(data_phy) << "\n"
++         << "Size: " << ds0->size() << " bytes long" << endl;
++    
++    // Assert if Logical Memory is Valid in Data Segment
++    cout << "\nAssert if logic data is valid" << endl;
++    assert(data0 == Memory_Map::APP_DATA);
++
++    // Assert if the Physicall memory data is located with correct space from code
++    cout << "Assert if phy data has size needed" << endl;
++    assert((data_phy + ds0->size()) == code_phy);
++
++    cout << "I'm done, bye!" << endl;
++    return 0;
++}
++
+diff --git a/app/task_test/task_test_traits.h b/app/task_test/task_test_traits.h
+new file mode 100644
+index 0000000..bb93335
+--- /dev/null
++++ b/app/task_test/task_test_traits.h
+@@ -0,0 +1,244 @@
++#ifndef __traits_h
++#define __traits_h
++
++#include <system/config.h>
++
++__BEGIN_SYS
++
++// Build
++template<> struct Traits<Build>: public Traits_Tokens
++{
++    // Basic configuration
++    static const unsigned int MODE = BUILTIN;
++    static const unsigned int ARCHITECTURE = ARMv7;
++    static const unsigned int MACHINE = Cortex;
++    static const unsigned int MODEL = Raspberry_Pi3;
++    static const unsigned int CPUS = 1;
++    static const unsigned int NODES = 1; // (> 1 => NETWORKING)
++    static const unsigned int EXPECTED_SIMULATION_TIME = 60; // s (0 => not simulated)
++
++    // Default flags
++    static const bool enabled = true;
++    static const bool monitored = false;
++    static const bool debugged = true;
++    static const bool hysterically_debugged = false;
++
++    // Default aspects
++    typedef ALIST<> ASPECTS;
++};
++
++
++// Utilities
++template<> struct Traits<Debug>: public Traits<Build>
++{
++    static const bool error   = true;
++    static const bool warning = true;
++    static const bool info    = false;
++    static const bool trace   = false;
++};
++
++template<> struct Traits<Lists>: public Traits<Build>
++{
++    static const bool debugged = hysterically_debugged;
++};
++
++template<> struct Traits<Spin>: public Traits<Build>
++{
++    static const bool debugged = hysterically_debugged;
++};
++
++template<> struct Traits<Heaps>: public Traits<Build>
++{
++    static const bool debugged = hysterically_debugged;
++};
++
++template<> struct Traits<Ciphers>: public Traits<Build>
++{
++};
++
++template<> struct Traits<Observers>: public Traits<Build>
++{
++    // Some observed objects are created before initializing the Display
++    // Enabling debug may cause trouble in some Machines
++    static const bool debugged = false;
++};
++
++
++// System Parts (mostly to fine control debugging)
++template<> struct Traits<Boot>: public Traits<Build>
++{
++};
++
++template<> struct Traits<Setup>: public Traits<Build>
++{
++};
++
++template<> struct Traits<Init>: public Traits<Build>
++{
++};
++
++template<> struct Traits<Framework>: public Traits<Build>
++{
++};
++
++template<> struct Traits<Aspect>: public Traits<Build>
++{
++    static const bool debugged = hysterically_debugged;
++
++    typedef ALIST<Shared, Authenticated> ASPECTS;
++};
++
++
++__END_SYS
++
++// Mediators
++#include __ARCHITECTURE_TRAITS_H
++#include __MACHINE_TRAITS_H
++
++__BEGIN_SYS
++
++
++// API Components
++template<> struct Traits<Application>: public Traits<Build>
++{
++    static const unsigned int STACK_SIZE = Traits<Machine>::STACK_SIZE;
++    static const unsigned int HEAP_SIZE = Traits<Machine>::HEAP_SIZE;
++    static const unsigned int MAX_THREADS = Traits<Machine>::MAX_THREADS;
++};
++
++template<> struct Traits<System>: public Traits<Build>
++{
++    static const unsigned int mode = Traits<Build>::MODE;
++    static const bool multithread = (Traits<Build>::CPUS > 1) || (Traits<Application>::MAX_THREADS > 1);
++    static const bool multitask = (mode != Traits<Build>::LIBRARY);
++    static const bool multicore = (Traits<Build>::CPUS > 1) && multithread;
++    static const bool multiheap = multitask || Traits<Scratchpad>::enabled;
++
++    static const unsigned long LIFE_SPAN = 1 * YEAR; // s
++    static const unsigned int DUTY_CYCLE = 1000000; // ppm
++
++    static const bool reboot = true;
++
++    static const unsigned int STACK_SIZE = Traits<Machine>::STACK_SIZE;
++    static const unsigned int HEAP_SIZE = (Traits<Application>::MAX_THREADS + 1) * Traits<Application>::STACK_SIZE;
++};
++
++template<> struct Traits<Task>: public Traits<Build>
++{
++    static const bool enabled = Traits<System>::multitask;
++};
++
++template<> struct Traits<Thread>: public Traits<Build>
++{
++    static const bool enabled = Traits<System>::multithread;
++    static const bool smp = Traits<System>::multicore;
++    static const bool simulate_capacity = false;
++    static const bool trace_idle = hysterically_debugged;
++
++    typedef RR Criterion;
++    static const unsigned int QUANTUM = 10000; // us
++};
++
++template<> struct Traits<Scheduler<Thread>>: public Traits<Build>
++{
++    static const bool debugged = Traits<Thread>::trace_idle || hysterically_debugged;
++};
++
++template<> struct Traits<Synchronizer>: public Traits<Build>
++{
++    static const bool enabled = Traits<System>::multithread;
++};
++
++template<> struct Traits<Alarm>: public Traits<Build>
++{
++    static const bool visible = hysterically_debugged;
++};
++
++template<> struct Traits<SmartData>: public Traits<Build>
++{
++    static const unsigned char PREDICTOR = NONE;
++};
++
++template<> struct Traits<Network>: public Traits<Build>
++{
++    typedef LIST<TSTP> NETWORKS;
++
++    static const unsigned int RETRIES = 3;
++    static const unsigned int TIMEOUT = 10; // s
++
++    static const bool enabled = (Traits<Build>::NODES > 1) && (NETWORKS::Length > 0);
++};
++
++template<> struct Traits<ELP>: public Traits<Network>
++{
++    typedef Ethernet NIC_Family;
++    static constexpr unsigned int NICS[] = {0}; // relative to NIC_Family (i.e. Traits<Ethernet>::DEVICES[NICS[i]]
++    static const unsigned int UNITS = COUNTOF(NICS);
++
++    static const bool enabled = Traits<Network>::enabled && (NETWORKS::Count<ELP>::Result > 0);
++};
++
++template<> struct Traits<TSTP>: public Traits<Network>
++{
++    typedef Ethernet NIC_Family;
++    static constexpr unsigned int NICS[] = {0}; // relative to NIC_Family (i.e. Traits<Ethernet>::DEVICES[NICS[i]]
++    static const unsigned int UNITS = COUNTOF(NICS);
++
++    static const unsigned int KEY_SIZE = 16;
++    static const unsigned int RADIO_RANGE = 8000; // approximated radio range in centimeters
++
++    static const bool enabled = Traits<Network>::enabled && (NETWORKS::Count<TSTP>::Result > 0);
++};
++
++template<> struct Traits<IP>: public Traits<Network>
++{
++    typedef Ethernet NIC_Family;
++    static constexpr unsigned int NICS[] = {0};  // relative to NIC_Family (i.e. Traits<Ethernet>::DEVICES[NICS[i]]
++    static const unsigned int UNITS = COUNTOF(NICS);
++
++    struct Default_Config {
++        static const unsigned int  TYPE    = DHCP;
++        static const unsigned long ADDRESS = 0;
++        static const unsigned long NETMASK = 0;
++        static const unsigned long GATEWAY = 0;
++    };
++
++    template<unsigned int UNIT>
++    struct Config: public Default_Config {};
++
++    static const unsigned int TTL  = 0x40; // Time-to-live
++
++    static const bool enabled = Traits<Network>::enabled && (NETWORKS::Count<IP>::Result > 0);
++};
++
++template<> struct Traits<UDP>: public Traits<Network>
++{
++    static const bool checksum = true;
++};
++
++template<> struct Traits<TCP>: public Traits<Network>
++{
++    static const unsigned int WINDOW = 4096;
++};
++
++template<> struct Traits<DHCP>: public Traits<Network>
++{
++};
++
++template<> struct Traits<Monitor>: public Traits<Build>
++{
++    static const bool enabled = monitored;
++
++    static constexpr System_Event SYSTEM_EVENTS[]                 = {ELAPSED_TIME, DEADLINE_MISSES, CPU_EXECUTION_TIME, THREAD_EXECUTION_TIME, RUNNING_THREAD};
++    static constexpr unsigned int SYSTEM_EVENTS_FREQUENCIES[]     = {           1,               1,                  1,                     1,              1}; // in Hz
++
++    static constexpr PMU_Event PMU_EVENTS[]                       = {COMMITED_INSTRUCTIONS, BRANCHES, CACHE_MISSES};
++    static constexpr unsigned int PMU_EVENTS_FREQUENCIES[]        = {                    1,        1,            1}; // in Hz
++
++    static constexpr unsigned int TRANSDUCER_EVENTS[]             = {CPU_VOLTAGE, CPU_TEMPERATURE};
++    static constexpr unsigned int TRANSDUCER_EVENTS_FREQUENCIES[] = {          1,           1}; // in Hz
++};
++
++__END_SYS
++
++#endif
+diff --git a/app/timer_test/makefile b/app/timer_test/makefile
+new file mode 100644
+index 0000000..8a6578a
+--- /dev/null
++++ b/app/timer_test/makefile
+@@ -0,0 +1,17 @@
++# EPOS Application Makefile
++
++include ../../makedefs
++
++all: install
++
++$(APPLICATION):	$(APPLICATION).o $(LIB)/*
++		$(ALD) $(ALDFLAGS) -o $@ $(APPLICATION).o
++
++$(APPLICATION).o: $(APPLICATION).cc $(SRC)
++		$(ACC) $(ACCFLAGS) -o $@ $<
++
++install: $(APPLICATION)
++		$(INSTALL) $(APPLICATION) $(IMG)
++
++clean:
++		$(CLEAN) *.o $(APPLICATION)
+diff --git a/app/timer_test/timer_test.cc b/app/timer_test/timer_test.cc
+new file mode 100644
+index 0000000..1742e6f
+--- /dev/null
++++ b/app/timer_test/timer_test.cc
+@@ -0,0 +1,64 @@
++// EPOS Segment Test Program
++#include <time.h>
++#include <process.h>
++#include <machine.h>
++#include <utility/fork.h>
++
++using namespace EPOS;
++
++int func_a();
++int print_inf();
++
++OStream cout;
++
++int main()
++{
++    cout << "=====Test Task Fork "<< Task::self()->id()<<"=====" << endl;
++
++    if (Task::self()->id() == 0) {
++        fork(&func_a);
++        fork(&func_a);
++        cout << "Hello World! I'm Task: "<< Task::self()->id() << endl;
++    }
++    if (Task::self()->id() == 1) {
++        cout << "Konnichiwa I'm Task: "<< Task::self()->id() << endl;
++        func_a();
++    }
++    if (Task::self()->id() == 2) {
++        cout << "Annyeong haseyo I'm Task: "<< Task::self()->id() << endl;
++        func_a();
++    }
++
++    print_inf();
++    cout << "Sayonara, bye! o/" << endl;
++    return 0;
++}
++
++int print_inf() {
++    Task * task = Task::self();
++    Address_Space * as = task->address_space();
++    cout << "===========================================" << "\n"
++         << "=Address Space page directory: " << as->pd() << "=\n"
++         << "=Code Logical Addr: " << static_cast<void *>(task->code()) << "=\n"
++         << "=Code Physical Addr: " << static_cast<void *>(as->physical(task->code())) << "=\n"
++         << "=Code Size: " << task->code_segment()->size() << " bytes long" << "=\n"
++         << "=Data Logical Addr: " << static_cast<void *>(task->data()) << "=\n"
++         << "=Data Physical Addr: " << static_cast<void *>(as->physical(task->data())) << "=\n"
++         << "=Data Size: " << task->data_segment()->size() << " bytes long" << "=\n"
++         << "===========================================" << endl;
++    return 0;
++}
++
++int func_a() {
++    cout << "Konnichiwa I'm Task: "<< Task::self()->id() << endl;
++    int step = 1000000;
++    for (int i = 0; i < 100000000; ++i) {
++      if (!(i % step)) {
++        ASM("_func_a_h:");
++        cout << "Checkpoint! ("<<Task::self()->id() <<")("<<i/step<<")" << endl;
++        // Alarm::delay(100000);
++      }
++    }
++    cout << "Task " << Task::self()->id() << "says sayonara!" << endl;
++    return 0;
++}
+diff --git a/app/timer_test/timer_test_traits.h b/app/timer_test/timer_test_traits.h
+new file mode 100644
+index 0000000..bb93335
+--- /dev/null
++++ b/app/timer_test/timer_test_traits.h
+@@ -0,0 +1,244 @@
++#ifndef __traits_h
++#define __traits_h
++
++#include <system/config.h>
++
++__BEGIN_SYS
++
++// Build
++template<> struct Traits<Build>: public Traits_Tokens
++{
++    // Basic configuration
++    static const unsigned int MODE = BUILTIN;
++    static const unsigned int ARCHITECTURE = ARMv7;
++    static const unsigned int MACHINE = Cortex;
++    static const unsigned int MODEL = Raspberry_Pi3;
++    static const unsigned int CPUS = 1;
++    static const unsigned int NODES = 1; // (> 1 => NETWORKING)
++    static const unsigned int EXPECTED_SIMULATION_TIME = 60; // s (0 => not simulated)
++
++    // Default flags
++    static const bool enabled = true;
++    static const bool monitored = false;
++    static const bool debugged = true;
++    static const bool hysterically_debugged = false;
++
++    // Default aspects
++    typedef ALIST<> ASPECTS;
++};
++
++
++// Utilities
++template<> struct Traits<Debug>: public Traits<Build>
++{
++    static const bool error   = true;
++    static const bool warning = true;
++    static const bool info    = false;
++    static const bool trace   = false;
++};
++
++template<> struct Traits<Lists>: public Traits<Build>
++{
++    static const bool debugged = hysterically_debugged;
++};
++
++template<> struct Traits<Spin>: public Traits<Build>
++{
++    static const bool debugged = hysterically_debugged;
++};
++
++template<> struct Traits<Heaps>: public Traits<Build>
++{
++    static const bool debugged = hysterically_debugged;
++};
++
++template<> struct Traits<Ciphers>: public Traits<Build>
++{
++};
++
++template<> struct Traits<Observers>: public Traits<Build>
++{
++    // Some observed objects are created before initializing the Display
++    // Enabling debug may cause trouble in some Machines
++    static const bool debugged = false;
++};
++
++
++// System Parts (mostly to fine control debugging)
++template<> struct Traits<Boot>: public Traits<Build>
++{
++};
++
++template<> struct Traits<Setup>: public Traits<Build>
++{
++};
++
++template<> struct Traits<Init>: public Traits<Build>
++{
++};
++
++template<> struct Traits<Framework>: public Traits<Build>
++{
++};
++
++template<> struct Traits<Aspect>: public Traits<Build>
++{
++    static const bool debugged = hysterically_debugged;
++
++    typedef ALIST<Shared, Authenticated> ASPECTS;
++};
++
++
++__END_SYS
++
++// Mediators
++#include __ARCHITECTURE_TRAITS_H
++#include __MACHINE_TRAITS_H
++
++__BEGIN_SYS
++
++
++// API Components
++template<> struct Traits<Application>: public Traits<Build>
++{
++    static const unsigned int STACK_SIZE = Traits<Machine>::STACK_SIZE;
++    static const unsigned int HEAP_SIZE = Traits<Machine>::HEAP_SIZE;
++    static const unsigned int MAX_THREADS = Traits<Machine>::MAX_THREADS;
++};
++
++template<> struct Traits<System>: public Traits<Build>
++{
++    static const unsigned int mode = Traits<Build>::MODE;
++    static const bool multithread = (Traits<Build>::CPUS > 1) || (Traits<Application>::MAX_THREADS > 1);
++    static const bool multitask = (mode != Traits<Build>::LIBRARY);
++    static const bool multicore = (Traits<Build>::CPUS > 1) && multithread;
++    static const bool multiheap = multitask || Traits<Scratchpad>::enabled;
++
++    static const unsigned long LIFE_SPAN = 1 * YEAR; // s
++    static const unsigned int DUTY_CYCLE = 1000000; // ppm
++
++    static const bool reboot = true;
++
++    static const unsigned int STACK_SIZE = Traits<Machine>::STACK_SIZE;
++    static const unsigned int HEAP_SIZE = (Traits<Application>::MAX_THREADS + 1) * Traits<Application>::STACK_SIZE;
++};
++
++template<> struct Traits<Task>: public Traits<Build>
++{
++    static const bool enabled = Traits<System>::multitask;
++};
++
++template<> struct Traits<Thread>: public Traits<Build>
++{
++    static const bool enabled = Traits<System>::multithread;
++    static const bool smp = Traits<System>::multicore;
++    static const bool simulate_capacity = false;
++    static const bool trace_idle = hysterically_debugged;
++
++    typedef RR Criterion;
++    static const unsigned int QUANTUM = 10000; // us
++};
++
++template<> struct Traits<Scheduler<Thread>>: public Traits<Build>
++{
++    static const bool debugged = Traits<Thread>::trace_idle || hysterically_debugged;
++};
++
++template<> struct Traits<Synchronizer>: public Traits<Build>
++{
++    static const bool enabled = Traits<System>::multithread;
++};
++
++template<> struct Traits<Alarm>: public Traits<Build>
++{
++    static const bool visible = hysterically_debugged;
++};
++
++template<> struct Traits<SmartData>: public Traits<Build>
++{
++    static const unsigned char PREDICTOR = NONE;
++};
++
++template<> struct Traits<Network>: public Traits<Build>
++{
++    typedef LIST<TSTP> NETWORKS;
++
++    static const unsigned int RETRIES = 3;
++    static const unsigned int TIMEOUT = 10; // s
++
++    static const bool enabled = (Traits<Build>::NODES > 1) && (NETWORKS::Length > 0);
++};
++
++template<> struct Traits<ELP>: public Traits<Network>
++{
++    typedef Ethernet NIC_Family;
++    static constexpr unsigned int NICS[] = {0}; // relative to NIC_Family (i.e. Traits<Ethernet>::DEVICES[NICS[i]]
++    static const unsigned int UNITS = COUNTOF(NICS);
++
++    static const bool enabled = Traits<Network>::enabled && (NETWORKS::Count<ELP>::Result > 0);
++};
++
++template<> struct Traits<TSTP>: public Traits<Network>
++{
++    typedef Ethernet NIC_Family;
++    static constexpr unsigned int NICS[] = {0}; // relative to NIC_Family (i.e. Traits<Ethernet>::DEVICES[NICS[i]]
++    static const unsigned int UNITS = COUNTOF(NICS);
++
++    static const unsigned int KEY_SIZE = 16;
++    static const unsigned int RADIO_RANGE = 8000; // approximated radio range in centimeters
++
++    static const bool enabled = Traits<Network>::enabled && (NETWORKS::Count<TSTP>::Result > 0);
++};
++
++template<> struct Traits<IP>: public Traits<Network>
++{
++    typedef Ethernet NIC_Family;
++    static constexpr unsigned int NICS[] = {0};  // relative to NIC_Family (i.e. Traits<Ethernet>::DEVICES[NICS[i]]
++    static const unsigned int UNITS = COUNTOF(NICS);
++
++    struct Default_Config {
++        static const unsigned int  TYPE    = DHCP;
++        static const unsigned long ADDRESS = 0;
++        static const unsigned long NETMASK = 0;
++        static const unsigned long GATEWAY = 0;
++    };
++
++    template<unsigned int UNIT>
++    struct Config: public Default_Config {};
++
++    static const unsigned int TTL  = 0x40; // Time-to-live
++
++    static const bool enabled = Traits<Network>::enabled && (NETWORKS::Count<IP>::Result > 0);
++};
++
++template<> struct Traits<UDP>: public Traits<Network>
++{
++    static const bool checksum = true;
++};
++
++template<> struct Traits<TCP>: public Traits<Network>
++{
++    static const unsigned int WINDOW = 4096;
++};
++
++template<> struct Traits<DHCP>: public Traits<Network>
++{
++};
++
++template<> struct Traits<Monitor>: public Traits<Build>
++{
++    static const bool enabled = monitored;
++
++    static constexpr System_Event SYSTEM_EVENTS[]                 = {ELAPSED_TIME, DEADLINE_MISSES, CPU_EXECUTION_TIME, THREAD_EXECUTION_TIME, RUNNING_THREAD};
++    static constexpr unsigned int SYSTEM_EVENTS_FREQUENCIES[]     = {           1,               1,                  1,                     1,              1}; // in Hz
++
++    static constexpr PMU_Event PMU_EVENTS[]                       = {COMMITED_INSTRUCTIONS, BRANCHES, CACHE_MISSES};
++    static constexpr unsigned int PMU_EVENTS_FREQUENCIES[]        = {                    1,        1,            1}; // in Hz
++
++    static constexpr unsigned int TRANSDUCER_EVENTS[]             = {CPU_VOLTAGE, CPU_TEMPERATURE};
++    static constexpr unsigned int TRANSDUCER_EVENTS_FREQUENCIES[] = {          1,           1}; // in Hz
++};
++
++__END_SYS
++
++#endif
+diff --git a/execute_app_loader.sh b/execute_app_loader.sh
+new file mode 100755
+index 0000000..105e482
+--- /dev/null
++++ b/execute_app_loader.sh
+@@ -0,0 +1,6 @@
++rm img/app_loader* 
++rm img/loader.img
++make APPLICATION=hello
++make APPLICATION=app_loader
++./bin/eposmkbi . ./img/loader.img ./img/app_loader ./img/hello
++/usr/bin/arm-none-eabi-objcopy -O binary img/loader.img img/app_loader.bin
+\ No newline at end of file
+diff --git a/include/architecture/armv7/armv7_cpu.h b/include/architecture/armv7/armv7_cpu.h
+index cec2782..9b7efb6 100644
+--- a/include/architecture/armv7/armv7_cpu.h
++++ b/include/architecture/armv7/armv7_cpu.h
+@@ -5,6 +5,8 @@
+ 
+ #include <architecture/cpu.h>
+ 
++extern "C" { void _go_user_mode(); }
++
+ __BEGIN_SYS
+ 
+ class ARMv7: protected CPU_Common
+@@ -318,7 +320,7 @@ public:
+ 
+     static Reg r0() { Reg r; ASM("mov %0, r0" : "=r"(r) : : ); return r; }
+     static void r0(Reg r) { ASM("mov r0, %0" : : "r"(r): ); }
+-    
++
+     static Reg r1() { Reg r; ASM("mov %0, r1" : "=r"(r) : : ); return r; }
+     static void r1(Reg r) { ASM("mov r1, %0" : : "r"(r): ); }
+ 
+@@ -411,7 +413,8 @@ public:
+     {
+     public:
+         Context(){}
+-        Context(Log_Addr  entry, Log_Addr exit, Log_Addr usp): _flags(FLAG_DEFAULTS), _lr(exit | (thumb ? 1 : 0)), _pc(entry | (thumb ? 1 : 0)) {
++        // Need to be a FLAG_USER when isnt a system
++        Context(Log_Addr  entry, Log_Addr exit, Log_Addr usp, Log_Addr ulr, bool is_system):_usp(usp), _ulr(ulr), _flags((is_system? FLAG_SVC : FLAG_USER)), _lr(exit | (thumb ? 1 : 0)), _pc(entry | (thumb ? 1 : 0)) {
+             if(Traits<Build>::hysterically_debugged || Traits<Thread>::trace_idle) {
+                 _r0 = 0; _r1 = 1; _r2 = 2; _r3 = 3; _r4 = 4; _r5 = 5; _r6 = 6; _r7 = 7; _r8 = 8; _r9 = 9; _r10 = 10; _r11 = 11; _r12 = 12;
+             }
+@@ -444,6 +447,8 @@ public:
+         }
+ 
+     public:
++        Reg32 _usp;
++        Reg32 _ulr;
+         Reg32 _flags;
+         Reg32 _r0;
+         Reg32 _r1;
+@@ -515,11 +520,21 @@ public:
+     template<typename ... Tn>
+     static Context * init_stack(Log_Addr usp, Log_Addr ksp, void (* exit)(), int (* entry)(Tn ...), Tn ... an) {
+         ksp -= sizeof(Context);
+-        Context * ctx = new(ksp) Context(entry, exit, usp);
++        Context * ctx = new(ksp) Context(entry, exit, usp, exit, true);
+         init_stack_helper(&ctx->_r0, an ...);
+         return ctx;
+     }
+ 
++    template<typename ... Tn>
++    static Context * init_user_stack(Log_Addr usp, Log_Addr ksp, void (* exit)(), int (* entry)(Tn ...), Tn ... an) {
++        ksp -= sizeof(Context);
++        Context * ctx = new(ksp) Context(entry, exit, usp, exit, false);
++        init_stack_helper(&ctx->_r0, an ...);
++        ksp -= sizeof(Context);
++        ctx = new(ksp) Context(&_go_user_mode, 0, 0, 0, true);
++        return ctx;
++    }
++
+     static void syscall(void * message);
+     static void syscalled();
+ 
+diff --git a/include/architecture/armv7/armv7_mmu.h b/include/architecture/armv7/armv7_mmu.h
+index d5092f7..993fa5b 100644
+--- a/include/architecture/armv7/armv7_mmu.h
++++ b/include/architecture/armv7/armv7_mmu.h
+@@ -33,7 +33,7 @@ public:
+             XN   = 1 << 0,  // not executable
+             PTE  = 1 << 1,  // sets entry as Small Page == Page Table Entry
+             // Access Permission bits, assuming SCTLR.AFE = 0
+-            AP0  = 1 << 4,  
++            AP0  = 1 << 4,
+             AP1  = 1 << 5,
+             AP2  = 1 << 9,
+             RW   = AP0,     // Read Write SYS
+@@ -151,7 +151,61 @@ public:
+     typedef _Page_Table<PT_ENTRIES> Page_Table;
+ 
+     // Page Directory
+-    typedef _Page_Table<PD_ENTRIES> Page_Directory;
++    class Page_Directory {
++    public:
++        Page_Directory() {}
++
++        PD_Entry & operator[](unsigned int i) { return _entry[i]; }
++        Page_Directory & log() { return *static_cast<Page_Directory *>(phy2log(this)); }
++
++        void map(int from, int to, Page_Flags flags, Color color) {
++            Phy_Addr * addr = alloc(to - from, color);
++            if(addr)
++                remap(addr, from, to, flags);
++            else
++                for( ; from < to; from++) {
++                    Log_Addr * pde = phy2log(&_entry[from]);
++                    *pde = phy2pde(alloc(1, color));
++                }
++        }
++
++        void map_contiguous(int from, int to, Page_Flags flags, Color color) {
++            remap(alloc(to - from, color), from, to, flags);
++        }
++
++        void remap(Phy_Addr addr, int from, int to, Page_Flags flags) {
++            addr = align_page(addr);
++            for( ; from < to; from++) {
++                Log_Addr * pde = phy2log(&_entry[from]);
++                *pde = phy2pde(addr);
++                addr += sizeof(Page);
++            }
++        }
++
++        void unmap(int from, int to) {
++            for( ; from < to; from++) {
++                free(_entry[from]);
++                Log_Addr * pde = phy2log(&_entry[from]);
++                *pde = 0;
++            }
++        }
++
++        friend OStream & operator<<(OStream & os, Page_Directory & pd) {
++            os << "{\n";
++            int brk = 0;
++            for(unsigned int i = 0; i < PD_ENTRIES; i++)
++                if(pd[i]) {
++                    os << "[" << i << "]=" << pd[i] << "  ";
++                    if(!(++brk % 4))
++                        os << "\n";
++                }
++            os << "\n}";
++            return os;
++        }
++
++    private:
++        PD_Entry _entry[PD_ENTRIES]; // the Phy_Addr in each entry passed through phy2pde()
++    };
+ 
+     // Chunk (for Segment)
+     class Chunk
+@@ -263,13 +317,15 @@ public:
+         void activate() const { ARMv7_MMU::pd(_pd); }
+ 
+         Log_Addr attach(const Chunk & chunk, unsigned int from = directory(APP_LOW)) {
+-            for(unsigned int i = from; i < directory(SYS); i++)
++            flush_tlb();
++            for(unsigned int i = from; i < PD_ENTRIES; i++)
+                 if(attach(i, chunk.pt(), chunk.pts(), chunk.flags()))
+                     return i << DIRECTORY_SHIFT;
+             return Log_Addr(false);
+         }
+ 
+         Log_Addr attach(const Chunk & chunk, Log_Addr addr) {
++            flush_tlb();
+             unsigned int from = directory(addr);
+             if(attach(from, chunk.pt(), chunk.pts(), chunk.flags()))
+                 return from << DIRECTORY_SHIFT;
+@@ -277,6 +333,7 @@ public:
+         }
+ 
+         void detach(const Chunk & chunk) {
++            flush_tlb();
+             for(unsigned int i = 0; i < PD_ENTRIES; i++) {
+                 if(indexes(pte2phy((*_pd)[i])) == indexes(chunk.pt())) {
+                     detach(i, chunk.pt(), chunk.pts());
+@@ -287,6 +344,7 @@ public:
+         }
+ 
+         void detach(const Chunk & chunk, Log_Addr addr) {
++            flush_tlb();
+             unsigned int from = directory(addr);
+             if(indexes(pte2phy((*_pd)[from])) != indexes(chunk.pt())) {
+                 db<MMU>(WRN) << "MMU::Directory::detach(pt=" << chunk.pt() << ",addr=" << addr << ") failed!" << endl;
+@@ -448,6 +506,19 @@ public:
+     static PD_Entry phy2pde(Phy_Addr frame) { return (frame) | Page_Flags::PD_FLAGS; }
+     static Phy_Addr pde2phy(PD_Entry entry) { return (entry & ~Page_Flags::PD_MASK); }
+ 
++    static void flush_tlb() {
++        CPU::isb();
++        CPU::dsb();
++        //ASM("MCR p15, 0, r0, c8, c5, 0;");
++        // ITLBIALL, Instruction TLB invalidate all. Operation ignores Rt value.");
++
++        ASM("mcr   p15, 0, r0, c8, c7, 0");// @ flush I,D TLBs
++        /*
++        ASM("mcr     p15, 0, r0, c7, c5, 4 \n" //  @ ISB
++            "mcrne   p15, 0, r0, c8, c7, 0");// @ flush I,D TLBs
++        */
++    }
++
+     static Log_Addr phy2log(Phy_Addr phy) { return Log_Addr((RAM_BASE == PHY_MEM) ? phy : (RAM_BASE > PHY_MEM) ? phy - (RAM_BASE - PHY_MEM) : phy + (PHY_MEM - RAM_BASE)); }
+     static Phy_Addr log2phy(Log_Addr log) { return Phy_Addr((RAM_BASE == PHY_MEM) ? log : (RAM_BASE > PHY_MEM) ? log + (RAM_BASE - PHY_MEM) : log - (PHY_MEM - RAM_BASE)); }
+ 
+@@ -467,7 +538,7 @@ private:
+     static Phy_Addr pd() { return CPU::ttbr0(); }
+     static void pd(Phy_Addr pd) { CPU::ttbr0(pd); CPU::flush_tlb(); CPU::isb(); CPU::dsb(); }
+ 
+-    static void flush_tlb() { CPU::flush_tlb(); }
++    //static void flush_tlb() { CPU::flush_tlb(); }
+     static void flush_tlb(Log_Addr addr) { CPU::flush_tlb(directory_bits(addr)); } // only bits from 31 to 12, all ASIDs
+ 
+     static void init();
+diff --git a/include/machine/cortex/cortex_ic.h b/include/machine/cortex/cortex_ic.h
+index 4e9374f..14b86e4 100644
+--- a/include/machine/cortex/cortex_ic.h
++++ b/include/machine/cortex/cortex_ic.h
+@@ -86,7 +86,7 @@ public:
+ 
+     void undefined_instruction();
+     void software_interrupt();
+-    void prefetch_abort();
++    void prefetch_abort() __attribute__((naked));
+     void data_abort();
+     void reserved();
+     void fiq();
+diff --git a/include/machine/cortex/raspberry_pi3/raspberry_pi3_traits.h b/include/machine/cortex/raspberry_pi3/raspberry_pi3_traits.h
+index 0141d93..19b49d0 100644
+--- a/include/machine/cortex/raspberry_pi3/raspberry_pi3_traits.h
++++ b/include/machine/cortex/raspberry_pi3/raspberry_pi3_traits.h
+@@ -49,7 +49,8 @@ public:
+     static const unsigned int INIT              = (Traits<Build>::MODE == Traits<Build>::LIBRARY) ? NOT_USED : 0x00080000;
+     static const unsigned int PHY_MEM           = 0x00000000;   // 0 (max 1792 MB)
+     static const unsigned int IO                = 0x70000000;   // 2 GB - 256 MB (max 247 MB)
+-    static const unsigned int SYS               = 0xff700000;   // 4 GB - 9 MB
++    //static const unsigned int SYS               = 0xff700000;   // 4 GB - 9 MB
++    static const unsigned int SYS               = 0xfe700000;   // 4 GB - 9 MB
+ 
+     // Default Sizes and Quantities
+     static const unsigned int STACK_SIZE        = 16 * 1024;
+diff --git a/include/memory.h b/include/memory.h
+index b7693db..abf5e30 100644
+--- a/include/memory.h
++++ b/include/memory.h
+@@ -7,14 +7,16 @@
+ 
+ __BEGIN_SYS
+ 
+-class Address_Space: private MMU::Directory
++
++class Address_Space: MMU::Directory
+ {
+     friend class Init_System;   // for Address_Space(pd)
+     friend class Thread;        // for Address_Space(pd)
+     friend class Scratchpad;    // for Address_Space(pd)
+     friend class Task;          // for activate()
+ 
+-private:
++//private:
++public:
+     using MMU::Directory::activate;
+ 
+ public:
+@@ -63,6 +65,33 @@ private:
+     }
+ };
+ 
++class Shared_Segment_Port
++{
++public:
++    Shared_Segment_Port(unsigned int p, Shared_Segment * s) : port(p), sseg(s) {}
++    unsigned int port;
++    Shared_Segment * sseg;
++};
++
++class Shared_Segment: public Segment
++{
++private:
++    typedef MMU::Chunk Chunk;
++
++public:
++    typedef Port_List<Shared_Segment_Port> List;
++    typedef CPU::Phy_Addr Phy_Addr;
++    typedef MMU::Flags Flags;
++
++public:
++    Shared_Segment(unsigned int port, unsigned int bytes, const Flags & flags);
++    static Shared_Segment * get_sseg(unsigned int port);
++    static List _list;
++    unsigned int _tasks;
++    unsigned int _port;
++};
++
++
+ __END_SYS
+ 
+ #endif
+diff --git a/include/process.h b/include/process.h
+index d5555af..4a4e11c 100644
+--- a/include/process.h
++++ b/include/process.h
+@@ -28,6 +28,9 @@ protected:
+     static const bool preemptive = Traits<Thread>::Criterion::preemptive;
+     static const bool reboot = Traits<System>::reboot;
+ 
++    static const bool multitask = Traits<System>::multitask;
++
++
+     static const unsigned int QUANTUM = Traits<Thread>::QUANTUM;
+     static const unsigned int STACK_SIZE = Traits<Application>::STACK_SIZE;
+ 
+@@ -51,6 +54,7 @@ public:
+         NORMAL  = Criterion::NORMAL,
+         LOW     = Criterion::LOW,
+         MAIN    = Criterion::MAIN,
++        LOADER  = Criterion::LOADER,
+         IDLE    = Criterion::IDLE
+     };
+ 
+@@ -59,12 +63,13 @@ public:
+ 
+     // Thread Configuration
+     struct Configuration {
+-        Configuration(const State & s = READY, const Criterion & c = NORMAL, unsigned int ss = STACK_SIZE)
+-        : state(s), criterion(c), stack_size(ss) {}
++        Configuration(const State & s = READY, const Criterion & c = NORMAL, unsigned int ss = STACK_SIZE, Task * t = 0)
++        : state(s), criterion(c), stack_size(ss), task(t) {}
+ 
+         State state;
+         Criterion criterion;
+         unsigned int stack_size;
++        Task * task;
+     };
+ 
+ 
+@@ -81,6 +86,8 @@ public:
+     const volatile Criterion & priority() const { return _link.rank(); }
+     void priority(const Criterion & p);
+ 
++    Task * task() const { return _task; }
++
+     int join();
+     void pass();
+     void suspend();
+@@ -90,6 +97,7 @@ public:
+     static void yield();
+     static void exit(int status = 0);
+ 
++
+ protected:
+     void constructor_prologue(unsigned int stack_size);
+     void constructor_epilogue(Log_Addr entry, unsigned int stack_size);
+@@ -118,7 +126,9 @@ private:
+     static void init();
+ 
+ protected:
++    Task * _task;
+     char * _stack;
++    Segment  * _ustack;
+     Context * volatile _context;
+     volatile State _state;
+     Queue * _waiting;
+@@ -130,24 +140,102 @@ protected:
+     static Scheduler<Thread> _scheduler;
+ };
+ 
+-
+-template<typename ... Tn>
+-inline Thread::Thread(int (* entry)(Tn ...), Tn ... an)
+-: _state(READY), _waiting(0), _joining(0), _link(this, NORMAL)
++// Task 
++class Task
+ {
+-    constructor_prologue(STACK_SIZE);
+-    _context = CPU::init_stack(0, _stack + STACK_SIZE, &__exit, entry, an ...);
+-    constructor_epilogue(entry, STACK_SIZE);
+-}
++    friend class Thread;        // for insert()
+ 
+-template<typename ... Tn>
+-inline Thread::Thread(const Configuration & conf, int (* entry)(Tn ...), Tn ... an)
+-: _state(conf.state), _waiting(0), _joining(0), _link(this, conf.criterion)
+-{
+-    constructor_prologue(conf.stack_size);
+-    _context = CPU::init_stack(0, _stack + conf.stack_size, &__exit, entry, an ...);
+-    constructor_epilogue(entry, conf.stack_size);
+-}
++private:
++    typedef CPU::Log_Addr Log_Addr;
++    typedef CPU::Phy_Addr Phy_Addr;
++    typedef CPU::Context Context;
++
++protected:
++    // This constructor is only used by Thread::init()
++    template<typename ... Tn>
++    Task(Address_Space * as, Segment * cs, Segment * ds, int (* entry)(Tn ...), const Log_Addr & code, const Log_Addr & data, Tn ... an)
++    : _as(as), _cs(cs), _ds(ds), _entry(entry), _code(code), _data(data) {
++        db<Task, Init>(TRC) << "Task(as=" << _as << ",cs=" << _cs << ",ds=" << _ds << ",entry=" << _entry << ",code=" << _code << ",data=" << _data << ") => " << this << endl;
++        lock();
++        _id = _task_count++;
++        unlock();
++        _current = this;
++        activate();
++        _main = new (SYSTEM) Thread(Thread::Configuration(Thread::RUNNING, Thread::MAIN, Traits<Application>::STACK_SIZE, this), entry, an ...);
++    }
++
++public:
++    Task(Address_Space * as, Segment * cs, Segment * ds, int (* entry)(), const Log_Addr & code, const Log_Addr & data)
++    : _as(as), _cs(cs), _ds(ds), _entry(entry), _code(code), _data(data) {
++        db<Task, Init>(TRC) << "Task(as=" << _as << ",cs=" << _cs << ",ds=" << _ds << ",entry=" << _entry << ",code=" << _code << ",data=" << _data << ") => " << this << endl;
++        lock();
++        _id = _task_count++;
++        unlock();
++        _main = new (SYSTEM) Thread(Thread::Configuration(Thread::READY, Thread::MAIN, Traits<Application>::STACK_SIZE, this), entry);
++    }
++
++    template<typename ... Tn>
++    Task(Segment * cs, Segment * ds, int (* entry)(Tn ...), const Log_Addr & code, const Log_Addr & data, Tn ... an)
++    : _as (new (SYSTEM) Address_Space), _cs(cs), _ds(ds), _entry(entry), _code(_as->attach(_cs, code)), _data(_as->attach(_ds, data)) {
++        db<Task>(TRC) << "Task(as=" << _as << ",cs=" << _cs << ",ds=" << _ds << ",entry=" << _entry << ",code=" << _code << ",data=" << _data << ") => " << this << endl;
++        lock();
++        _id = _task_count++;
++        unlock();
++        _main = new (SYSTEM) Thread(Thread::Configuration(Thread::READY, Thread::MAIN, Traits<Application>::STACK_SIZE, this), entry, an ...);
++    }
++    ~Task();
++
++    Address_Space * address_space() const { return _as; }
++
++    Segment * code_segment() const { return _cs; }
++    Segment * data_segment() const { return _ds; }
++
++    Log_Addr code() const { return _code; }
++    Log_Addr data() const { return _data; }
++
++    Thread * main() const { return _main; }
++
++    static Task * volatile self() { return current(); }
++    Log_Addr entry() { return _entry; }
++
++    unsigned int id() {return _id;}
++
++    void activate_context() {
++        activate();
++        MMU::flush_tlb();
++        lock();
++        _current = this;
++        unlock();
++    }
++
++private:
++    void activate() const { _as->activate(); }
++
++    void insert(Thread * t) { _threads.insert(new (SYSTEM) Thread::Queue::Element(t)); }
++    void remove(Thread * t) { Thread::Queue::Element * el = _threads.remove(t); if(el) delete el; }
++
++    static Task * volatile current() { return _current; }
++    static void current(Task * t) { _current = t; }
++
++    static void lock() { CPU::int_disable(); }
++    static void unlock() { CPU::int_enable(); }
++
++private:
++    unsigned int _id;
++    Address_Space * _as;
++    Segment * _cs;
++    Segment * _ds;
++    Log_Addr _entry;
++    Log_Addr _code;
++    Log_Addr _data;
++    Thread * _main;
++    Thread::Queue _threads;
++
++    static Task * volatile _current;
++
++protected:
++    static volatile unsigned int _task_count;
++};
+ 
+ 
+ // A Java-like Active Object
+@@ -179,6 +267,42 @@ private:
+     Thread * _handler;
+ };
+ 
++template<typename ... Tn>
++inline Thread::Thread(int (* entry)(Tn ...), Tn ... an)
++:_task(Task::self()), _state(READY), _waiting(0), _joining(0), _link(this, NORMAL)
++{
++    constructor_prologue(STACK_SIZE);
++    _context = CPU::init_stack(0, _stack + STACK_SIZE, &__exit, entry, an ...);
++    constructor_epilogue(entry, STACK_SIZE);
++
++    _task->insert(this);
++}
++
++template<typename ... Tn>
++inline Thread::Thread(const Configuration & conf, int (* entry)(Tn ...), Tn ... an)
++:_task(conf.task ? conf.task : Task::self()), _state(conf.state), _waiting(0), _joining(0), _link(this, conf.criterion)
++{
++    constructor_prologue(conf.stack_size);
++
++    if (conf.criterion == Thread::IDLE) {
++        _context = CPU::init_stack(0, _stack + conf.stack_size, &__exit, entry, an ...);
++    } else {
++        _ustack = new (SYSTEM) Segment(Traits<Machine>::STACK_SIZE, Segment::Flags::APP);
++        CPU::Log_Addr usp = _task->address_space()->attach(_ustack);
++        db<Thread>(TRC) << "UStack attached at vaddr=" << usp << endl;
++        _context = CPU::init_user_stack(usp + Traits<Machine>::STACK_SIZE, _stack + Traits<Machine>::STACK_SIZE, &__exit, entry, an ...);
++        db<Thread>(TRC) << "Context attached at vaddr=" << hex << _context << endl;
++    }
++    //Log_Addr usp = CPU::init_user_stack(0, _stack + conf.stack_size, &__exit, entry, an ...);
++    constructor_epilogue(entry, conf.stack_size);
++    //db<Thread>(TRC) << "------->THREAD USP" << hex << usp << endl;
++
++    // Not add Idle in task's threads list
++    if (conf.criterion != Thread::IDLE) {
++        _task->insert(this);
++    }
++}
++
+ __END_SYS
+ 
+ #endif
+diff --git a/include/scheduler.h b/include/scheduler.h
+index 50dc5b7..b9c3c33 100644
+--- a/include/scheduler.h
++++ b/include/scheduler.h
+@@ -25,8 +25,9 @@ class Scheduling_Criterion_Common
+ public:
+     // Priorities
+     enum : int {
+-        MAIN   = 0,
+-        HIGH   = 1,
++        LOADER = 0,
++        MAIN   = 1,
++        HIGH   = 2,
+         NORMAL = (unsigned(1) << (sizeof(int) * 8 - 1)) - 3,
+         LOW    = (unsigned(1) << (sizeof(int) * 8 - 1)) - 2,
+         IDLE   = (unsigned(1) << (sizeof(int) * 8 - 1)) - 1
+diff --git a/include/syscall/agent.h b/include/syscall/agent.h
+new file mode 100644
+index 0000000..fde3fc8
+--- /dev/null
++++ b/include/syscall/agent.h
+@@ -0,0 +1,560 @@
++// EPOS Thread Component Declarations
++
++#ifndef __agent_h
++#define __agent_h
++
++#include <architecture.h>
++#include <machine.h>
++#include <syscall/message.h>
++
++#include <time.h>
++#include <memory.h>
++#include <process.h>
++#include <synchronizer.h>
++#include <time.h>
++#include <utility/fork.h>
++#include <utility/load_app.h>
++
++
++__BEGIN_SYS
++
++class Agent: public Message
++{
++public:
++    static void _exec(){
++        Agent * agt;
++        ASM("mov %0, r0  " : "=r"(agt) :);
++        agt->exec();
++    }
++    void exec() {
++        switch(entity()) {
++            case Message::ENTITY::LOADER:
++                handle_loader();
++                break;
++            case Message::ENTITY::FORK:
++                handle_fork();
++                break;
++            case Message::ENTITY::DISPLAY:
++                handle_display();
++                break;
++            case Message::ENTITY::THREAD:
++                handle_thread();
++                break;
++            case Message::ENTITY::TASK:
++                handle_task();
++                break;
++            case Message::ENTITY::ADDRESS_SPACE:
++                handle_address_space();
++                break;
++            case Message::ENTITY::SEGMENT:
++                handle_segment();
++                break;
++            case Message::ENTITY::MUTEX:
++                handle_mutex();
++                break;
++            case Message::ENTITY::SEMAPHORE:
++                handle_semaphore();
++                break;
++            case Message::ENTITY::CONDITION:
++                handle_condition();
++                break;
++            case Message::ENTITY::CLOCK:
++                handle_clock();
++                break;
++            case Message::ENTITY::ALARM:
++                handle_alarm();
++                break;
++            case Message::ENTITY::DELAY:
++                handle_delay();
++                break;
++            case Message::ENTITY::CHRONOMETER:
++                handle_chronometer();
++                break;
++            case Message::ENTITY::SHARED_SEGMENT:
++                handle_shared_segment();
++                break;
++            default:
++                break;
++        }
++    }
++
++private:
++
++    void handle_shared_segment() {
++        switch(method()) {
++            case Message::SHARED_SEGMENT_GET_SSEG: {
++                Shared_Segment * res;
++                unsigned int port;
++                get_params(port);
++                res = Shared_Segment::get_sseg(port);
++                db<Agent>(ERR) << "Fim get sseg" << endl;
++                result(reinterpret_cast<int>(res));
++            } break;
++            case Message::SHARED_SEGMENT_CREATE: {
++                unsigned int port, bytes;
++                Segment::Flags flags;
++                get_params(port,bytes,flags);
++
++                Shared_Segment * res = Shared_Segment::get_sseg(port);
++
++                if (!res) {
++                    res = new (SYSTEM) Shared_Segment(port,bytes,flags);
++                }
++                
++                db<Agent>(ERR) << "Fim sseg create" << endl;
++                result(reinterpret_cast<int>(res));
++            } break;
++            default:
++                db<Agent>(ERR) << "ENTITY DEFAULT" << endl;
++                break;
++        }
++    }
++    void handle_loader() {
++        switch(method()) {
++            case Message::LOADER_NEW_APP: {
++                int off_set, res;
++                unsigned int addr;
++                get_params(off_set, addr);
++                res = load_app(off_set, addr);
++                db<Agent>(ERR) << "Fim load app" << endl;
++
++                result(res);
++            } break;
++            default:
++                db<Agent>(ERR) << "ENTITY DEFAULT" << endl;
++                break;
++        }
++    }
++
++    void handle_fork() {
++        switch(method()) {
++            case Message::DO_FORK: {
++                int (* entry)();
++                ASM("mrs %0, lr_usr  " : "=r"(entry) :);
++                fork(entry);
++                result(1);
++            } break;
++            default:
++                db<Agent>(TRC) << "ENTITY DEFAULT" << endl;
++                break;
++        }
++    }
++
++    void handle_display() {
++        switch(method()) {
++            case Message::PRINT: {
++                char * s;
++                get_params(s);
++                const char * cs = reinterpret_cast<const char *>(s);
++                Display::puts(cs);
++            } break;
++            default:
++                db<Agent>(TRC) << "ENTITY DEFAULT" << endl;
++                break;
++        }
++    }
++
++    void handle_thread() {
++        switch(method()) {
++            case Message::THREAD_CREATE: {
++                int (* entry)();
++                get_params(entry);
++                Thread * t = new (SYSTEM) Thread(Thread::Configuration(Thread::READY, Thread::NORMAL), entry);
++                result(reinterpret_cast<int>(t));
++            }   break;
++            case Message::THREAD_CREATE_CONFIG: {
++                int (* entry)();
++                get_params(entry);
++                new (SYSTEM) Thread(entry);
++            }   break;
++            /*
++            case Message::THREAD_PRIORITY1: {
++                Thread * t = reinterpret_cast<Thread *>(id());
++                Criterion & p;
++                get_params(p);
++                t->priority(p);
++            } */
++            case Message::THREAD_TASK: {
++                Thread * t = reinterpret_cast<Thread *>(id());
++                Task * task = t->task();
++                result(reinterpret_cast<int>(task));
++            }   break;
++            case Message::THREAD_JOIN: {
++                db<Agent>(TRC) << "THREAD JOIN" << endl;
++                Thread * t = reinterpret_cast<Thread *>(id());
++                int r = t->join();
++                ASM("_banana:");
++                result(r);
++            }   break;
++            case Message::THREAD_PASS: {
++                Thread * t = reinterpret_cast<Thread *>(id());
++                t->pass();
++            }   break;
++            case Message::THREAD_SUSPEND: {
++                Thread * t = reinterpret_cast<Thread *>(id());
++                t->suspend();
++            }   break;
++            case Message::THREAD_RESUME: {
++                Thread * t = reinterpret_cast<Thread *>(id());
++                t->resume();
++            }   break;
++            case Message::THREAD_SELF: {
++                Thread * t = Thread::self();
++                result(reinterpret_cast<int>(t));
++                break;
++            }
++            case Message::THREAD_YIELD: {
++                Thread::yield();
++            }   break;
++            case Message::THREAD_EXIT: {
++                int status;
++                get_params(status);
++                db<Agent>(TRC) << "THREAD EXIT" << endl;
++                Thread::exit(status);
++            }   break;
++            default:
++                db<Agent>(TRC) << "FAILED :(" << endl;
++                break;
++        }
++    }
++
++    void handle_task(){
++        switch(method()) {
++            case Message::TASK_CREATE: {
++                Segment * cs;
++                Segment * ds;
++                int (* entry)();
++                Address_Space::Log_Addr code;
++                Address_Space::Log_Addr data;
++                get_params(cs, ds, entry, code, data);
++                Task * t = new (SYSTEM) Task(cs, ds, entry, code, data);
++                result(reinterpret_cast<int>(t));
++            }   break;
++            case Message::TASK_ADDRESS_SPACE: {
++                Task * t = reinterpret_cast<Task *>(id());
++                Address_Space * a = t->address_space();
++                result(reinterpret_cast<int>(a));
++            }   break;
++            case Message::TASK_CODE_SEGMENT: {
++                Task * t = reinterpret_cast<Task *>(id());
++                Segment * s = t->code_segment();
++                result(reinterpret_cast<int>(s));
++            }   break;
++            case Message::TASK_DATA_SEGMENT: {
++                Task * t = reinterpret_cast<Task *>(id());
++                Segment * s = t->data_segment();
++                result(reinterpret_cast<int>(s));
++            }   break;
++            case Message::TASK_CODE: {
++                Task * t = reinterpret_cast<Task *>(id());
++                Address_Space::Log_Addr l = t->code();
++                result(l);
++            }   break;
++            case Message::TASK_DATA: {
++                Task * t = reinterpret_cast<Task *>(id());
++                Address_Space::Log_Addr l = t->data();
++                result(l);
++            }   break;
++            case Message::TASK_MAIN: {
++                Task * t = reinterpret_cast<Task *>(id());
++                Thread * m = t->main();
++                result(reinterpret_cast<int>(m));
++            }   break;
++            case Message::TASK_ID: {
++                Task * t = reinterpret_cast<Task *>(id());
++                unsigned int r = t->id();
++                result(r);
++            }   break;
++            default:
++                db<Agent>(TRC) << "FAILED :(" << endl;
++                break;
++        }
++    }
++
++    void handle_address_space(){
++        switch(method()) {
++            case Message::ADDRESS_SPACE_CREATE: {
++                Address_Space * a = new (SYSTEM) Address_Space();
++                result(reinterpret_cast<int>(a));
++            }   break;
++            case Message::ADDRESS_SPACE_CREATE_PD: {
++                MMU::Page_Directory * pd;
++                get_params(pd);
++                Address_Space * a = new (SYSTEM) Address_Space(pd);
++                result(reinterpret_cast<int>(a));
++            }   break;
++            case Message::ADDRESS_SPACE_ATTACH1: {
++                Segment * seg;
++                Address_Space * a = reinterpret_cast<Address_Space *>(id());
++                get_params(seg);
++                result(a->attach(seg));
++            }   break;
++            case Message::ADDRESS_SPACE_ATTACH2: {
++                Segment * seg;
++                Address_Space::Log_Addr addr;
++                Address_Space * a = reinterpret_cast<Address_Space *>(id());
++                get_params(seg, addr);
++                result(a->attach(seg, addr));
++            }   break;
++            case Message::ADDRESS_SPACE_DETACH1 : {
++                Segment * seg;
++                Address_Space * a = reinterpret_cast<Address_Space *>(id());
++                get_params(seg);
++                a->detach(seg);
++            }   break;
++            case Message::ADDRESS_SPACE_DETACH2 : {
++                Segment * seg;
++                Address_Space::Log_Addr addr;
++                Address_Space * a = reinterpret_cast<Address_Space *>(id());
++                get_params(seg, addr);
++                a->detach(seg, addr);
++            }   break;
++            case Message::ADDRESS_SPACE_PHYSICAL : {
++                Address_Space::Log_Addr address;
++                Address_Space * a = reinterpret_cast<Address_Space *>(id());
++                get_params(address);
++                result(a->physical(address));
++            }   break;
++            default:
++                db<Agent>(TRC) << "FAILED :(" << endl;
++                break;
++        }
++    }
++    void handle_segment(){
++        switch(method()) {
++            case Message::SEGMENT_CREATE: {
++                unsigned int bytes;
++                Segment::Flags flags;
++                get_params(bytes, flags);
++                Segment * s = new (SYSTEM) Segment(bytes, flags);
++                result(reinterpret_cast<int>(s));
++            }   break;
++            case Message::SEGMENT_CREATE_PHY: {
++                Segment::Phy_Addr phy_addr;
++                unsigned int bytes;
++                Segment::Flags flags;
++                get_params(phy_addr, bytes, flags);
++                Segment * s = new (SYSTEM) Segment(phy_addr, bytes, flags);
++                result(reinterpret_cast<int>(s));
++            } break;
++            case Message::SEGMENT_SIZE: {
++                Segment * s = reinterpret_cast<Segment *>(id());
++                int r = s->size();
++                result(r);
++            } break;
++            case Message::SEGMENT_PHY_ADDRESS: {
++                Segment * s = reinterpret_cast<Segment *>(id());
++                int r = s->phy_address();
++                result(r);
++            } break;
++            case Message::SEGMENT_RESIZE: {
++                Segment * s = reinterpret_cast<Segment *>(id());
++                int amount;
++                get_params(amount);
++                int r = s->resize(amount);
++                result(r);
++            } break;
++            default:
++                db<Agent>(TRC) << "FAILED :(" << endl;
++                break;
++        }
++    }
++    void handle_mutex() {
++        switch(method()) {
++            case Message::MUTEX_CREATE: {
++                Mutex * m = new (SYSTEM) Mutex();
++                db<Agent>(TRC) << "AGENT CREATE MUTEX" << endl;
++                result(reinterpret_cast<int>(m));
++            }   break;
++            case Message::MUTEX_LOCK: {
++                Mutex * m = reinterpret_cast<Mutex *>(id());
++                m->lock();
++                db<Agent>(TRC) << "AGENT MUTEX LOCK" << endl;
++            }   break;
++            case Message::MUTEX_UNLOCK: {
++                Mutex * m = reinterpret_cast<Mutex *>(id());
++                m->unlock();
++                db<Agent>(TRC) << "AGENT MUTEX UNLOCK" << endl;
++            }   break;
++            case Message::MUTEX_HANDLER: {
++                Mutex * m = reinterpret_cast<Mutex *>(id());
++                Mutex_Handler * h = new (SYSTEM) Mutex_Handler(m);
++                db<Agent>(TRC) << "AGENT NEW MUTEX_HANDLER" << endl;
++                result(reinterpret_cast<int>(h));
++            }   break;
++            case Message::MUTEX_OPERATOR: {
++                Mutex_Handler * h = reinterpret_cast<Mutex_Handler *>(id());
++                (* h)();
++                db<Agent>(TRC) << "AGENT MUTEX_HANDLER ()" << endl;
++            }   break;
++            default:
++                db<Agent>(TRC) << "MUTEX FAILED :(" << endl;
++                break;
++        }
++    }
++    void handle_semaphore(){
++        switch(method()) {
++            case Message::SEMAPHORE_CREATE: {
++                int v;
++                get_params(v);
++                Semaphore * s = new (SYSTEM) Semaphore(v);
++                result(reinterpret_cast<int>(s));
++            }   break;
++            case Message::SEMAPHORE_P: {
++                Semaphore * s = reinterpret_cast<Semaphore *>(id());
++                s->p();
++            }   break;
++            case Message::SEMAPHORE_V: {
++                Semaphore * s = reinterpret_cast<Semaphore *>(id());
++                s->v();
++            }   break;
++            case Message::SEMAPHORE_HANDLER: {
++                Semaphore * s;
++                get_params(s);
++                Semaphore_Handler * sh = new (SYSTEM) Semaphore_Handler(s);
++                result(reinterpret_cast<int>(sh));
++            }   break;
++            case Message::SEMAPHORE_OPERATOR : {
++                Semaphore_Handler * sh;
++                get_params(sh);
++                (*sh)();
++            }   break;
++            default:
++                db<Agent>(TRC) << "FAILED :(" << endl;
++                break;
++        }
++    }
++    void handle_condition(){
++        switch(method()) {
++            case Message::CONDITION_CREATE: {
++                Condition * c = new (SYSTEM) Condition();
++                result(reinterpret_cast<int>(c));
++            }   break;
++            case Message::CONDITION_WAIT: {
++                Condition * c = reinterpret_cast<Condition *>(id());
++                c->wait();
++                // db<Agent>(TRC) << "AHH CREATE THREAD" << endl;
++            }   break;
++            case Message::CONDITION_SIGNAL: {
++                Condition * c = reinterpret_cast<Condition *>(id());
++                c->signal();
++                // db<Agent>(TRC) << "AHH CREATE THREAD" << endl;
++            }   break;
++            case Message::CONDITION_BROADCAST: {
++                Condition * c = reinterpret_cast<Condition *>(id());
++                c->broadcast();
++                // db<Agent>(TRC) << "AHH EXIT THREAD" << endl;
++            }   break;
++            case Message::CONDITION_HANDLER: {
++                Condition * c;
++                get_params(c);
++                Condition_Handler * ch = new (SYSTEM) Condition_Handler(c);
++                result(reinterpret_cast<int>(ch));
++            }   break;
++            case Message::CONDITION_OPERATOR : {
++                Condition_Handler * ch;
++                get_params(ch);
++                (*ch)();
++            }   break;
++            default:
++                db<Agent>(TRC) << "FAILED :(" << endl;
++                break;
++        }
++    }
++    void handle_clock(){}
++    void handle_alarm(){
++        switch(method()) {
++            case Message::ALARM_CREATE: {
++                Microsecond time;
++                Handler * handler;
++                unsigned int times;
++                get_params(time, handler, times);
++                Alarm * a = new (SYSTEM) Alarm(time, handler, times);
++                result(reinterpret_cast<int>(a));
++            }   break;
++            case Message::ALARM_PERIOD: {
++                Microsecond p;
++                Alarm * a = reinterpret_cast<Alarm *>(id());
++                p = a->period();
++                result(p);
++            }   break;
++            case Message::ALARM_PERIOD1: {
++                Microsecond p;
++                Alarm * a = reinterpret_cast<Alarm *>(id());
++                get_params(p);
++                a->period(p);
++            }   break;
++            case Message::ALARM_RESET: {
++                Alarm * a = reinterpret_cast<Alarm *>(id());
++                a->reset();
++            }   break;
++            case Message::ALARM_FREQUENCY : {
++                result(Alarm::frequency());
++            }   break;
++            case Message::ALARM_DELAY : {
++                Microsecond time;
++                get_params(time);
++                Alarm * a = reinterpret_cast<Alarm *>(id());
++                a->delay(time);
++            }   break;
++            default:
++                db<Agent>(TRC) << "FAILED :(" << endl;
++                break;
++        }
++    }
++    void handle_delay(){
++        switch(method()) {
++            case Message::DELAY_CREATE: {
++                Microsecond time;
++                get_params(time);
++                Delay * d = new (SYSTEM) Delay(reinterpret_cast<const Microsecond &>(time));
++                result(reinterpret_cast<int>(d));
++            }   break;
++          default:
++                db<Agent>(TRC) << "FAILED :(" << endl;
++                break;
++        }
++    }
++    void handle_chronometer(){
++        switch(method()) {
++            case Message::CHRONOMETER_CREATE: {
++                Chronometer * c = new (SYSTEM) Chronometer();
++                result(reinterpret_cast<int>(c));
++            }   break;
++            case Message::CHRONOMETER_FREQUENCY: {
++                Chronometer * c = reinterpret_cast<Chronometer *>(id());
++                Hertz p = c->frequency();
++                result(p);
++                // db<Agent>(TRC) << "AHH CREATE THREAD" << endl;
++            }   break;
++            case Message::CHRONOMETER_RESET: {
++                Chronometer * c = reinterpret_cast<Chronometer *>(id());
++                c->reset();
++                // db<Agent>(TRC) << "AHH EXIT THREAD" << endl;
++            }   break;
++            case Message::CHRONOMETER_START: {
++              Chronometer * c = reinterpret_cast<Chronometer *>(id());
++              c->start();
++          }   break;
++            case Message::CHRONOMETER_LAP : {
++              Chronometer * c = reinterpret_cast<Chronometer *>(id());
++              c->lap();
++          }   break;
++            case Message::CHRONOMETER_STOP : {
++              Chronometer * c = reinterpret_cast<Chronometer *>(id());
++              c->stop();
++          }   break;
++            case Message::CHRONOMETER_READ : {
++              Chronometer * c = reinterpret_cast<Chronometer *>(id());
++              result(c->read());
++          }   break;
++            default:
++                db<Agent>(TRC) << "FAILED :(" << endl;
++                break;
++        }
++    }
++};
++
++__END_SYS
++
++#endif
+diff --git a/include/syscall/message.h b/include/syscall/message.h
+new file mode 100644
+index 0000000..6b6a046
+--- /dev/null
++++ b/include/syscall/message.h
+@@ -0,0 +1,170 @@
++// EPOS Thread Component Declarations
++
++#ifndef __message_h
++#define __message_h
++
++#include <architecture.h>
++
++extern "C" { void _syscall(void *); }
++
++__BEGIN_SYS
++
++class Message
++{
++public:
++    enum {
++        LOADER_NEW_APP,
++        DO_FORK,
++        PRINT,
++        DELETE,
++
++        THREAD_CREATE,
++        THREAD_CREATE_CONFIG,
++        //THREAD_PRIORITY,
++        THREAD_PRIORITY1,
++        THREAD_TASK,
++        THREAD_JOIN,
++        THREAD_PASS,
++        THREAD_SUSPEND,
++        THREAD_RESUME,
++        THREAD_SELF,
++        THREAD_YIELD,
++        THREAD_EXIT,
++        THREAD_WAIT_NEXT,
++
++        TASK_CREATE,
++        TASK_ADDRESS_SPACE,
++        TASK_CODE_SEGMENT,
++        TASK_DATA_SEGMENT,
++        TASK_CODE,
++        TASK_DATA,
++        TASK_MAIN,
++        TASK_ENTRY,
++        TASK_ID,
++
++        ADDRESS_SPACE_CREATE, 
++        ADDRESS_SPACE_CREATE_PD, 
++        ADDRESS_SPACE_ATTACH1,
++        ADDRESS_SPACE_ATTACH2,
++        ADDRESS_SPACE_DETACH1,
++        ADDRESS_SPACE_DETACH2,
++        ADDRESS_SPACE_PHYSICAL,
++
++        SEGMENT_CREATE,
++        SEGMENT_CREATE_PHY,
++        SEGMENT_SIZE,
++        SEGMENT_PHY_ADDRESS,
++        SEGMENT_RESIZE,
++
++        SHARED_SEGMENT_GET_SSEG,
++        SHARED_SEGMENT_CREATE,
++        
++        MUTEX_CREATE,
++        MUTEX_LOCK,
++        MUTEX_UNLOCK,
++        MUTEX_HANDLER,
++        MUTEX_OPERATOR,
++        
++        SEMAPHORE_CREATE,
++        SEMAPHORE_P,
++        SEMAPHORE_V,
++        SEMAPHORE_HANDLER,
++        SEMAPHORE_OPERATOR,
++
++        CONDITION_CREATE,
++        CONDITION_WAIT,
++        CONDITION_SIGNAL,
++        CONDITION_BROADCAST,
++        CONDITION_HANDLER,
++        CONDITION_OPERATOR,
++
++        CLOCK_CREATE,
++        CLOCK_RESOLUTION,
++        CLOCK_NOW,
++        CLOCK_DATE,
++        CLOCK_DATE1,
++
++        ALARM_CREATE,
++        ALARM_PERIOD,
++        ALARM_PERIOD1,
++        ALARM_RESET,
++        ALARM_FREQUENCY,
++        ALARM_DELAY,
++        ALARM_TIMES,
++        ALARM_TIMER_PERIOD,
++        ALARM_TICKS,
++        ALARM_LOCK,
++        ALARM_UNLOCK,
++        ALARM_HANDLER,
++        ALARM_INIT,
++
++        DELAY_CREATE,
++
++        CHRONOMETER_CREATE,
++        CHRONOMETER_FREQUENCY,
++        CHRONOMETER_RESET,
++        CHRONOMETER_START,
++        CHRONOMETER_LAP,
++        CHRONOMETER_STOP,
++        CHRONOMETER_READ,
++    };
++    enum ENTITY {
++        LOADER,
++        FORK,
++        DISPLAY,
++        THREAD,
++        TASK,
++        ADDRESS_SPACE,
++        SEGMENT,
++        SHARED_SEGMENT,
++        MUTEX,
++        SEMAPHORE,
++        CONDITION,
++        CLOCK,
++        ALARM,
++        DELAY,
++        CHRONOMETER,
++    };
++public:
++    template<typename ... Tn>
++    Message(int id, int entity, int method, Tn ... an): _id(id), _entity(entity), _method(method) {set_params(an ...);}
++
++    //template<typename ... Tn>
++    //Message(int entity, int method, Tn ... an): _entity(entity), _method(method) {set_params(an ...);}
++    //Message(int entity, int method): _entity(entity), _method(method) {}
++
++    template<typename ... Tn>
++    void get_params(Tn && ... an) {
++        // Force a compilation error in case out is called with too many arguments
++        typename IF<(SIZEOF<Tn ...>::Result <= 256), int, void>::Result index = 0;
++        DESERIALIZE(_params, index, an ...);
++    }
++    template<typename ... Tn>
++    void set_params(const Tn & ... an) {
++        // Force a compilation error in case out is called with too many arguments
++        typename IF<(SIZEOF<Tn ...>::Result <= 256), int, void>::Result index = 0;
++        SERIALIZE(_params, index, an ...);
++    }
++
++    void act() { _syscall(this); }
++
++    int id(){return _id;}
++    int entity(){return _entity;}
++    int method(){return _method;}
++    int result(){return _result;}
++    void result(int r){_result = r;}
++    char* params(){return _params;}
++
++private:
++    int _id;
++    int _entity;
++    int _method;
++    int _result;
++    char _params[256];
++
++};
++
++
++__END_SYS
++
++#endif
+diff --git a/include/syscall/stub_address_space.h b/include/syscall/stub_address_space.h
+new file mode 100644
+index 0000000..67fc899
+--- /dev/null
++++ b/include/syscall/stub_address_space.h
+@@ -0,0 +1,74 @@
++// EPOS Component Declarations
++
++#ifndef __stub_address_space_h
++#define __stub_address_space_h
++
++#include <architecture.h>
++#include <syscall/message.h>
++#include <memory.h>
++
++__BEGIN_API
++
++__USING_UTIL
++
++class Stub_Address_Space
++{
++private:
++    int id;
++    typedef _SYS::Message Message;
++    typedef _SYS::MMU MMU;
++    typedef _SYS::Address_Space Address_Space;
++    typedef _SYS::Segment Segment;
++    // typedef Message::ENTITY::SEMAPHORE SEMAPHORE;
++
++public:
++    Stub_Address_Space(){}
++    void set_id(int _id) {id = _id;}
++
++    template<typename ... Tn>
++    Stub_Address_Space(Tn ... an){
++        Message * msg = new Message(0, Message::ENTITY::ADDRESS_SPACE, Message::ADDRESS_SPACE_CREATE);
++        msg->act();
++        id = msg->result();
++    }
++
++    template<typename ... Tn>
++    Stub_Address_Space(MMU::Page_Directory * pd, Tn ... an){
++        Message * msg = new Message(0, Message::ENTITY::ADDRESS_SPACE, Message::ADDRESS_SPACE_CREATE_PD, pd);
++        msg->act();
++        id = msg->result();
++    }
++
++    Address_Space::Log_Addr attach(Segment * seg) {
++        Message * msg = new Message(id, Message::ENTITY::ADDRESS_SPACE, Message::ADDRESS_SPACE_ATTACH1, seg);
++        msg->act();
++        return msg->result();
++    }
++
++    Address_Space::Log_Addr attach(Segment * seg, Address_Space::Log_Addr addr) {
++        Message * msg = new Message(id, Message::ENTITY::ADDRESS_SPACE, Message::ADDRESS_SPACE_ATTACH2, seg, addr);
++        msg->act();
++        return msg->result();
++    }
++
++    void detach(Segment * seg) {
++        Message * msg = new Message(id, Message::ENTITY::ADDRESS_SPACE, Message::ADDRESS_SPACE_DETACH1, seg);
++        msg->act();
++    }
++
++    void detach(Segment * seg, Address_Space::Log_Addr addr) {
++        Message * msg = new Message(id, Message::ENTITY::ADDRESS_SPACE, Message::ADDRESS_SPACE_DETACH2, seg, addr);
++        msg->act();
++    }
++
++    Address_Space::Phy_Addr physical(Address_Space::Log_Addr addr) {
++        Message * msg = new Message(id, Message::ENTITY::ADDRESS_SPACE, Message::ADDRESS_SPACE_PHYSICAL, addr);
++        msg->act();
++        return msg->result();
++    }
++
++};
++
++__END_API
++
++#endif
+diff --git a/include/syscall/stub_alarm.h b/include/syscall/stub_alarm.h
+new file mode 100644
+index 0000000..4ce29d9
+--- /dev/null
++++ b/include/syscall/stub_alarm.h
+@@ -0,0 +1,64 @@
++// EPOS Component Declarations
++
++#ifndef __stub_alarm_h
++#define __stub_alarm_h
++
++#include <architecture.h>
++#include <syscall/message.h>
++#include <time.h>
++
++__BEGIN_API
++
++__USING_UTIL
++
++class Stub_Alarm
++{
++private:
++    int id;
++    typedef _SYS::Message Message;
++    // typedef Message::ENTITY::SEMAPHORE SEMAPHORE;
++
++
++public:
++    template<typename ... Tn>
++    Stub_Alarm(const Microsecond & time, Handler * handler, unsigned int times = 1, Tn ... an){
++        Message * msg = new Message(0, Message::ENTITY::ALARM, Message::ALARM_CREATE, time, handler, times);
++        msg->act();
++        id = msg->result();
++    }
++
++    /*
++    const Microsecond & period() {
++        Message *msg = new Message(id, Message::ENTITY::ALARM, Message::ALARM_PERIOD);
++        msg->act();
++        return msg->result();
++    }
++    */
++
++
++    void period(const Microsecond & p) {
++        Message *msg = new Message(id, Message::ENTITY::ALARM, Message::ALARM_PERIOD1, p);
++        msg->act();
++    }
++
++    void reset() {
++        Message *msg = new Message(id, Message::ENTITY::ALARM, Message::ALARM_RESET);
++        msg->act();
++    }
++
++    static Hertz frequency() {
++        Message *msg = new Message(0, Message::ENTITY::ALARM, Message::ALARM_FREQUENCY);
++        msg->act();
++        return (msg->result());
++    }
++
++    void delay(const Microsecond & time) {
++        Message *msg = new Message(id, Message::ENTITY::ALARM, Message::ALARM_DELAY, time);
++        msg->act();
++    }
++
++};
++
++__END_API
++
++#endif
+diff --git a/include/syscall/stub_chronometer.h b/include/syscall/stub_chronometer.h
+new file mode 100644
+index 0000000..5665859
+--- /dev/null
++++ b/include/syscall/stub_chronometer.h
+@@ -0,0 +1,64 @@
++// EPOS Component Declarations
++
++#ifndef __stub_chronometer_h
++#define __stub_chronometer_h
++
++#include <architecture.h>
++#include <syscall/message.h>
++
++__BEGIN_API
++
++__USING_UTIL
++
++class Stub_Chronometer
++{
++private:
++    int id;
++    typedef _SYS::Message Message;
++    // typedef Message::ENTITY::SEMAPHORE SEMAPHORE;
++
++public:
++    template<typename ... Tn>
++    Stub_Chronometer(Tn ... an){
++        Message * msg = new Message(0, Message::ENTITY::CHRONOMETER, Message::CHRONOMETER_CREATE);
++        msg->act();
++        id = msg->result();
++    }
++
++    Hertz frequency(){
++        Message * msg = new Message(id, Message::ENTITY::CHRONOMETER, Message::CHRONOMETER_FREQUENCY);
++        msg->act();
++        return msg->result();
++    }
++
++    void reset() {
++        Message * msg = new Message(id, Message::ENTITY::CHRONOMETER, Message::CHRONOMETER_RESET);
++        msg->act();
++    }
++
++    void start() {
++        Message * msg = new Message(id, Message::ENTITY::CHRONOMETER, Message::CHRONOMETER_START);
++        msg->act();
++    }
++
++    void lap() {
++        Message * msg = new Message(id, Message::ENTITY::CHRONOMETER, Message::CHRONOMETER_LAP);
++        msg->act();
++    }
++
++    void stop() {
++        Message * msg = new Message(id, Message::ENTITY::CHRONOMETER, Message::CHRONOMETER_STOP);
++        msg->act();
++    }
++
++    Microsecond read() {
++        Message * msg = new Message(id, Message::ENTITY::CHRONOMETER, Message::CHRONOMETER_READ);
++        msg->act();
++        return msg->result();
++    }
++
++};
++
++__END_API
++
++#endif
+diff --git a/include/syscall/stub_clock.h b/include/syscall/stub_clock.h
+new file mode 100644
+index 0000000..7932a72
+--- /dev/null
++++ b/include/syscall/stub_clock.h
+@@ -0,0 +1,55 @@
++// EPOS Component Declarations
++
++#ifndef __stub_clock_h
++#define __stub_clock_h
++
++#include <architecture.h>
++#include <machine/rtc.h>
++#include <syscall/message.h>
++
++__BEGIN_API
++
++__USING_UTIL
++
++class Stub_Clock
++{
++private:
++    int id;
++    typedef _SYS::Message Message;
++    typedef Message::ENTITY::CLOCK CLOCK;
++    typedef RTC::Date Date;
++
++public:
++    Stub_Clock(){
++        Message * msg = new Message(0, CLOCK, Message::CLOCK_CREATE);
++        msg->act();
++        id = msg->result();
++    }
++
++    Microsecond resolution() {
++        Message * msg = new Message(id, CLOCK, Message::CLOCK_RESOLUTION);
++        msg->act();
++        return msg->result();
++    }
++
++    Second now() {
++        Message * msg = new Message(id, CLOCK, Message::CLOCK_NOW);
++        msg->act();
++        return msg->result();
++    }
++
++    Date date() {
++        Message * msg = new Message(id, CLOCK, Message::CLOCK_DATE);
++        msg->act();
++        return msg->result();
++    }
++
++    void date() {
++        Message * msg = new Message(id, CLOCK, Message::CLOCK_DATE1);
++        msg->act();
++    }
++};
++
++__END_API
++
++#endif
+diff --git a/include/syscall/stub_condition.h b/include/syscall/stub_condition.h
+new file mode 100644
+index 0000000..eceae93
+--- /dev/null
++++ b/include/syscall/stub_condition.h
+@@ -0,0 +1,58 @@
++// EPOS Component Declarations
++
++#ifndef __stub_condition_h
++#define __stub_condition_h
++
++#include <architecture.h>
++#include <syscall/message.h>
++
++__BEGIN_API
++
++__USING_UTIL
++
++class Stub_Condition
++{
++private:
++    int id;
++    int handler;
++    typedef _SYS::Message Message;
++
++public:
++    template<typename ... Tn>
++    Stub_Condition(Tn ... an){
++        Message * msg = new Message(0, Message::ENTITY::CONDITION, Message::CONDITION_CREATE);
++        msg->act();
++        id = msg->result();
++    }
++
++    void wait(){
++        Message * msg = new Message(id, Message::ENTITY::CONDITION, Message::CONDITION_WAIT);
++        msg->act();
++    }
++
++    void signal(){
++        Message * msg = new Message(id, Message::ENTITY::CONDITION, Message::CONDITION_SIGNAL);
++        msg->act();
++    }
++
++    void broadcast(){
++        Message * msg = new Message(id, Message::ENTITY::CONDITION, Message::CONDITION_BROADCAST);
++        msg->act();
++    }
++
++    // handler
++    void condition_handler(){
++        Message * msg = new Message(id, Message::ENTITY::CONDITION, Message::CONDITION_HANDLER, id);
++        msg->act();
++        handler = msg->result();
++    }
++
++    void operator()(){
++        Message * msg = new Message(id, Message::ENTITY::CONDITION, Message::CONDITION_OPERATOR, handler);
++        msg->act();
++    }
++};
++
++__END_API
++
++#endif
+diff --git a/include/syscall/stub_delay.h b/include/syscall/stub_delay.h
+new file mode 100644
+index 0000000..5227809
+--- /dev/null
++++ b/include/syscall/stub_delay.h
+@@ -0,0 +1,32 @@
++// EPOS Component Declarations
++
++#ifndef __stub_delay_h
++#define __stub_delay_h
++
++#include <architecture.h>
++#include <syscall/message.h>
++#include <time.h>
++
++__BEGIN_API
++
++__USING_UTIL
++
++class Stub_Delay
++{
++private:
++    int id;
++    typedef _SYS::Message Message;
++    // typedef Message::ENTITY::SEMAPHORE SEMAPHORE;
++
++
++public:
++    Stub_Delay(const Microsecond & time){
++        Message * msg = new Message(0, Message::ENTITY::DELAY, Message::DELAY_CREATE);
++        msg->act();
++        id = msg->result();
++    }
++};
++
++__END_API
++
++#endif
+diff --git a/include/syscall/stub_fork.h b/include/syscall/stub_fork.h
+new file mode 100644
+index 0000000..7fb0644
+--- /dev/null
++++ b/include/syscall/stub_fork.h
+@@ -0,0 +1,22 @@
++// EPOS Component Declarations
++
++#ifndef __stub_task_h
++#define __stub_task_h
++
++#include <architecture.h>
++#include <syscall/message.h>
++#include <memory.h>
++
++__BEGIN_API
++
++__USING_UTIL
++
++static unsigned int fork() {
++    _SYS::Message * msg = new  _SYS::Message(0,  _SYS::Message::ENTITY::FORK,  _SYS::Message::DO_FORK);
++    msg->act();
++    return msg->result();
++};
++
++__END_API
++
++#endif
+diff --git a/include/syscall/stub_loader.h b/include/syscall/stub_loader.h
+new file mode 100644
+index 0000000..ef010c2
+--- /dev/null
++++ b/include/syscall/stub_loader.h
+@@ -0,0 +1,35 @@
++// EPOS Component Declarations
++
++#ifndef __stub_loader_h
++#define __stub_loader_h
++
++#include <architecture.h>
++#include <syscall/message.h>
++#include <syscall/stub_task.h>
++
++__BEGIN_API
++
++__USING_UTIL
++
++class Stub_Loader
++{
++private:
++    int id;
++    typedef _SYS::Message Message;
++
++public:
++    Stub_Loader(){}
++
++    int new_app(int off_set, unsigned int addr) {
++        Message * msg = new Message(0, Message::ENTITY::LOADER, Message::LOADER_NEW_APP, off_set, addr);
++        msg->act();
++         
++        return msg->result();
++    }
++
++
++};
++
++__END_API
++
++#endif
+\ No newline at end of file
+diff --git a/include/syscall/stub_mutex.h b/include/syscall/stub_mutex.h
+new file mode 100644
+index 0000000..778f10b
+--- /dev/null
++++ b/include/syscall/stub_mutex.h
+@@ -0,0 +1,60 @@
++// EPOS Component Declarations
++
++#ifndef __stub_mutex_h
++#define __stub_mutex_h
++
++#include <architecture.h>
++#include <syscall/message.h>
++
++__BEGIN_API
++
++__USING_UTIL
++
++class Stub_Mutex
++{
++private:
++    int id;
++    typedef _SYS::Message Message;
++
++public:
++    Stub_Mutex(){
++        Message * msg = new Message(0, Message::ENTITY::MUTEX, Message::MUTEX_CREATE);
++        msg->act();
++        id = msg->result();
++    }
++
++    void lock() {
++        Message * msg = new Message(id, Message::ENTITY::MUTEX, Message::MUTEX_LOCK);
++        msg->act();
++    }
++
++    void unlock() {
++        Message * msg = new Message(id, Message::ENTITY::MUTEX, Message::MUTEX_UNLOCK);
++        msg->act();
++    }
++};
++
++class Stub_Mutex_Handler {
++private:
++    int id;
++    typedef _SYS::Message Message;
++
++public:
++    // handler it self
++    Stub_Mutex_Handler(){
++        Message * msg = new Message(0, Message::ENTITY::MUTEX, Message::MUTEX_HANDLER);
++        msg->act();
++        id = msg->result();
++    }
++
++    /*
++    void operator()() {
++        Message * msg = new Message(handler, Message::ENTITY::MUTEX, Message::MUTEX_OPERATOR);
++        msg->act();
++    }
++    */
++};
++
++__END_API
++
++#endif
+diff --git a/include/syscall/stub_segment.h b/include/syscall/stub_segment.h
+new file mode 100644
+index 0000000..afb9eb8
+--- /dev/null
++++ b/include/syscall/stub_segment.h
+@@ -0,0 +1,63 @@
++// EPOS Component Declarations
++
++#ifndef __stub_segment_h
++#define __stub_segment_h
++
++#include <architecture.h>
++#include <syscall/message.h>
++#include <memory.h>
++
++__BEGIN_API
++
++__USING_UTIL
++
++class Stub_Segment
++{
++private:
++    int id;
++    typedef _SYS::Message Message;
++    typedef _SYS::MMU MMU;
++    typedef _SYS::Segment Segment;
++
++public:
++    Stub_Segment(){}
++    void set_id(int _id) {id = _id;}
++
++    Stub_Segment(unsigned int bytes, MMU::Flags flags = MMU::Flags::APP){
++        Message * msg = new Message(0, Message::ENTITY::SEGMENT, Message::SEGMENT_CREATE, bytes, flags);
++        msg->act();
++        id = msg->result();
++    }
++
++    Stub_Segment(Segment::Phy_Addr phy_addr, unsigned int bytes, MMU::Flags flags = MMU::Flags::APP){
++        Message * msg = new Message(0, Message::ENTITY::SEGMENT, Message::SEGMENT_CREATE_PHY, phy_addr, bytes, flags);
++        msg->act();
++        id = msg->result();
++    }
++
++    unsigned int size () {
++        Message * msg = new Message(id, Message::ENTITY::SEGMENT, Message::SEGMENT_SIZE);
++        msg->act();
++        int r = msg->result();
++        return reinterpret_cast<int>(r);
++    }
++
++    Segment::Phy_Addr phy_address() {
++        Message * msg = new Message(id, Message::ENTITY::SEGMENT, Message::SEGMENT_PHY_ADDRESS);
++        msg->act();
++        int r = msg->result();
++        //return reinterpret_cast<Segment::Phy_Addr>(r);
++        return r;
++    }
++
++    int resize (int amount) {
++        Message * msg = new Message(id, Message::ENTITY::SEGMENT, Message::SEGMENT_RESIZE, amount);
++        msg->act();
++        int r = msg->result();
++        return r;
++    }
++};
++
++__END_API
++
++#endif
+diff --git a/include/syscall/stub_semaphore.h b/include/syscall/stub_semaphore.h
+new file mode 100644
+index 0000000..4328c70
+--- /dev/null
++++ b/include/syscall/stub_semaphore.h
+@@ -0,0 +1,53 @@
++// EPOS Component Declarations
++
++#ifndef __stub_semaphore_h
++#define __stub_semaphore_h
++
++#include <architecture.h>
++#include <syscall/message.h>
++
++__BEGIN_API
++
++__USING_UTIL
++
++class Stub_Semaphore
++{
++private:
++    int id;
++    int handler;
++    typedef _SYS::Message Message;
++
++public:
++    template<typename ... Tn>
++    Stub_Semaphore(int v, Tn ... an){
++        Message * msg = new Message(0, Message::ENTITY::SEMAPHORE, Message::SEMAPHORE_CREATE, v);
++        msg->act();
++        id = msg->result();
++    }
++
++    void p(){
++        Message * msg = new Message(id, Message::ENTITY::SEMAPHORE, Message::SEMAPHORE_P);
++        msg->act();
++    }
++
++    void v(){
++        Message * msg = new Message(id, Message::ENTITY::SEMAPHORE, Message::SEMAPHORE_V);
++        msg->act();
++    }
++
++    // handler
++    void semaphore_handler(){
++        Message * msg = new Message(id, Message::ENTITY::SEMAPHORE, Message::SEMAPHORE_HANDLER, id);
++        msg->act();
++        handler = msg->result();
++    }
++
++    void operator()(){
++        Message * msg = new Message(id, Message::ENTITY::SEMAPHORE, Message::SEMAPHORE_OPERATOR, handler);
++        msg->act();
++    }
++};
++
++__END_API
++
++#endif
+diff --git a/include/syscall/stub_shared_segment.h b/include/syscall/stub_shared_segment.h
+new file mode 100644
+index 0000000..45c6c6d
+--- /dev/null
++++ b/include/syscall/stub_shared_segment.h
+@@ -0,0 +1,44 @@
++// EPOS Component Declarations
++
++#ifndef __stub_segment_h
++#define __stub_segment_h
++
++#include <architecture.h>
++#include <syscall/message.h>
++#include <memory.h>
++
++__BEGIN_API
++
++__USING_UTIL
++
++class Stub_Shared_Segment
++{
++private:
++    int id;
++    typedef _SYS::Message Message;
++    typedef _SYS::Shared_Segment Shared_Segment;
++    typedef _SYS::Segment Segment;
++
++public:
++
++    Stub_Shared_Segment(){}
++
++    void set_id(int _id) {id = _id;}
++    
++    Stub_Shared_Segment(unsigned int port, unsigned int bytes, const Flags & flags) {
++        Message * msg = new Message(0, Message::ENTITY::SHARED_SEGMENT, Message::SHARED_SEGMENT_CREATE, port, bytes, flags);
++        msg->act();
++        id = msg->result();
++    }
++
++    Shared_Segment * get_sseg(unsigned int port) {
++        Message * msg = new Message(0, Message::ENTITY::SHARED_SEGMENT, Message::SHARED_SEGMENT_GET_SSEG, port);
++        msg->act();
++        return msg->result();
++    }
++    
++};
++
++__END_API
++
++#endif
+diff --git a/include/syscall/stub_task.h b/include/syscall/stub_task.h
+new file mode 100644
+index 0000000..6ef7c76
+--- /dev/null
++++ b/include/syscall/stub_task.h
+@@ -0,0 +1,98 @@
++// EPOS Component Declarations
++
++#ifndef __stub_task_h
++#define __stub_task_h
++
++#include <architecture.h>
++#include <syscall/message.h>
++#include <syscall/stub_address_space.h>
++#include <syscall/stub_segment.h>
++#include <memory.h>
++
++__BEGIN_API
++
++__USING_UTIL
++
++class Stub_Task
++{
++private:
++    int _id;
++    typedef _SYS::Message Message;
++    typedef _SYS::Address_Space Address_Space;
++    typedef _SYS::Segment Segment;
++
++public:
++    Stub_Task();
++   
++    template<typename ... Tn>
++    Stub_Task(Stub_Segment * cs, Stub_Segment * ds, int (* entry)(Tn ...), const Address_Space::Log_Addr & code, const Address_Space::Log_Addr & data, Tn ... an){
++        Message * msg = new Message(0, Message::ENTITY::TASK, Message::TASK_CREATE, cs, ds, entry, code, data);
++        msg->act();
++        _id = msg->result();
++    }
++
++    Stub_Address_Space * address_space() {
++        Message * msg = new Message(_id, Message::ENTITY::TASK, Message::TASK_ADDRESS_SPACE);
++        msg->act();
++        int a = msg->result();
++        Stub_Address_Space * as = new Stub_Address_Space();
++        as->set_id(a);
++        return reinterpret_cast<Stub_Address_Space *>(as);
++    }
++
++    Stub_Segment * code_segment() {
++        Message * msg = new Message(_id, Message::ENTITY::TASK, Message::TASK_CODE_SEGMENT);
++        msg->act();
++        int s = msg->result();
++        Stub_Segment * sc = new Stub_Segment();
++        sc->set_id(s);
++        return reinterpret_cast<Stub_Segment *>(sc);
++    }
++
++    Stub_Segment * data_segment() {
++        Message * msg = new Message(_id, Message::ENTITY::TASK, Message::TASK_DATA_SEGMENT);
++        msg->act();
++        int s = msg->result();
++        Stub_Segment * sd = new Stub_Segment();
++        sd->set_id(s);
++        return reinterpret_cast<Stub_Segment *>(sd);
++    }
++
++    Address_Space::Log_Addr code() {
++        Message * msg = new Message(_id, Message::ENTITY::TASK, Message::TASK_CODE);
++        msg->act();
++        int l = msg->result();
++        //return reinterpret_cast<Address_Space::Log_Addr>(l);
++        return l;
++    }
++
++    Address_Space::Log_Addr data() {
++        Message * msg = new Message(_id, Message::ENTITY::TASK, Message::TASK_DATA);
++        msg->act();
++        int l = msg->result();
++        //return reinterpret_cast<Address_Space::Log_Addr>(l);
++        return l;
++    }
++
++    /*Stub_Thread * main() {
++        Message * msg = new Message(_id, Message::ENTITY::TASK, Message::TASK_MAIN);
++        msg->act();
++        int m = msg->result();
++        Stub_Thread * st = new Stub_Thread();
++        st->set_id(m);
++        return reinterpret_cast<Stub_Thread *>(st);
++    }*/
++
++    int id() {
++        Message * msg = new Message(_id, Message::ENTITY::TASK, Message::TASK_ID);
++        msg->act();
++        int r = msg->result();
++        return reinterpret_cast<int>(r);
++    }
++
++    void set_id(int id) {_id = id;}
++};
++
++__END_API
++
++#endif
+diff --git a/include/syscall/stub_thread.h b/include/syscall/stub_thread.h
+new file mode 100644
+index 0000000..d749d02
+--- /dev/null
++++ b/include/syscall/stub_thread.h
+@@ -0,0 +1,101 @@
++// EPOS Component Declarations
++
++#ifndef __stub_thread_h
++#define __stub_thread_h
++
++#include <architecture.h>
++#include <syscall/message.h>
++#include <syscall/stub_task.h>
++
++__BEGIN_API
++
++__USING_UTIL
++
++class Stub_Thread
++{
++private:
++    int id;
++    typedef _SYS::Message Message;
++
++public:
++    Stub_Thread(){}
++
++    template<typename ... Tn>
++    Stub_Thread(int (* entry)(Tn ...), Tn ... an){
++        Message * msg = new Message(0, Message::ENTITY::THREAD, Message::THREAD_CREATE, entry);
++        msg->act();
++        id = msg->result();
++    }
++
++    /*
++    template<typename ... Tn>
++    Stub_Thread(const Configuration & conf, int (* entry)(Tn ...), Tn ... an){
++        Message * msg = new Message(THREAD, Message::THREAD_CREATE, conf, entry);
++        msg->act();
++        id = msg->result();
++    }
++    */
++
++    void set_id(int _id){id = _id;};
++
++    /*
++    void priority(const Criterion & p) {
++        Message * msg = new Message(id, Message::ENTITY::THREAD, Message::THREAD_PRIORITY1, p);
++        msg->act();
++    }
++    */
++
++    Stub_Task * task() {
++        Message * msg = new Message(id, Message::ENTITY::THREAD, Message::THREAD_TASK);
++        msg->act();
++        int id = msg->result();
++        Stub_Task * new_stub_task = new Stub_Task();
++        new_stub_task->set_id(id);
++        return new_stub_task;
++    }
++
++    int join() {
++        Message * msg = new Message(id, Message::ENTITY::THREAD, Message::THREAD_JOIN);
++        msg->act();
++        return msg->result();
++    }
++
++    void pass() {
++        Message * msg = new Message(id, Message::ENTITY::THREAD, Message::THREAD_PASS);
++        msg->act();
++    }
++
++    void suspend() {
++        Message * msg = new Message(id, Message::ENTITY::THREAD, Message::THREAD_SUSPEND);
++        msg->act();
++    }
++
++    void resume() {
++        Message * msg = new Message(id, Message::ENTITY::THREAD, Message::THREAD_RESUME);
++        msg->act();
++    }
++
++    static Stub_Thread * self() {
++        Message * msg = new Message(0, Message::ENTITY::THREAD, Message::THREAD_SELF);
++        msg->act();
++        int id = msg->result();
++        Stub_Thread * new_stub_thread = new Stub_Thread();
++        new_stub_thread->set_id(id);
++        return new_stub_thread;
++    }
++
++    static void yield() {
++        Message * msg = new Message(0, Message::ENTITY::THREAD, Message::THREAD_YIELD);
++        msg->act();
++    }
++
++    static void exit(int status = 0) {
++        Message * msg = new Message(0, Message::ENTITY::THREAD, Message::THREAD_EXIT);
++        msg->set_params(status);
++        msg->act();
++    }
++};
++
++__END_API
++
++#endif
+diff --git a/include/system.h b/include/system.h
+index 5215ef1..d026d25 100644
+--- a/include/system.h
++++ b/include/system.h
+@@ -19,6 +19,12 @@ class Application
+ private:
+     static void init();
+ 
++public:
++    static const unsigned int APP_CODE = Traits<Machine>::APP_CODE;
++    static const unsigned int APP_DATA = Traits<Machine>::APP_DATA;
++    static const unsigned int STACK_SIZE = Traits<Machine>::STACK_SIZE;
++    static const unsigned int HEAP_SIZE = 4*1024*1024;
++
+ private:
+     static char _preheap[sizeof(Heap)];
+     static Heap * _heap;
+diff --git a/include/system/traits.h b/include/system/traits.h
+index 5e505ed..63d5b1f 100644
+--- a/include/system/traits.h
++++ b/include/system/traits.h
+@@ -116,6 +116,7 @@ class EA_PEDF;
+ 
+ class Address_Space;
+ class Segment;
++class Shared_Segment;
+ 
+ class Synchronizer;
+ class Mutex;
+diff --git a/include/system/types.h b/include/system/types.h
+index 645c2df..d6730ce 100644
+--- a/include/system/types.h
++++ b/include/system/types.h
+@@ -165,6 +165,7 @@ enum
+     ACTIVE_ID,
+     ADDRESS_SPACE_ID,
+     SEGMENT_ID,
++    SHARED_SEGMENT_ID,
+     MUTEX_ID,
+     SEMAPHORE_ID,
+     CONDITION_ID,
+@@ -228,6 +229,7 @@ template<> struct Type<Task> { static const Type_Id ID = TASK_ID; };
+ 
+ template<> struct Type<Address_Space> { static const Type_Id ID = ADDRESS_SPACE_ID; };
+ template<> struct Type<Segment> { static const Type_Id ID = SEGMENT_ID; };
++template<> struct Type<Shared_Segment> { static const Type_Id ID = SHARED_SEGMENT_ID; };
+ 
+ template<> struct Type<Mutex> { static const Type_Id ID = MUTEX_ID; };
+ template<> struct Type<Semaphore> { static const Type_Id ID = SEMAPHORE_ID; };
+diff --git a/include/utility/elf.h b/include/utility/elf.h
+index 49a7c8e..c960133 100644
+--- a/include/utility/elf.h
++++ b/include/utility/elf.h
+@@ -23,7 +23,7 @@ public:
+     int segments() { return e_phnum; }
+ 
+     Elf32_Word segment_type(int i) {
+- 	return (i > segments()) ? PT_NULL : seg(i)->p_type;
++ 	    return (i > segments()) ? PT_NULL : seg(i)->p_type;
+     }
+ 
+     Elf32_Addr segment_address(int i) {
+diff --git a/include/utility/fork.h b/include/utility/fork.h
+new file mode 100644
+index 0000000..b97ce40
+--- /dev/null
++++ b/include/utility/fork.h
+@@ -0,0 +1,46 @@
++// EPOS Fork implementation
++
++#ifndef __fork_h
++#define __fork_h
++
++#include <process.h>
++#include <architecture.h>
++
++__BEGIN_UTIL
++
++static unsigned int fork(int(* main)()) {
++    //unsigned long lr = CPU::lr();
++    Task * c_task = Task::self();
++
++    // Code
++    Segment* cs;
++    unsigned int cs_size = c_task->code_segment()->size();
++    cs = new (SYSTEM) Segment(cs_size, Segment::Flags::SYS);
++
++    CPU::int_disable();
++    CPU::Log_Addr tmp = c_task->address_space()->attach(cs);
++    memcpy(tmp, c_task->code(), cs_size);
++    c_task->address_space()->detach(cs);
++    CPU::int_enable();
++
++    // Data
++    Segment* ds;
++    unsigned int ds_size = c_task->data_segment()->size();
++    ds = new (SYSTEM) Segment(ds_size, Segment::Flags::SYS);
++
++    CPU::int_disable();
++    CPU::Log_Addr tmp_ds = c_task->address_space()->attach(ds);
++    memcpy(tmp_ds, c_task->data(), ds_size);
++    c_task->address_space()->detach(ds);
++    CPU::int_enable();
++
++    typedef int (Main)();
++    main = reinterpret_cast<Main *>(main);
++    new (SYSTEM) Task(cs, ds, main, c_task->code(), c_task->data());
++
++    return Task::self()->id();
++}
++
++__END_UTIL
++
++#endif
+diff --git a/include/utility/list.h b/include/utility/list.h
+index ccc8954..7d902d7 100644
+--- a/include/utility/list.h
++++ b/include/utility/list.h
+@@ -1403,6 +1403,22 @@ private:
+     unsigned int _grouped_size;
+ };
+ 
++template<typename T>
++class Port_List: public List<T>
++{
++public:
++    typedef typename List<T>::Element Element;
++    typedef List<T> Base;
++    using Base::head;
++    using Base::insert;
++
++    Element * find(unsigned int port) {
++        Element * e = head();
++        for(; e && (e->object()->port != port); e = e->next());
++        return e;
++    }
++};
++
+ __END_UTIL
+ 
+ #endif
+diff --git a/include/utility/load_app.h b/include/utility/load_app.h
+new file mode 100644
+index 0000000..91392dd
+--- /dev/null
++++ b/include/utility/load_app.h
+@@ -0,0 +1,120 @@
++#ifndef __load_app_h
++#define __load_app_h
++
++#include <process.h>
++#include <architecture.h>
++#include <machine.h>
++#include <utility/elf.h>
++
++__BEGIN_UTIL
++
++int load_app(int off_set, unsigned int addr) {
++    typedef CPU::Log_Addr Log_Addr;
++    db<Task>(ERR) << "********Load_app::off_set(" << off_set << ") ,addr(" << addr << ")********" << endl;
++    unsigned int tamanho = *(reinterpret_cast<int*> (addr + off_set));
++    db<Task>(ERR) << "Tamanho arquivo: " << tamanho << endl;
++
++    ELF * app_elf = reinterpret_cast<ELF *>(addr + off_set + 4);
++
++    unsigned int entry = 0;
++    unsigned int app_code = ~0U;
++    unsigned int app_code_size = 0;
++    unsigned int app_data = ~0U;
++    unsigned int app_data_size = 0;
++
++    if(!app_elf->valid()) {
++        db<Task>(TRC) << "APP ELF image is corrupted!" << endl;
++    } else {
++        db<Task>(TRC) << "We good" << endl;
++    }
++
++    entry = app_elf->entry();
++    app_code = app_elf->segment_address(0);
++    if(app_code != MMU::align_directory(app_code)) {
++        Machine::panic();
++    }
++
++    db<Task>(TRC) << "app code :" << hex << app_code << endl;
++
++    app_code_size = app_elf->segment_size(0);
++
++    // if this has data segment
++    if(app_elf->segments() > 1) {
++        for(int i = 1; i < app_elf->segments(); i++) {
++            if(app_elf->segment_type(i) != PT_LOAD)
++                continue;
++            // if(app_elf->segment_address(i) < app_data)
++            if(app_data == ~0U)
++                app_data = app_elf->segment_address(i);
++            app_data_size += app_elf->segment_size(i);
++        }
++    }
++
++    db<Task>(TRC) << "LINE 52 - app_data_size :" << hex << app_data_size << endl;
++
++    if(app_data == ~0U) {
++        db<Setup>(WRN) << "APP ELF image has no data segment!" << endl;
++        app_data = MMU::align_page(Memory_Map::APP_DATA); 
++        // app_data += MMU::align_page(Traits<Application>::HEAP_SIZE);
++    }
++    if(Traits<System>::multiheap) { // Application heap in data segment
++        app_data_size = MMU::align_page(app_data_size);
++        app_data_size += MMU::align_page(Traits<Application>::STACK_SIZE);
++        app_data_size += MMU::align_page(Traits<Application>::HEAP_SIZE);
++    }
++
++
++    typedef int (Main)(); // TODO @cross se pah ta faltando o argc e argv aqui
++    // typedef int (Main)(argc, argv); // TODO @cross se pah ta faltando o argc e argv aqui
++    Main * main = reinterpret_cast<Main *>(entry);
++
++    // argc = ...;
++    // argv = ...;
++
++
++    // Address_Space* as = new (SYSTEM) Address_Space(MMU::current());
++    //Segment* cs = new (SYSTEM) Segment(Log_Addr(app_code), app_code_size, Segment::Flags::APP);
++    Segment* cs = new (SYSTEM) Segment(app_code_size, Segment::Flags::APP);
++    //Segment* ds = new (SYSTEM) Segment(Log_Addr(app_data), app_data_size, Segment::Flags::APP);
++    Segment* ds = new (SYSTEM) Segment(app_data_size, Segment::Flags::APP);
++
++    // cout << "Attaching data segment..." << endl;
++    CPU::int_disable();
++    Log_Addr code = Task::self()->address_space()->attach(cs); // o prox endereço eh 0x8020
++    Log_Addr data = Task::self()->address_space()->attach(ds); // 0 1 --> 2 3
++    Log_Addr aux_data = data;
++    CPU::int_enable();
++    
++    // aqui eh hora de copiar entao tem que ser igual da task que ta rodando
++    //      mas dps a gente quer nos outros lugarex 0x8000 e 0x8040
++
++    // app_code = app_elf->segment_address(0);
++
++    if(app_elf->load_segment(0, code) < 0) { // 0x8020
++        db<Setup>(ERR) << "Application code segment was corrupted during SETUP!" << endl;
++        Machine::panic();
++    }
++    for(int i = 1; i < app_elf->segments(); i++) {
++        if(app_elf->load_segment(i, data) < 0) {
++            db<Setup>(ERR) << "Application data segment was corrupted during SETUP!" << endl;
++            Machine::panic();
++        }
++        data += app_elf->segment_size(i);
++    }
++
++    Task::self()->address_space()->detach(cs, code);
++    Task::self()->address_space()->detach(ds, aux_data);
++
++    db<Task>(TRC) << "app_code_size :" << hex << app_code_size << endl;
++    db<Task>(TRC) << "app_data_size :" << hex << app_data_size << endl;
++    db<Task>(TRC) << "HEAP_SIZE :" << hex << Traits<Application>::HEAP_SIZE << endl;
++
++    new (SYSTEM) Task(cs, ds, main, app_code, app_data);
++
++
++    db<Task>(ERR) << "************End::Load_app:************" << endl;
++    return (*reinterpret_cast<int*> (addr + off_set + tamanho + 4));
++}
++__END_UTIL
++
++#endif
+diff --git a/makedefs b/makedefs
+index 311389b..4b6132f 100644
+--- a/makedefs
++++ b/makedefs
+@@ -137,11 +137,12 @@ cortex_IMG_SUFFIX	:= .bin
+ endif
+ 
+ ifeq ($(MMOD),raspberry_pi3)
+-cortex_CC_FLAGS		:= -mcpu=cortex-a53 -mfloat-abi=hard -mfpu=vfp
++#cortex_CC_FLAGS		:= -mcpu=cortex-a53 -mfloat-abi=hard -mfpu=vfp
++cortex_CC_FLAGS		:= -mcpu=cortex-a53 -mfloat-abi=softfp -mfpu=vfp
+ cortex_AS_FLAGS		:= -mcpu=cortex-a53
+ cortex_LD_FLAGS		:=
+ cortex_EMULATOR		= qemu-system-aarch64 -M raspi2 -cpu cortex-a53 -smp 4 -m 1G -serial null -serial mon:stdio -nographic -no-reboot -device loader,file=loader.img,addr=$(IMAGE_ADDR),force-raw=on -kernel 
+-cortex_DEBUGGER		:= gdb
++cortex_DEBUGGER		:= arm-none-eabi-gdb
+ cortex_FLASHER		= $(TLS)/eposflash/eposflash-$(MMOD) -d /dev/ttyACM0 -f
+ cortex_MAGIC		:= --nmagic
+ cortex_CODE_NAME	:= .init
+@@ -369,8 +370,8 @@ lib%.o: lib%.cc
+ 		$(CLEAN) $<.tmp
+ 
+ %.bin: %.img
+-		cp $< loader.img
+-		$(OBJCOPY) -O binary $< $@
++		# cp $< loader.img
++		# $(OBJCOPY) -O binary $< $@
+ 
+ %.out: %.img
+ 		$(EMULATOR) $< | $(TEE) $@
+diff --git a/src/api/shared_segment.cc b/src/api/shared_segment.cc
+new file mode 100644
+index 0000000..dad76c6
+--- /dev/null
++++ b/src/api/shared_segment.cc
+@@ -0,0 +1,31 @@
++// EPOS Memory Segment Implementation
++
++#include <system.h>
++#include <memory.h>
++
++__BEGIN_SYS
++
++Shared_Segment::List Shared_Segment::_list; 
++
++Shared_Segment::Shared_Segment(unsigned int port, unsigned int bytes, const Flags & flags): Segment(bytes, flags)
++{
++    db<Segment>(TRC) << "Shared_Segment(bytes=" << bytes << ",flags=" << flags << ") [Chunk::_pt=" << Chunk::pt() << "] => " << this << endl;
++    _tasks = 1;
++    _port = port;
++    assert(!_list.find(port));
++    Shared_Segment_Port * ssport = new (SYSTEM) Shared_Segment_Port(port, this);
++    List::Element * ssport_link = new (SYSTEM) List::Element(ssport);
++    _list.insert(ssport_link);
++}
++
++Shared_Segment * Shared_Segment::get_sseg(unsigned int port) { 
++    db<Shared_Segment>(TRC) << "get_sseg(port=" << port << ")" << endl;
++    List::Element * ssport_link= _list.find(port);
++    if (!ssport_link) {
++        return 0;
++    }
++
++    return ssport_link->object()->sseg; 
++}
++
++__END_SYS
+diff --git a/src/api/task.cc b/src/api/task.cc
+new file mode 100644
+index 0000000..a4717b3
+--- /dev/null
++++ b/src/api/task.cc
+@@ -0,0 +1,27 @@
++// EPOS Task Implementation
++
++#include <process.h>
++
++__BEGIN_SYS
++
++// Class attributes
++volatile unsigned int Task::_task_count;
++Task* volatile Task::_current;
++
++// Methods
++Task::~Task()
++{
++    db<Task>(TRC) << "~Task(this=" << this << ")" << endl;
++
++    while (!_threads.empty()){
++        delete _threads.remove()->object();
++    }
++
++    lock();
++    _task_count--;
++    unlock();
++
++    delete _as;
++}
++
++__END_SYS
+diff --git a/src/api/thread.cc b/src/api/thread.cc
+index 191597d..03edfd4 100644
+--- a/src/api/thread.cc
++++ b/src/api/thread.cc
+@@ -88,6 +88,8 @@ Thread::~Thread()
+     if(_joining)
+         _joining->resume();
+ 
++    _task->remove(this);
++
+     unlock();
+ 
+     delete _stack;
+@@ -342,6 +344,10 @@ void Thread::dispatch(Thread * prev, Thread * next, bool charge)
+         }
+         db<Thread>(INF) << "Thread::dispatch:next={" << next << ",ctx=" << *next->_context << "}" << endl;
+ 
++        if (prev->_task != next->_task) {
++            next->_task->activate_context();
++        }
++
+         // The non-volatile pointer to volatile pointer to a non-volatile context is correct
+         // and necessary because of context switches, but here, we are locked() and
+         // passing the volatile to switch_constext forces it to push prev onto the stack,
+diff --git a/src/api/thread_init.cc b/src/api/thread_init.cc
+index 53ade54..950d7be 100644
+--- a/src/api/thread_init.cc
++++ b/src/api/thread_init.cc
+@@ -13,21 +13,41 @@ void Thread::init()
+ {
+     db<Init, Thread>(TRC) << "Thread::init()" << endl;
+ 
+-    typedef int (Main)();
++    typedef int (Main)(int argc, char ** argv);
+ 
+     System_Info * si = System::info();
+     Main * main;
+ 
+-    if(Traits<System>::multitask)
++    if(Traits<System>::multitask){
+         main = reinterpret_cast<Main *>(si->lm.app_entry);
+-    else
++    }else{
+         // If EPOS is a library, then adjust the application entry point to __epos_app_entry, which will directly call main().
+         // In this case, _init will have already been called, before Init_Application to construct MAIN's global objects.
+         main = reinterpret_cast<Main *>(__epos_app_entry);
++    }
+ 
+     Criterion::init();
+ 
+-    new (SYSTEM) Thread(Thread::Configuration(Thread::RUNNING, Thread::MAIN), main);
++    if (Traits<System>::multitask) {
++        Address_Space* as = new (SYSTEM) Address_Space(MMU::current());
++        Segment* cs = new (SYSTEM) Segment(Log_Addr(si->lm.app_code), si->lm.app_code_size, Segment::Flags::APPC);
++        Segment* ds = new (SYSTEM) Segment(Log_Addr(si->lm.app_data), si->lm.app_data_size, Segment::Flags::APPD);
++        Log_Addr code = si->lm.app_code;
++        Log_Addr data = si->lm.app_data;
++        //Log_Addr code = as->attach(cs);
++        //Log_Addr data = as->attach(ds);
++
++        int argc = static_cast<int>(si->lm.app_extra_size);
++        char ** argv = reinterpret_cast<char **>(si->lm.app_extra);
++
++        new (SYSTEM) Task(as, cs, ds, main, code, data, argc, argv);
++
++        if(si->lm.has_ext)
++            db<Init>(INF) << "Thread::init: additional data from mkbi at "  << reinterpret_cast<void *>(si->lm.app_extra) << ":" << si->lm.app_extra_size << endl;
++    }
++    else {
++        new (SYSTEM) Thread(Thread::Configuration(Thread::RUNNING, Thread::MAIN), reinterpret_cast<int (*)()>(main));
++    }
+ 
+     // Idle thread creation does not cause rescheduling (see Thread::constructor_epilogue)
+     new (SYSTEM) Thread(Thread::Configuration(Thread::READY, Thread::IDLE), &Thread::idle);
+diff --git a/src/architecture/armv7/armv7_cpu.cc b/src/architecture/armv7/armv7_cpu.cc
+index dce0e43..853c634 100644
+--- a/src/architecture/armv7/armv7_cpu.cc
++++ b/src/architecture/armv7/armv7_cpu.cc
+@@ -44,8 +44,14 @@ if(thumb)
+ void CPU::Context::load() const volatile
+ {
+     ASM("       mov     sp, %0                  \n"
+-        "       isb                             \n" // serialize the pipeline so that SP gets updated before the pop
+-        "       pop     {r12}                   \n" : : "r"(this));
++        "       isb                             \n" : : "r"(this)); // serialize the pipeline so that SP gets updated before the pop
++    ASM(
++        "       pop     {r12}                   \n"
++        "       msr     sp_usr, r12             \n");
++    ASM(
++        "       pop     {r12}                   \n"
++        "       msr     lr_usr, r12             \n");
++    ASM("       pop     {r12}                   \n");
+     msr12();
+     ASM("       pop     {r0-r12, lr}            \n"
+         "       pop     {pc}                    \n");
+@@ -72,6 +78,10 @@ if(Traits<FPU>::enabled && !Traits<FPU>::user_save)
+ 
+     mrs12();                                            // move flags to tmp register
+     ASM("       push    {r12}                   \n");   // save flags
++    ASM("       mrs     r12, lr_usr             \n"
++        "       push    {r12}                   \n");
++    ASM("       mrs     r12, sp_usr             \n"
++        "       push    {r12}                   \n");
+     ASM("       str     sp, [r0]                \n");   // update Context * volatile * o
+ 
+ 
+@@ -79,6 +89,10 @@ if(Traits<FPU>::enabled && !Traits<FPU>::user_save)
+     ASM("       mov     sp, r1                  \n"     // get Context * volatile n into SP
+         "       isb                             \n");   // serialize the pipeline so SP gets updated before the pop
+ 
++    ASM("       pop     {r12}                   \n"
++        "       msr     sp_usr, r12             \n");
++    ASM("       pop     {r12}                   \n"
++        "       msr     lr_usr, r12             \n");
+     ASM("       pop     {r12}                   \n");   // pop flags into the temporary register r12
+     msr12();                                            // restore flags
+ 
+diff --git a/src/architecture/armv7/armv7_cpu_syscall.cc b/src/architecture/armv7/armv7_cpu_syscall.cc
+new file mode 100644
+index 0000000..244314d
+--- /dev/null
++++ b/src/architecture/armv7/armv7_cpu_syscall.cc
+@@ -0,0 +1,32 @@
++// EPOS ARMV7 CPU System Call Entry Implementation
++
++#include <architecture/armv7/armv7_cpu.h>
++
++__BEGIN_SYS
++
++void CPU::syscall(void * msg)
++{
++    ASM(
++        //Salvando contexto
++        // "push {lr}  \n"
++        "push {r0}  \n"
++        //Chamando sycall
++        "mov r0, %0 \n"
++        //"mov r12, sp \n"  // salvar tmp sp_usr
++        //"mrs sp, sp_usr \n" // carregar sp_svc
++        //"msr sp_usr, r12 \n"// salvar sp_usr
++
++        "SVC 0x0    \n"
++
++        //"mov r12, sp \n"  //salvar tmp sp_svc
++        //"mrs sp, sp_usr \n" //carregar sp_usr
++        //"msr sp_usr, r12 \n" //salver_sp_svc
++
++        //Retornando contexto
++        "pop {r0}   \n"
++        // "pop {lr}   \n"
++        "" :: "r"(msg)
++    );
++}
++
++__END_SYS
+diff --git a/src/architecture/armv7/armv7_cpu_syscalled.cc b/src/architecture/armv7/armv7_cpu_syscalled.cc
+new file mode 100644
+index 0000000..e0ee240
+--- /dev/null
++++ b/src/architecture/armv7/armv7_cpu_syscalled.cc
+@@ -0,0 +1,19 @@
++// EPOS ARMV7 CPU System Call Entry Implementation
++
++#include <architecture/armv7/armv7_cpu.h>
++
++extern "C" { void _sysexec(); }
++
++__BEGIN_SYS
++
++void CPU::syscalled()
++{
++    ASM("push {lr}  \n"
++        "push {r0}  \n"
++        "bl _sysexec   \n"
++        "pop {r0}  \n"
++        "pop {lr}  \n"
++    );
++}
++
++__END_SYS
+diff --git a/src/architecture/armv7/armv7_crt0.S b/src/architecture/armv7/armv7_crt0.S
+index a5467ff..20d9818 100644
+--- a/src/architecture/armv7/armv7_crt0.S
++++ b/src/architecture/armv7/armv7_crt0.S
+@@ -18,6 +18,8 @@ _mcu_start:
+         .global _start
+         .type   _start, function
+ _start:
++        // save context
++        push    {r0-r1}
+         // Clear the BSS
+         eor     r0, r0
+         ldr     r1, =__bss_start__
+@@ -34,6 +36,12 @@ _start:
+         .globl  __epos_app_entry
+         .type   __epos_app_entry, function
+ __epos_app_entry:
++//_user_mode:
++        //msr cpsr_all, #16    // Change to user mode
++        //mov r12, sp
++        //mrs sp, sp_usr
++        //msr sp_usr, r12
++        pop     {r0-r1}
+         bl      main
+         push    {r0}         // save main's return value to be used by exit()
+         bl      _fini
+diff --git a/src/init/init_application.cc b/src/init/init_application.cc
+index 53815ae..2270393 100644
+--- a/src/init/init_application.cc
++++ b/src/init/init_application.cc
+@@ -23,8 +23,8 @@ public:
+         db<Init>(INF) << "Initializing application's heap: " << endl;
+         if(Traits<System>::multiheap) { // heap in data segment arranged by SETUP
+             char * heap = (MMU::align_page(&_end) >= CPU::Log_Addr(Memory_Map::APP_DATA)) ? MMU::align_page(&_end) : CPU::Log_Addr(Memory_Map::APP_DATA); // ld is eliminating the data segment in some compilations, particularly for RISC-V, and placing _end in the code segment
+-            if(Traits<Build>::MODE != Traits<Build>::KERNEL) // if not a kernel, then use the stack allocated by SETUP, otherwise make that part of the heap
+-                heap += MMU::align_page(Traits<Application>::STACK_SIZE);
++            //if(Traits<Build>::MODE != Traits<Build>::KERNEL) // if not a kernel, then use the stack allocated by SETUP, otherwise make that part of the heap
++                //heap += MMU::align_page(Traits<Application>::STACK_SIZE);
+             Application::_heap = new (&Application::_preheap[0]) Heap(heap, HEAP_SIZE);
+         } else
+             for(unsigned int frames = MMU::allocable(); frames; frames = MMU::allocable())
+diff --git a/src/machine/cortex/raspberry_pi3/raspberry_pi3_ic.cc b/src/machine/cortex/raspberry_pi3/raspberry_pi3_ic.cc
+index 38c9e13..30a3c02 100644
+--- a/src/machine/cortex/raspberry_pi3/raspberry_pi3_ic.cc
++++ b/src/machine/cortex/raspberry_pi3/raspberry_pi3_ic.cc
+@@ -1,5 +1,6 @@
+ // EPOS ARM Cortex IC Mediator Implementation
+ 
++#include <architecture/cpu.h>
+ #include <machine/machine.h>
+ #include <machine/ic.h>
+ #include <machine/timer.h>
+@@ -16,6 +17,21 @@ extern "C" { void _data_abort() __attribute__ ((alias("_ZN4EPOS1S2IC10data_abort
+ extern "C" { void _reserved() __attribute__ ((alias("_ZN4EPOS1S2IC8reservedEv"))); }
+ extern "C" { void _fiq() __attribute__ ((alias("_ZN4EPOS1S2IC3fiqEv"))); }
+ 
++extern "C" { void _go_user_mode() __attribute__ ((naked)); }
++extern "C" { void __exit(); }
++extern "C" { void _exit(int s); }
++
++void _go_user_mode() {
++    ASM("pop {r12}                     \n"
++        "msr sp_usr, r12               \n"
++        "pop {r12}                     \n"
++        "msr lr_usr, r12               \n"
++        "pop {r0}                      \n"
++        "msr spsr_cfxs, r0             \n"
++        "ldmfd sp!, {r0-r12, lr, pc}^  \n"
++    );
++}
++
+ __BEGIN_SYS
+ 
+ // Class attributes
+@@ -211,44 +227,90 @@ void IC::int_not(Interrupt_Id i)
+ 
+ void IC::hard_fault(Interrupt_Id i)
+ {
++    ASM(
++        // Go to SVC to kill thread
++        "msr cpsr_c, #0x13                          \n"
++    );
+     db<IC>(ERR) << "IC::hard_fault(i=" << i << ")" << endl;
+-    Machine::panic();
++    //Machine::panic();
++    _exit(-1);
+ }
+ 
+ void IC::undefined_instruction()
+ {
++    ASM(
++        // Go to SVC to kill thread
++        "msr cpsr_c, #0x13                          \n"
++    );
+     db<IC>(ERR) << "Undefined instruction" << endl;
+-    Machine::panic();
++    //Machine::panic();
++    _exit(-1);
+ }
+ 
+ void IC::software_interrupt()
+ {
+-    db<IC>(ERR) << "Software interrupt" << endl;
+-    Machine::panic();
++    //Salvar Contexto IC
++    ASM(
++        "stmfd sp!, {r0-r3, lr}  \n"
++        "mrs r1, spsr            \n"
++        "push {r1}               \n"
++    );
++    CPU::syscalled();
++    ASM(
++        "pop {r1}                \n"
++        "msr spsr_cfxs, r1       \n"
++        "ldmfd sp!, {r0-r3, pc}^ \n"
++    );
+ }
+ 
+ void IC::prefetch_abort()
+ {
+-    db<IC>(ERR) << "Prefetch abort" << endl;
+-    Machine::panic();
++    ASM(
++        // Go to SVC to execute __exit or to kill thread
++        "msr cpsr_c, #0x13                          \n"
++        // Get the addr of prefetch function
++        "mrs r1, lr_abt                             \n"
++        "sub r1, r1, #0x4                           \n"
++        "ldr r2, =__exit                            \n"
++        "cmp r1, r2                                 \n"
++        "bne _prefetch_abort_error_exit             \n"
++        // Continues to thread __exit
++        "bx r1                                      \n"
++        "_prefetch_abort_error_exit:                \n"
++    );
++    _exit(-1);
+ }
+ 
+ void IC::data_abort()
+ {
++    ASM(
++        // Go to SVC to kill thread
++        "msr cpsr_c, #0x13                          \n"
++    );
+     db<IC>(ERR) << "Data abort" << endl;
+-    Machine::panic();
++    _exit(-1);
+ }
+ 
+ void IC::reserved()
+ {
++    ASM(
++        // Go to SVC to kill thread
++        "msr cpsr_c, #0x13                          \n"
++    );
+     db<IC>(ERR) << "Reserved" << endl;
+-    Machine::panic();
++    //Machine::panic();
++    _exit(-1);
+ }
+ 
+ void IC::fiq()
+ {
++    ASM(
++        // Go to SVC to kill thread
++        "msr cpsr_c, #0x13                          \n"
++    );
+     db<IC>(ERR) << "FIQ handler" << endl;
+-    Machine::panic();
++    //Machine::panic();
++    _exit(-1);
+ }
+ 
+ __END_SYS
+diff --git a/src/setup/setup_raspberry_pi3.cc b/src/setup/setup_raspberry_pi3.cc
+index 994f4e7..d1f7929 100644
+--- a/src/setup/setup_raspberry_pi3.cc
++++ b/src/setup/setup_raspberry_pi3.cc
+@@ -575,8 +575,8 @@ void Setup::setup_app_pt()
+     // APPLICATION data (contains stack, heap and extra)
+     configure_page_table_descriptors(reinterpret_cast<PT_Entry *>(&app_data_pt[MMU::page(si->lm.app_data)]), si->pmm.app_data, MMU::pages(si->lm.app_data_size), MMU::page_tables(MMU::pages(si->lm.app_data_size)), Flags::APP);
+ 
+-    db<Setup>(INF) << "APPC_PT=" << *reinterpret_cast<Page_Table *>(app_code_pt) << endl;
+-    db<Setup>(INF) << "APPD_PT=" << *reinterpret_cast<Page_Table *>(app_data_pt) << endl;
++    db<Setup>(TRC) << "APPC_PT=" << *reinterpret_cast<Page_Table *>(app_code_pt) << endl;
++    db<Setup>(TRC) << "APPD_PT=" << *reinterpret_cast<Page_Table *>(app_data_pt) << endl;
+ }
+ 
+ void Setup::setup_sys_pd()
+@@ -696,6 +696,7 @@ void Setup::enable_paging()
+ 
+     // MNG_DOMAIN for no page permission verification
+     CPU::dacr((Traits<System>::multitask) ? CPU::CLI_DOMAIN : CPU::MNG_DOMAIN);
++    //CPU::dacr(CPU::MNG_DOMAIN);
+ 
+     CPU::dsb();
+     CPU::isb();
+@@ -872,12 +873,12 @@ void _entry()
+                         ldr pc, fiq                                             \t\n\
+                                                                                 \t\n\
+         reset:          .word _reset                                            \t\n\
+-        ui:             .word _undefined_instruction                            \t\n\
+-        si:             .word _software_interrupt                               \t\n\
+-        pa:             .word _prefetch_abort                                   \t\n\
+-        da:             .word _data_abort                                       \t\n\
+-        irq:            .word _int_entry                                        \t\n\
+-        fiq:            .word _fiq                                              ");
++        ui:             .word 0x0                                               \t\n\
++        si:             .word 0x0                                               \t\n\
++        pa:             .word 0x0                                               \t\n\
++        da:             .word 0x0                                               \t\n\
++        irq:            .word 0x0                                               \t\n\
++        fiq:            .word 0x0                                               ");
+ }
+ 
+ void _reset()
+diff --git a/src/system/application_binding.cc b/src/system/application_binding.cc
+new file mode 100644
+index 0000000..12e9e92
+--- /dev/null
++++ b/src/system/application_binding.cc
+@@ -0,0 +1,40 @@
++// EPOS Applicaiton Component Implementation
++
++#include <utility/ostream.h>
++#include <utility/heap.h>
++#include <machine.h>
++#include <memory.h>
++#include <process.h>
++#include <system.h>
++#include <syscall/stub_thread.h>
++
++__BEGIN_SYS
++//OStream kout;
++OStream kerr;
++__END_SYS
++
++
++// Bindings
++extern "C" {
++    // Libc legacy
++    void _panic() { _API::Stub_Thread::exit(-1); }
++    void _exit(int s) { _API::Stub_Thread::exit(s); for(;;); }
++
++    //void __exit() { _API::Stub_Thread::exit(_SYS::CPU::fr()); }  // must be handled by the Page Fault handler for user-level tasks
++    //void __cxa_pure_virtual() { db<void>(ERR) << "Pure Virtual method called!" << endl; }
++}
++
++__USING_SYS;
++// Bindings
++extern "C" {
++    void _syscall(void * m) { CPU::syscall(m); }
++
++    // OStream
++    void _print(const char * s) {
++        // Message msg(Message::ENTITY::DISPLAY, Message::PRINT, reinterpret_cast<int>(s));
++        Message msg(0, Message::ENTITY::DISPLAY, Message::PRINT);
++        msg.set_params(reinterpret_cast<unsigned int>(s));
++        msg.act();
++    }
++}
++
+diff --git a/src/system/makefile b/src/system/makefile
+index 6967702..ab0d410 100644
+--- a/src/system/makefile
++++ b/src/system/makefile
+@@ -31,7 +31,7 @@ system_builtin_$(MMOD): $(OBJS)
+ 		--section-start $(MACH_DATA_NAME)=$(SYS_DATA_ADDR) \
+ 		--entry=_init -o system_$(MMOD) \
+ 		$(LIB)/crtbegin_$(MMOD).o \
+-		system_scaffold.o \
++		system_scaffold.o system_binding.o\
+ 		$(LIB)/crtend_$(MMOD).o \
+ 		--whole-archive \
+ 		-l$(LSYS) -l$(LMACH) -l$(LARCH) \
+@@ -45,13 +45,13 @@ system_kernel_$(MMOD): $(OBJS)
+ 		--section-start $(MACH_DATA_NAME)=$(SYS_DATA_ADDR) \
+ 		--entry=_init -o system_$(MMOD) \
+ 		$(LIB)/crtbegin_$(MMOD).o \
+-		system_scaffold.o \
++		system_scaffold.o system_binding.o \
+ 		$(LIB)/crtend_$(MMOD).o \
+ 		--whole-archive \
+ 		-l$(LSYS) -l$(LMACH) -l$(LARCH) \
+ 		--no-whole-archive \
+ 		-l$(LUTIL) -lgcc
+-		$(LD) $(LDFLAGS) -i application_scaffold.o -o application_$(MMOD).o
++		$(LD) $(LDFLAGS) -i application_scaffold.o application_binding.o -o application_$(MMOD).o
+ 
+ clean:
+ 		$(CLEAN) *.o $(shell find -maxdepth 1 -executable -not -type d)
+diff --git a/src/system/system_binding.cc b/src/system/system_binding.cc
+new file mode 100644
+index 0000000..e663d04
+--- /dev/null
++++ b/src/system/system_binding.cc
+@@ -0,0 +1,26 @@
++// EPOS System Scaffold and System Component Implementation
++
++#include <utility/ostream.h>
++#include <utility/heap.h>
++#include <machine.h>
++#include <memory.h>
++#include <process.h>
++#include <system.h>
++#include <syscall/agent.h>
++
++// Bindings
++extern "C" {
++    __USING_SYS;
++    // Libc legacy
++    void _panic() { Machine::panic(); }
++    void _exit(int s) { Thread::exit(s); for(;;); }
++    void __exit() { Thread::exit(CPU::fr()); }  // must be handled by the Page Fault handler for user-level tasks
++    void __cxa_pure_virtual() { db<void>(ERR) << "Pure Virtual method called!" << endl; }
++    void _syscall(void *m) { CPU::syscall(m); } 
++    void _sysexec() { Agent::_exec(); } 
++
++    // Utility-related methods that differ from kernel and user space.
++    // OStream
++    void _print(const char * s) { Display::puts(s); }
++}
++
+diff --git a/src/system/system_scaffold.cc b/src/system/system_scaffold.cc
+index 93089ce..8cdf4e0 100644
+--- a/src/system/system_scaffold.cc
++++ b/src/system/system_scaffold.cc
+@@ -21,18 +21,3 @@ Segment * System::_heap_segment;
+ Heap * System::_heap;
+ 
+ __END_SYS
+-
+-// Bindings
+-extern "C" {
+-    __USING_SYS;
+-
+-    // Libc legacy
+-    void _panic() { Machine::panic(); }
+-    void _exit(int s) { Thread::exit(s); for(;;); }
+-    void __exit() { Thread::exit(CPU::fr()); }  // must be handled by the Page Fault handler for user-level tasks
+-    void __cxa_pure_virtual() { db<void>(ERR) << "Pure Virtual method called!" << endl; }
+-
+-    // Utility-related methods that differ from kernel and user space.
+-    // OStream
+-    void _print(const char * s) { Display::puts(s); }
+-}
+diff --git a/tools/eposcc/eposcc b/tools/eposcc/eposcc
+index a3af4c6..2bcad33 100644
+--- a/tools/eposcc/eposcc
++++ b/tools/eposcc/eposcc
+@@ -33,9 +33,9 @@ CONFIGURATOR=eposcfg
+ 
+ COMP_FLGS="-include $INC/system.h"
+ COMP_HDRS="$INC"
+-if [ "$SMOD" = "kernel" ] ; then
+-COMP_FLGS="$COMP_FLGS -include $INC/framework/main.h"
+-fi
++#if [ "$SMOD" = "kernel" ] ; then
++#COMP_FLGS="$COMP_FLGS -include $INC/framework/main.h"
++#fi
+ 
+ C_COMPILER="$TOOLS_PREFIX""gcc"
+ C_COMP_FLGS="$MACH_CC_FLAGS"
+diff --git a/tools/eposcfg/eposcfg.cc b/tools/eposcfg/eposcfg.cc
+index 2eb64c2..e0fb69e 100644
+--- a/tools/eposcfg/eposcfg.cc
++++ b/tools/eposcfg/eposcfg.cc
+@@ -23,7 +23,7 @@ using namespace EPOS::S::U;
+ 
+ // Constants
+ const unsigned int TOKENS = 31;
+-const unsigned int COMPONENTS = 62;
++const unsigned int COMPONENTS = 63;
+ const unsigned int STRING_SIZE = 128;
+ 
+ // Configuration tokens (integer tokens first, marked by INT_TOKENS)
+@@ -106,6 +106,7 @@ char components[COMPONENTS][STRING_SIZE] = {
+     "Scheduler",
+     "Address_Space",
+     "Segment",
++    "Shared_Segment",
+     "Synchronizer",
+     "Mutex",
+     "Semaphore",
+@@ -380,33 +381,34 @@ void populate_strings()
+     if(Traits<Ethernet_NIC>::enabled)   enable_component("Ethernet_NIC");
+ 
+     // Enabled components
+-    if(Traits<System>::enabled)         enable_component("System");
+-    if(Traits<Application>::enabled)    enable_component("Application");
+-    if(Traits<Thread>::enabled)         enable_component("Thread");
+-    if(Traits<Active>::enabled)         enable_component("Active");
+-    if(Traits<Periodic_Thread>::enabled)enable_component("Periodic_Thread");
+-    if(Traits<RT_Thread>::enabled)      enable_component("RT_Thread");
+-    if(Traits<Task>::enabled)           enable_component("Task");
+-    if(Traits<Scheduler<Thread>>::enabled)      enable_component("Scheduler");
+-    if(Traits<Address_Space>::enabled)  enable_component("Address_Space");
+-    if(Traits<Segment>::enabled)        enable_component("Segment");
+-    if(Traits<Synchronizer>::enabled)   enable_component("Synchronizer");
+-    if(Traits<Mutex>::enabled)          enable_component("Mutex");
+-    if(Traits<Semaphore>::enabled)      enable_component("Semaphore");
+-    if(Traits<Condition>::enabled)      enable_component("Condition");
+-    if(Traits<Clock>::enabled)          enable_component("Clock");
+-    if(Traits<Chronometer>::enabled)    enable_component("Chronometer");
+-    if(Traits<Alarm>::enabled)          enable_component("Alarm");
+-    if(Traits<Delay>::enabled)          enable_component("Delay");
+-    if(Traits<Network>::enabled)        enable_component("Network");
+-    if(Traits<TSTP>::enabled)           enable_component("TSTP");
+-    if(Traits<IP>::enabled)             enable_component("IP");
+-    if(Traits<ICMP>::enabled)           enable_component("ICMP");
+-    if(Traits<UDP>::enabled)            enable_component("UDP");
+-    if(Traits<TCP>::enabled)            enable_component("TCP");
+-    if(Traits<DHCP>::enabled)           enable_component("DHCP");
+-    if(Traits<IPC>::enabled)            enable_component("IPC");
+-    if(Traits<SmartData>::enabled)      enable_component("SmartData");
++    if(Traits<System>::enabled)             enable_component("System");
++    if(Traits<Application>::enabled)        enable_component("Application");
++    if(Traits<Thread>::enabled)             enable_component("Thread");
++    if(Traits<Active>::enabled)             enable_component("Active");
++    if(Traits<Periodic_Thread>::enabled)    enable_component("Periodic_Thread");
++    if(Traits<RT_Thread>::enabled)          enable_component("RT_Thread");
++    if(Traits<Task>::enabled)               enable_component("Task");
++    if(Traits<Scheduler<Thread>>::enabled)  enable_component("Scheduler");
++    if(Traits<Address_Space>::enabled)      enable_component("Address_Space");
++    if(Traits<Segment>::enabled)            enable_component("Segment");
++    if(Traits<Shared_Segment>::enabled)     enable_component("Shared_Segment");
++    if(Traits<Synchronizer>::enabled)       enable_component("Synchronizer");
++    if(Traits<Mutex>::enabled)              enable_component("Mutex");
++    if(Traits<Semaphore>::enabled)          enable_component("Semaphore");
++    if(Traits<Condition>::enabled)          enable_component("Condition");
++    if(Traits<Clock>::enabled)              enable_component("Clock");
++    if(Traits<Chronometer>::enabled)        enable_component("Chronometer");
++    if(Traits<Alarm>::enabled)              enable_component("Alarm");
++    if(Traits<Delay>::enabled)              enable_component("Delay");
++    if(Traits<Network>::enabled)            enable_component("Network");
++    if(Traits<TSTP>::enabled)               enable_component("TSTP");
++    if(Traits<IP>::enabled)                 enable_component("IP");
++    if(Traits<ICMP>::enabled)               enable_component("ICMP");
++    if(Traits<UDP>::enabled)                enable_component("UDP");
++    if(Traits<TCP>::enabled)                enable_component("TCP");
++    if(Traits<DHCP>::enabled)               enable_component("DHCP");
++    if(Traits<IPC>::enabled)                enable_component("IPC");
++    if(Traits<SmartData>::enabled)          enable_component("SmartData");
+ }
+ 
+ // Sets the value of a token if it exists
